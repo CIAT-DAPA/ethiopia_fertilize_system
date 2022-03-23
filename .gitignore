@@ -1,0 +1,18 @@
+# Data
+/data/inputs/*.csv
+/data/inputs/*.xls
+/data/inputs/*.xlsx
+/data/inputs/*.tif
+/data/inputs/*.shp
+
+/data/workspace/*.csv
+/data/workspace/*.xls
+/data/workspace/*.xlsx
+/data/workspace/*.tif
+/data/workspace/*.shp
+
+/data/final/*.csv
+/data/final/*.xls
+/data/final/*.xlsx
+/data/final/*.tif
+/data/final/*.shp
