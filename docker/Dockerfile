@@ -2,32 +2,34 @@
 FROM ubuntu
 
 
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/Bogota
 
 RUN apt-get clean \
     && apt-get update \
     && apt-get install -y \
-    make \
-    gcc \ 
-    vim \
-    unzip \
-    dirmngr \
-    apt-transport-https \
-    cmake \
-    gfortran \
-    git \
-    wget \
-    libnetcdf-dev \
-    grads \
-    cdo \
-    nco \
-    gdal-bin \
-    proj-bin \
-    libgdal-dev \
-    libproj-dev \
-    libcurl4-openssl-dev \
-    libssl-dev \
-    libxml2-dev \
-    libudunits2-dev
+        make \
+        gcc \ 
+        vim \
+        unzip \
+        dirmngr \
+        apt-transport-https \
+        cmake \
+        gfortran \
+        git \
+        wget \
+        libnetcdf-dev \
+        grads \
+        cdo \
+        nco \
+        gdal-bin \
+        proj-bin \
+        libgdal-dev \
+        libproj-dev \
+        libcurl4-openssl-dev \
+        libssl-dev \
+        libxml2-dev \
+        libudunits2-dev
 
 # && printf "y\n13\n34" | apt-get install software-properties-common \
 # && printf "y\n13\n34" | apt-get install libgdal-dev \ 
