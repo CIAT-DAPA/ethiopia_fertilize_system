@@ -26,8 +26,8 @@ function App() {
 
     <Card
           className="mt-2"
-          bg={'Light'.toLowerCase()}
-          text={'black'}
+          bg={'Dark'.toLowerCase()}
+          text={'white'}
         >
           <Card.Header><h6>In collaboration with</h6></Card.Header>
             <Card.Body>
