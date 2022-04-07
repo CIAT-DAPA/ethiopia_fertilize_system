@@ -74,8 +74,8 @@ setwd("/workdir/rdata/input")
   cov_train <- cov_train[complete.cases(cov_train),]
   cov_train$landform <- as.factor(cov_train$landform)
   # cov_train$soiltype <- as.factor(cov_train$soiltype)
-  yield_nps <- dplyr::select(cov_train, c("n","p","p", "yield"))
-  cov_train <- dplyr::select(cov_train, -c("n","p","p", "yield"))
+  yield_nps <- dplyr::select(cov_train, c("n","p","k", "yield"))
+  cov_train <- dplyr::select(cov_train, -c("n","p","k", "yield"))
   cov_train <- cbind(cov_train, yield_nps)
   cov_train <- unique(na.omit(cov_train[, 1:ncol(cov_train)])) #removing NAs and duplicates
   
@@ -126,8 +126,8 @@ setwd("/workdir/rdata/input")
 # Multiple iteration
 
   N <- c(seq(0, 75, 15), seq(100, 200, 25)) #this will be optimized
-  # P <- N[1:7]
-  P <- K <- N[1:3]
+  P <- K <- N[1:7]
+  # P <- K <- N[1:3]
   npk <- expand.grid(N = N, P = P, K = K)
   
 #loop for climate forcast scenario
