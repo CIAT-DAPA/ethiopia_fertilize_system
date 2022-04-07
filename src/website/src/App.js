@@ -15,7 +15,7 @@ function App() {
 
       <Map
       center={{lat: 8.36399064480884, lng: 39.40866527188474}}
-      zoom={6}
+      zoom={7}
       />
 
 {/* <Row className="mt-4"> */}

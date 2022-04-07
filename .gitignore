@@ -16,3 +16,5 @@
 /data/final/*.xlsx
 /data/final/*.tif
 /data/final/*.shp
+
+docker/data/
