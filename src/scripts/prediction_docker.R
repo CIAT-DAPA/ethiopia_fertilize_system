@@ -18,7 +18,7 @@ rm(list = ls())
 
 # ------------------------------------------------------------------------------ 
 # unzip & read the raster stac
-setwd("/workdir/rdata/input")
+setwd("/workdir/data/input")
  
  print(noquote("Unzipping covaraite raster ..."))
  cov <- unzip("stack_eth.zip")
@@ -80,7 +80,7 @@ setwd("/workdir/rdata/input")
   cov_train <- unique(na.omit(cov_train[, 1:ncol(cov_train)])) #removing NAs and duplicates
   
   # dir.create("workspace")
-  setwd("/workdir/rdata/workspace")
+  setwd("/workdir/data/workspace")
   save(cov_train, file = paste0("regression_matrix", ".RData"))
   
   #load the rda file
@@ -134,10 +134,10 @@ setwd("/workdir/rdata/input")
 # setwd(workspace)
   path <- "yield"
   dir.create(path, FALSE, TRUE)
-  path = "/workdir/rdata/workspace/yield"
+  path = "/workdir/data/workspace/yield"
   a <- apply(npk, 1, function(i) paste(i, collapse="."))
   f <- file.path(path, paste0("yield.", a, ".tif"))
-  setwd("/workdir/rdata/workspace/yield")
+  setwd("/workdir/data/workspace/yield")
   # print(noquote("Predicting ..."))
   for (i in 1:nrow(npk)) {
     if (file.exists(f[i])) next

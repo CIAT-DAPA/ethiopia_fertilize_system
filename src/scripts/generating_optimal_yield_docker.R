@@ -15,7 +15,7 @@ print(noquote("Loading libraries ..."))
 # ------------------------------------------------------------------------------ 
 # list raster files
   print(noquote("Reading and stacking rasters ..."))
-  setwd("/workdir/rdata/workspace/yield")
+  setwd("/workdir/data/workspace/yield")
   # dir.create("output", showWarnings = F)
   rfiles <- list.files(path = ".", pattern = ".tif$", all.files = T)
   yield_ras <- lapply(rfiles, raster)
@@ -24,7 +24,7 @@ print(noquote("Loading libraries ..."))
   print(noquote("Generating optimal yield ..."))
   optimal_yield <- max(yield_stack)
   
-  setwd("/workdir/rdata/final")
+  setwd("/workdir/data/final")
   writeRaster(
     optimal_yield,
     filename = "wheat_optimal_yield_normal.tif",
