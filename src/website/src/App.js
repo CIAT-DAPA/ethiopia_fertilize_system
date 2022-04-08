@@ -3,8 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import Map from './components/Map';
 import InputForm from './components/InputForm';
+import ChartVisualization from './components/ChartVisualization';
 import {Header} from './components/common';
-import {Container, Card, Row, Col} from "react-bootstrap";
+import {Container, Card, Row, Col, Stack} from "react-bootstrap";
 
 function App() {
   return (
@@ -13,10 +14,18 @@ function App() {
     <Container>
       <InputForm/>
 
-      <Map
-      center={{lat: 8.36399064480884, lng: 39.40866527188474}}
-      zoom={7}
-      />
+      <Row className='mt-4'>
+        <Col>
+          <Map
+          center={{lat: 8.36399064480884, lng: 39.40866527188474}}
+          zoom={7}
+          />
+        </Col>
+        <Col>
+          <ChartVisualization/> 
+        </Col>
+        
+      </Row>
 
 {/* <Row className="mt-4"> */}
         

@@ -9,7 +9,7 @@ const Map = (props) => {
     const [url_national_annual, setUrlNatAnnual] = useState(GEOSERVER_URL + workspace + "/" + "wms");
 
     return(
-        <MapContainer center={props.center} zoom={props.zoom} style={{ height: '67vh' }} scrollWheelZoom={true} className="mt-4">
+        <MapContainer center={props.center} zoom={props.zoom} style={{ height: '67vh' }} scrollWheelZoom={true}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
