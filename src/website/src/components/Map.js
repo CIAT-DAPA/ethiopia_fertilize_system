@@ -5,11 +5,11 @@ import "leaflet/dist/leaflet.css";
 const Map = (props) => {
     
     const GEOSERVER_URL = "http://localhost:8600/geoserver/";
-    let store =  "datosPrueba";
-    const [url_national_annual, setUrlNatAnnual] = useState(GEOSERVER_URL + store + "/" + "wms");
+    let workspace =  "fertilizer_61e59d829d5d2486e18d2ea9";
+    const [url_national_annual, setUrlNatAnnual] = useState(GEOSERVER_URL + workspace + "/" + "wms");
 
     return(
-        <MapContainer center={props.center} zoom={props.zoom} style={{ height: '67vh' }} scrollWheelZoom={true} className="mt-4">
+        <MapContainer center={props.center} zoom={props.zoom} style={{ height: '67vh' }} scrollWheelZoom={true}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -18,9 +18,9 @@ const Map = (props) => {
                     
                         <>
                         
-                            <LayersControl.BaseLayer name={"Prueba 1"}>
+                            <LayersControl.BaseLayer name={"Optimal yield"}>
                                 <WMSTileLayer
-                                    layers={'datosPrueba:2010'}
+                                    layers={'fertilizer_61e59d829d5d2486e18d2ea9:optimal_yield'}
                                     attribution=''
                                     url={url_national_annual}
                                     format={"image/png"}

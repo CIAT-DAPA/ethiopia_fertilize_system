@@ -4,6 +4,8 @@ FROM ubuntu
 WORKDIR /workdir
 
 COPY ./r-libraries/ /workdir/r-install-libraries
+COPY ./script/ /workdir/script
+COPY ./data/ /workdir/data
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Bogota
@@ -44,6 +46,6 @@ RUN apt-get clean \
 
 
 # docker build -t deguzman98/fertilize_app_process:latest .
-# docker tag da3459a97f66 deguzman98/fertilize_app_process:latest
+# docker tag 55a8a673c6c1 deguzman98/fertilize_app_process:latest
 
 # docker run -it --rm deguzman98/fertilize_app_process:latest /bin/bash
