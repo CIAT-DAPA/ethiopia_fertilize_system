@@ -3,7 +3,7 @@
 
 rm(list = ls())
 
-  print(noquote("Loading libraries ..."))
+  message(noquote("Loading libraries ..."))
   require(rgdal)
   require(raster)
   require(caret)
@@ -20,7 +20,7 @@ rm(list = ls())
 # unzip & read the raster stac
 setwd("/workdir/data/input")
  
- print(noquote("Unzipping covaraite raster ..."))
+ message(noquote("Unzipping covaraite raster ..."))
  cov <- unzip("stack_eth.zip")
  cov_stack <- stack("stack_eth.tif")
  names(cov_stack) <- 
@@ -68,7 +68,7 @@ setwd("/workdir/data/input")
 
 # ------------------------------------------------------------------------------
 # extracting values by points
-  print(noquote("Extracting point vaues..."))
+  message(noquote("Extracting point vaues..."))
   grid_val <- extract(cov_soil_land, points)
   cov_train <- cbind(grid_val, points_train) # covariates, yield & nps
   cov_train <- cov_train[complete.cases(cov_train),]
@@ -102,7 +102,7 @@ setwd("/workdir/data/input")
   training <- cov_train[inTrain,]
   testing <- cov_train[-inTrain,]
   
-  print(noquote("Training the model..."))
+  message(noquote("Training the model..."))
   mod_fit <- train(
     yield ~ .,
     data = training,
@@ -138,11 +138,15 @@ setwd("/workdir/data/input")
   a <- apply(npk, 1, function(i) paste(i, collapse="."))
   f <- file.path(path, paste0("yield.", a, ".tif"))
   setwd("/workdir/data/workspace/yield")
-  # print(noquote("Predicting ..."))
+  # message(noquote("Predicting ..."))
+  message(noquote("Predicting yield"))
+  #progress bar
+  n_iter <- nrow(npk)
+  pb <- txtProgressBar(min = 0, max = n_iter, style = 3, width = 50, char = "=")
   for (i in 1:nrow(npk)) {
+    # progress(i, progress.bar=TRUE)
     if (file.exists(f[i])) next
     NPK <- data.frame(n = npk$N[i], p = npk$P[i], k = npk$K[i])
-      print(noquote(paste("Predicting yield",n,p,k,sep = ".")))
       predict(
         cov_stack, # use below normal, average and above average
         mod_fit,
@@ -151,5 +155,8 @@ setwd("/workdir/data/input")
         overwrite = TRUE,
         wopt = list(datatype = "INT2S", names = a[i])
       )
+      # if (i == nrow(npk)) message("Done!")
+      setTxtProgressBar(pb, i)
   }
+  close(pb)
   

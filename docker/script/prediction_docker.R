@@ -3,7 +3,7 @@
 
 rm(list = ls())
 
-  print(noquote("Loading libraries ..."))
+  message(noquote("Loading libraries ..."))
   require(rgdal)
   require(raster)
   require(caret)
@@ -20,9 +20,9 @@ rm(list = ls())
 # unzip & read the raster stac
 setwd("/workdir/data/input")
  
- print(noquote("Extracting covaraite raster ..."))
- cov <- unzip("stack_amhara.zip")
- cov_stack <- stack("stack_amhara.tif")
+ message(noquote("Unzipping covaraite raster ..."))
+ cov <- unzip("stack_eth.zip")
+ cov_stack <- stack("stack_eth.tif")
  names(cov_stack) <- 
    c(
      "bdod",
@@ -59,8 +59,8 @@ setwd("/workdir/data/input")
 # read csv data and convert to spatial
   # cov_stack <- cov_stack[[-6]]
   
-  points <- read.csv("csv_data_amhara.csv", header = T, sep = ",")
-  points_train <- dplyr::select(points, -c("lon","lat","s","k"))
+  points <- read.csv("csv_eth.csv", header = T, sep = ",")
+  points_train <- dplyr::select(points, -c("lon","lat"))
   cov_soil_land <- cov_stack[[1:16]]
   new_crs <- proj4string(cov_stack)
   coordinates(points) <- ~lon+lat
@@ -68,14 +68,14 @@ setwd("/workdir/data/input")
 
 # ------------------------------------------------------------------------------
 # extracting values by points
-  print(noquote("Extracting point ..."))
+  message(noquote("Extracting point vaues..."))
   grid_val <- extract(cov_soil_land, points)
   cov_train <- cbind(grid_val, points_train) # covariates, yield & nps
   cov_train <- cov_train[complete.cases(cov_train),]
   cov_train$landform <- as.factor(cov_train$landform)
   # cov_train$soiltype <- as.factor(cov_train$soiltype)
-  yield_nps <- dplyr::select(cov_train, c("n","p","yield"))
-  cov_train <- dplyr::select(cov_train, -c("n","p","yield"))
+  yield_nps <- dplyr::select(cov_train, c("n","p","k", "yield"))
+  cov_train <- dplyr::select(cov_train, -c("n","p","k", "yield"))
   cov_train <- cbind(cov_train, yield_nps)
   cov_train <- unique(na.omit(cov_train[, 1:ncol(cov_train)])) #removing NAs and duplicates
   
@@ -102,7 +102,7 @@ setwd("/workdir/data/input")
   training <- cov_train[inTrain,]
   testing <- cov_train[-inTrain,]
   
-  print(noquote("Model training ..."))
+  message(noquote("Training the model..."))
   mod_fit <- train(
     yield ~ .,
     data = training,
@@ -126,26 +126,27 @@ setwd("/workdir/data/input")
 # Multiple iteration
 
   N <- c(seq(0, 75, 15), seq(100, 200, 25)) #this will be optimized
-  # P <- N[1:7]
-  P <- N[1:3]
-  np <- expand.grid(N = N, P = P)
+  P <- K <- N[1:7]
+  # P <- K <- N[1:3]
+  npk <- expand.grid(N = N, P = P, K = K)
   
 #loop for climate forcast scenario
 # setwd(workspace)
   path <- "yield"
   dir.create(path, FALSE, TRUE)
   path = "/workdir/data/workspace/yield"
-  a <- apply(np, 1, function(i) paste(i, collapse="."))
+  a <- apply(npk, 1, function(i) paste(i, collapse="."))
   f <- file.path(path, paste0("yield.", a, ".tif"))
   setwd("/workdir/data/workspace/yield")
-  print(noquote("Predicting ..."))
-  for (i in 1:nrow(np)) {
+  # message(noquote("Predicting ..."))
+  message(noquote(paste("Predicting yield",n,p,k,sep = ".")))
+  for (i in 1:nrow(npk)) {
     if (file.exists(f[i])) next
-    NP <- data.frame(n = np$N[i], p = np$P[i])
+    NPK <- data.frame(n = npk$N[i], p = npk$P[i], k = npk$K[i])
       predict(
         cov_stack, # use below normal, average and above average
         mod_fit,
-        const = NP,
+        const = NPK,
         filename = f[i],
         overwrite = TRUE,
         wopt = list(datatype = "INT2S", names = a[i])

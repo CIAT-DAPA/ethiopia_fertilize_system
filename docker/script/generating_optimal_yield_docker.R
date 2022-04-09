@@ -3,7 +3,7 @@
 
 rm(list = ls())
 
-print(noquote("Loading libraries ..."))
+message(noquote("Loading libraries ..."))
   require(rgdal)
   require(raster)
   require(dplyr)
@@ -14,14 +14,14 @@ print(noquote("Loading libraries ..."))
 
 # ------------------------------------------------------------------------------ 
 # list raster files
-  print(noquote("Reading and stacking rasters ..."))
+  message(noquote("Reading and stacking rasters ..."))
   setwd("/workdir/data/workspace/yield")
   # dir.create("output", showWarnings = F)
   rfiles <- list.files(path = ".", pattern = ".tif$", all.files = T)
   yield_ras <- lapply(rfiles, raster)
   yield_stack <- stack(yield_ras)
   
-  print(noquote("Generating optimal yield ..."))
+  message(noquote("Generating optimal yield ..."))
   optimal_yield <- max(yield_stack)
   
   setwd("/workdir/data/final")
@@ -51,7 +51,7 @@ print(noquote("Loading libraries ..."))
         p = integer()
       )
     )
-  print(noquote("Generating raster and csv files ..."))
+  message(noquote("Generating raster and csv files ..."))
 # create a csv file for the layers
   n_layer <- p_layer <- raster(optimal_yield)
   values(n_layer) <- nps_df$n

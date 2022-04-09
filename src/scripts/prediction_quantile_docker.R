@@ -2,7 +2,7 @@
 # Data pre-processing for prediction
   rm(list = ls())
 
-  print(noquote("Loading libraries ..."))
+  message(noquote("Loading libraries ..."))
   require(rgdal)
   require(caret)
   require(dplyr)
@@ -20,8 +20,7 @@
 # list raster files 
   setwd("/workdir/data/input")
   
-  print(noquote("Reading covariate raster ..."))
-  # cov <- unzip("stack_amhara.zip")
+  message(noquote("Reading covariate raster ..."))
   cov_stack <- stack("stack_eth.tif")
   names(cov_stack) <- 
     c(
@@ -74,7 +73,7 @@
 
 # ------------------------------------------------------------------------------
 # extracting values by points
-  print(noquote("Extracting raster values ..."))
+  message(noquote("Extracting raster values ..."))
   grid_val <- extract(cov, points)
   grid_val <- as.data.frame(grid_val)
   grid_val <-  unique(na.omit(grid_val[, 1:ncol(grid_val)]))
@@ -85,13 +84,13 @@
   Ytraining     <- grid_val[inTrain,32]
   Ytesting      <- grid_val[-inTrain,32]
   
-  print(noquote("Training the model ..."))
+  message(noquote("Training the model ..."))
   mod_fit <- quantregForest(x = Xtraining, y = Ytraining)
   
-  print(noquote("Predicting attainable yield ..."))
+  message(noquote("Predicting attainable yield ..."))
   pred_90 <- predict(object = cov, model = mod_fit, what =  0.95)
   
-  print(noquote("Writing rasters and csv files ..."))
+  message(noquote("Writing rasters and csv files ..."))
   setwd("/workdir/data/final")
   writeRaster(
     pred_90,
