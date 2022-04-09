@@ -61,7 +61,7 @@ message(noquote("Loading libraries ..."))
   
   n_layer2 <- mask(n_layer, optimal_yield)
   p_layer2 <- mask(p_layer, optimal_yield)
-  s_layer2 <- mask(s_layer, optimal_yield)
+  k_layer2 <- mask(k_layer, optimal_yield)
   
   writeRaster(n_layer2, filename = "wheat_n_normal", format = "GTiff", overwrite = T)
   writeRaster(p_layer2, filename = "wheat_p_normal", format = "GTiff", overwrite = T)
@@ -70,8 +70,8 @@ message(noquote("Loading libraries ..."))
   n <- as.data.frame(n)
   p <- as(p_layer2, "SpatialGridDataFrame")
   p <- as.data.frame(p)
-  s <- as(s_layer2, "SpatialGridDataFrame")
-  s <- as.data.frame(s)
+  k <- as(k_layer2, "SpatialGridDataFrame")
+  k <- as.data.frame(k)
   
   
   # csv_optimal <- cbind(grid2[,1], n[,1], p[1], s)
