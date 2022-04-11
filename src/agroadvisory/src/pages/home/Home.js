@@ -17,7 +17,6 @@ function Home() {
                 <div className="carousel-inner">
                     <div className="carousel-item active">
                         <img className='bd-placeholder-img' width="100%" height="100%" aria-hidden="true" alt="" src={landscape} />
-                        
                         <div className="container">
                             <div className="carousel-caption">
                                 <h1>NextGen Agroadvisory</h1>
