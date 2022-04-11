@@ -36,8 +36,9 @@ function Fertilization() {
                         <li>Agronomic optimal yield</li>
                         <li>Agronomic attainable yield</li>
                         <li>Current yield (blanket yield)</li>
-                        <li>Economic/profitable optimal yield based on which yield decomposition can also be calculated</li>
+                        <li>Economic/profitable optimal yield</li>
                     </ol>
+                    Based on which yield decomposition can also be calculated
                 </p>
                 <Map id="map_type_yield" init={map_init} type={"yield"} crop={crop} forecast={forecast} scenario={scenario} />
                 <MapHeader title={"Nutrients"} />
