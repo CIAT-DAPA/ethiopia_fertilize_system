@@ -1,7 +1,10 @@
 import React from 'react';
 
 import './Home.css';
-
+import landscape from '../../assets/images/landscape.jpg';
+import soil_climate_specific from '../../assets/images/soil_climate_specific.jpg';
+import season_specific from '../../assets/images/season_specific.jpg';
+import segmentation from '../../assets/images/segmentation.jpg';
 function Home() {
 
     return (
@@ -13,7 +16,8 @@ function Home() {
                 </div>
                 <div className="carousel-inner">
                     <div className="carousel-item active">
-                        <svg className="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg>
+                        <img className='bd-placeholder-img' width="100%" height="100%" aria-hidden="true" alt="" src={landscape} />
+                        
                         <div className="container">
                             <div className="carousel-caption">
                                 <h1>NextGen Agroadvisory</h1>
@@ -51,22 +55,22 @@ function Home() {
             <div className="container marketing">
                 <div className="row">
                     <div className="col-lg-4">
-                        <svg className="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+                        <img className="bd-placeholder-img rounded-circle" alt="" src={soil_climate_specific}  width="140" height="140"  role="img" />
                         <h2>Site specific</h2>
                         <p>The fertilizer advisory is site-specific that accounts the local soil topography, climate condition.</p>
-                        <p><a className="btn btn-secondary" href="#">View details »</a></p>
+                        <p></p>
                     </div>
                     <div className="col-lg-4">
-                        <svg className="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+                        <img className="bd-placeholder-img rounded-circle" alt="" src={segmentation}  width="140" height="140"  role="img" />
                         <h2>Farmer segmentation</h2>
                         <p>It is context specific that provides targeted advisory for various segments of the society based on gender and resource endowment.</p>
-                        <p><a className="btn btn-secondary" href="#">View details »</a></p>
+                        <p></p>
                     </div>
                     <div className="col-lg-4">
-                        <svg className="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+                        <img className="bd-placeholder-img rounded-circle" alt="" src={season_specific}  width="140" height="140"  role="img" />
                         <h2>Season smart</h2>
                         <p>It is season-smart in which the advisories are based on the next growing period forecast weather conditions.</p>
-                        <p><a className="btn btn-secondary" href="#">View details »</a></p>
+                        <p></p>
                     </div>
                 </div>
             </div>
