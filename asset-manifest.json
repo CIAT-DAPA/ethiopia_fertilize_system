@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/ethiopia_agroadvisory/static/css/main.dd0f924b.css",
-    "main.js": "/ethiopia_agroadvisory/static/js/main.b96aab4d.js",
-    "static/js/787.22c90e81.chunk.js": "/ethiopia_agroadvisory/static/js/787.22c90e81.chunk.js",
-    "static/media/landscape.jpg": "/ethiopia_agroadvisory/static/media/landscape.45fe1aa9a31507fd63f5.jpg",
-    "static/media/season_specific.jpg": "/ethiopia_agroadvisory/static/media/season_specific.7880d907930bb80a6283.jpg",
-    "static/media/soil_climate_specific.jpg": "/ethiopia_agroadvisory/static/media/soil_climate_specific.72a0130cd7a0d2872c20.jpg",
-    "static/media/segmentation.jpg": "/ethiopia_agroadvisory/static/media/segmentation.4f84dccbad300f242b24.jpg",
-    "index.html": "/ethiopia_agroadvisory/index.html",
-    "main.dd0f924b.css.map": "/ethiopia_agroadvisory/static/css/main.dd0f924b.css.map",
-    "main.b96aab4d.js.map": "/ethiopia_agroadvisory/static/js/main.b96aab4d.js.map",
-    "787.22c90e81.chunk.js.map": "/ethiopia_agroadvisory/static/js/787.22c90e81.chunk.js.map"
+    "main.css": "/ethiopia_fertilize_system/static/css/main.dd0f924b.css",
+    "main.js": "/ethiopia_fertilize_system/static/js/main.573e879c.js",
+    "static/js/787.22c90e81.chunk.js": "/ethiopia_fertilize_system/static/js/787.22c90e81.chunk.js",
+    "static/media/landscape.jpg": "/ethiopia_fertilize_system/static/media/landscape.45fe1aa9a31507fd63f5.jpg",
+    "static/media/season_specific.jpg": "/ethiopia_fertilize_system/static/media/season_specific.7880d907930bb80a6283.jpg",
+    "static/media/soil_climate_specific.jpg": "/ethiopia_fertilize_system/static/media/soil_climate_specific.72a0130cd7a0d2872c20.jpg",
+    "static/media/segmentation.jpg": "/ethiopia_fertilize_system/static/media/segmentation.4f84dccbad300f242b24.jpg",
+    "index.html": "/ethiopia_fertilize_system/index.html",
+    "main.dd0f924b.css.map": "/ethiopia_fertilize_system/static/css/main.dd0f924b.css.map",
+    "main.573e879c.js.map": "/ethiopia_fertilize_system/static/js/main.573e879c.js.map",
+    "787.22c90e81.chunk.js.map": "/ethiopia_fertilize_system/static/js/787.22c90e81.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.dd0f924b.css",
-    "static/js/main.b96aab4d.js"
+    "static/js/main.573e879c.js"
   ]
 }
