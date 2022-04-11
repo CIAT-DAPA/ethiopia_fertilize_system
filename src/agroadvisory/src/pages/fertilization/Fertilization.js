@@ -2,6 +2,7 @@ import React from 'react';
 
 import Sidebar from '../../components/sidebar/Sidebar';
 
+import MapHeader from '../../components/map_header/MapHeader';
 import Map from '../../components/map/Map';
 
 function Fertilization() {
@@ -28,16 +29,10 @@ function Fertilization() {
         <div className="row">
             <Sidebar opt_forecast={opt_forecast} opt_crops={opt_crops} opt_scenarios={opt_scenarios} OnChangeForecast={changeForecast} OnChangeCrop={changeCrop} OnChangeScenario={changeScenario} />
             <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 className="h2">Type yield</h1>
-                    <div className="btn-toolbar mb-2 mb-md-0">
-                        <div className="btn-group me-2">
-                            <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>
-                        </div>
-                    </div>
-                </div>
+                <MapHeader title={"Type yield"} />
                 <Map id="map_type_yield" init={map_init} type={"yield"} crop={crop} forecast={forecast} scenario={scenario} />
+                <MapHeader title={"Nutrients"} />
+                <Map id="map_nutrients" init={map_init} type={"nutrients"} crop={crop} forecast={forecast} scenario={scenario} />
             </main>
         </div>
     );
