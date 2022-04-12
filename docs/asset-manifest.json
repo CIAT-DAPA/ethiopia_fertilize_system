@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.dd0f924b.css",
+    "main.js": "/static/js/main.1896eef4.js",
+    "static/js/787.22c90e81.chunk.js": "/static/js/787.22c90e81.chunk.js",
+    "static/media/landscape.jpg": "/static/media/landscape.45fe1aa9a31507fd63f5.jpg",
+    "static/media/season_specific.jpg": "/static/media/season_specific.7880d907930bb80a6283.jpg",
+    "static/media/soil_climate_specific.jpg": "/static/media/soil_climate_specific.72a0130cd7a0d2872c20.jpg",
+    "static/media/segmentation.jpg": "/static/media/segmentation.4f84dccbad300f242b24.jpg",
+    "index.html": "/index.html",
+    "main.dd0f924b.css.map": "/static/css/main.dd0f924b.css.map",
+    "main.1896eef4.js.map": "/static/js/main.1896eef4.js.map",
+    "787.22c90e81.chunk.js.map": "/static/js/787.22c90e81.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dd0f924b.css",
+    "static/js/main.1896eef4.js"
+  ]
+}
