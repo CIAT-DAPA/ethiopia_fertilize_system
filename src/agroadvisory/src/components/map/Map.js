@@ -10,9 +10,17 @@ function Map(props) {
     const [nutrients, setNutrients] = React.useState(["n", "p", "k"]);
     const { BaseLayer } = LayersControl;
 
+    const handleEventsMap = (map) => {
+        map.target.on("click", function (e) {
+            props.onClick(e, map);
+            //const { lat, lng } = e.latlng;
+            //L.marker([lat, lng], { icon }).addTo(map.target);
+        });
+    };
+
     return (
         <>
-            <MapContainer center={props.init.center} zoom={props.init.zoom} style={{ height: '500px' }} scrollWheelZoom={true}>
+            <MapContainer center={props.init.center} zoom={props.init.zoom} style={{ height: '500px' }} scrollWheelZoom={true} whenReady={handleEventsMap} >
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -21,26 +29,26 @@ function Map(props) {
                     {props.type == "yield" ?
                         types_yield.map((item) => {
                             return <BaseLayer key={"yield_" + item} name={item}>
-                                        <WMSTileLayer
-                                            layers={"fertilizer_et:yieldtypes_" + props.crop + "_" + item + "_yield_" + props.scenario}
-                                            attribution=''
-                                            url={url_service}
-                                            format={"image/png"}
-                                            transparent={true}
-                                        />
-                                    </BaseLayer>
+                                <WMSTileLayer
+                                    layers={"fertilizer_et:yieldtypes_" + props.crop + "_" + item + "_yield_" + props.scenario}
+                                    attribution=''
+                                    url={url_service}
+                                    format={"image/png"}
+                                    transparent={true}
+                                />
+                            </BaseLayer>
                         })
                         :
                         nutrients.map((item) => {
                             return <BaseLayer key={"nutrients_" + item} name={item}>
-                                        <WMSTileLayer
-                                            layers={"fertilizer_et:nutrients_" + props.crop + "_" + item + "_" + props.scenario}
-                                            attribution=''
-                                            url={url_service}
-                                            format={"image/png"}
-                                            transparent={true}
-                                        />
-                                    </BaseLayer>
+                                <WMSTileLayer
+                                    layers={"fertilizer_et:nutrients_" + props.crop + "_" + item + "_" + props.scenario}
+                                    attribution=''
+                                    url={url_service}
+                                    format={"image/png"}
+                                    transparent={true}
+                                />
+                            </BaseLayer>
                         })
                     }
                 </LayersControl>
