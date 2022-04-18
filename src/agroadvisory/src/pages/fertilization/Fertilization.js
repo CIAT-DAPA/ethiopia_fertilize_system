@@ -31,17 +31,14 @@ function Fertilization() {
 
     const onClickMap = (e, map) => {
         const { lat, lng } = e.latlng;
-        L.marker([lat, lng], { icon }).addTo(map.target)
-            .bindPopup('Value')
-            .openPopup();
         // The object map has many layers. By default OSM is 35, but custom layers have different ids
         Object.keys(map.target._layers).forEach(function(key,index) {
-            if(key != 35){
-                GeoFeatures.get_value(map.target._layers[key].options.layers,lat,lng)
+            if(map.target._layers[key].wmsParams != undefined){
+                const layer_name = map.target._layers[key].options.layers;
+                GeoFeatures.get_value(layer_name,lat,lng)
                 .then((data)=>{
-                    console.log(data);
                     L.marker([lat, lng], { icon }).addTo(map.target)
-                        .bindPopup('Value: ' + data.features[0].properties.GRAY_INDEX)
+                        .bindPopup(layer_name.split(":")[1] + ' - value: ' + data.features[0].properties.GRAY_INDEX.toFixed(2))
                         .openPopup();
                 });
             }
@@ -59,8 +56,6 @@ function Fertilization() {
                 <ol>
                     <li>Agronomic optimal yield</li>
                     <li>Agronomic attainable yield</li>
-                    <li>Current yield (blanket yield)</li>
-                    <li>Economic/profitable optimal yield</li>
                 </ol>
                 <p className='text-justify'>
                     Based on which yield decomposition can also be calculated
