@@ -15,7 +15,7 @@ message(noquote("Loading libraries ..."))
 # ------------------------------------------------------------------------------ 
 # list raster files
   message(noquote("Reading and stacking rasters ..."))
-  setwd("/workdir/data/workspace/yield")
+  setwd("/workdir/data/workspace/yield_above")
   # dir.create("output", showWarnings = F)
   rfiles <- list.files(path = ".", pattern = ".tif$", all.files = T)
   yield_ras <- lapply(rfiles, raster)
@@ -27,7 +27,7 @@ message(noquote("Loading libraries ..."))
   setwd("/workdir/data/final")
   writeRaster(
     optimal_yield,
-    filename = "wheat_optimal_yield_normal.tif",
+    filename = "wheat_optimal_yield_above.tif",
     format = "GTiff",
     overwrite = TRUE)
 
@@ -63,9 +63,8 @@ message(noquote("Loading libraries ..."))
   p_layer2 <- mask(p_layer, optimal_yield)
   k_layer2 <- mask(k_layer, optimal_yield)
   
-  writeRaster(n_layer2, filename = "wheat_n_normal", format = "GTiff", overwrite = T)
-  writeRaster(p_layer2, filename = "wheat_p_normal", format = "GTiff", overwrite = T)
-  writeRaster(k_layer2, filename = "wheat_p_normal", format = "GTiff", overwrite = T)
+  writeRaster(n_layer2, filename = "wheat_n_above", format = "GTiff", overwrite = T)
+  writeRaster(p_layer2, filename = "wheat_p_above", format = "GTiff", overwrite = T)
   
   n <- as(n_layer2, "SpatialGridDataFrame")
   n <- as.data.frame(n)
@@ -79,7 +78,7 @@ message(noquote("Loading libraries ..."))
   csv_optimal <- cbind(grid2[,1], n[,1], p[,1], k)
   colnames(csv_optimal) <- c("optimal_yield","n","p","k","lon","lat")
   write.csv(csv_optimal,
-            file = "wheat_optimal_yield_normal.csv",
+            file = "wheat_optimal_yield_above.csv",
             row.names = F,
             sep = ",")
   

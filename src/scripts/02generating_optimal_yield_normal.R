@@ -15,7 +15,7 @@ message(noquote("Loading libraries ..."))
 # ------------------------------------------------------------------------------ 
 # list raster files
   message(noquote("Reading and stacking rasters ..."))
-  setwd("/workdir/data/workspace/yield")
+  setwd("/workdir/data/workspace/yield_normal")
   # dir.create("output", showWarnings = F)
   rfiles <- list.files(path = ".", pattern = ".tif$", all.files = T)
   yield_ras <- lapply(rfiles, raster)
@@ -54,7 +54,7 @@ message(noquote("Loading libraries ..."))
     )
   message(noquote("Generating raster and csv files ..."))
 # create a csv file for the layers
-  n_layer <- p_layer <- raster(optimal_yield)
+  n_layer <- p_layer <- k_layer <- raster(optimal_yield)
   values(n_layer) <- nps_df$n
   values(p_layer) <- nps_df$p
   values(k_layer) <- nps_df$k

@@ -1,79 +1,18 @@
 # ------------------------------------------------------------------------------
-# Data pre-processing for prediction
+# souring data preparation script
 
-rm(list = ls())
-
-  message(noquote("Loading libraries ..."))
-  require(rgdal)
-  require(raster)
-  require(caret)
-  require(dplyr)
-  require(sf)
-  require(sp)
-  require(ranger)
-  require(randomForest)
-  require(hydroGOF)
-  require(Metrics)
-  require(ggplot2)
-
-# ------------------------------------------------------------------------------ 
-# unzip & read the raster stac
-setwd("/workdir/data/input")
- 
- message(noquote("Unzipping covaraite raster ..."))
- cov <- unzip("stack_eth.zip")
- cov_stack <- stack("stack_eth.tif")
- names(cov_stack) <- 
-   c(
-     "bdod",
-     "cec",
-     "cfvo",
-     "clay",
-     "dem",
-     "landform",
-     "nitrogen",
-     "ocd",
-     "ocs",
-     "phh2o",
-     "sand",
-     "silt",
-     "slope",
-     "soc",
-     # "soiltype",
-     "tpi",
-     "tri", 
-     "prcp1",
-     "prcp2",
-     "prcp3",       
-     "srad1",
-     "srad2",        
-     "srad3",
-     "tmax1",        
-     "tmax2",       
-     "tmax3",       
-     "tmin1",      
-     "tmin2",       
-     "tmin3"
-   )
-# ------------------------------------------------------------------------------
-# read csv data and convert to spatial
-  # cov_stack <- cov_stack[[-6]]
-  
-  points <- read.csv("csv_eth.csv", header = T, sep = ",")
-  points_train <- dplyr::select(points, -c("lon","lat"))
-  cov_soil_land <- cov_stack[[1:16]]
-  new_crs <- proj4string(cov_stack)
-  coordinates(points) <- ~lon+lat
-  proj4string(points) <- new_crs
+  rm(list = ls())
+  setwd("/workdir/script")
+  source("input.R")
 
 # ------------------------------------------------------------------------------
 # extracting values by points
   message(noquote("Extracting point vaues..."))
+  cov_soil_land <- stack_normal[[1:16]]
   grid_val <- extract(cov_soil_land, points)
   cov_train <- cbind(grid_val, points_train) # covariates, yield & nps
   cov_train <- cov_train[complete.cases(cov_train),]
   cov_train$landform <- as.factor(cov_train$landform)
-  # cov_train$soiltype <- as.factor(cov_train$soiltype)
   yield_nps <- dplyr::select(cov_train, c("n","p","k", "yield"))
   cov_train <- dplyr::select(cov_train, -c("n","p","k", "yield"))
   cov_train <- cbind(cov_train, yield_nps)
@@ -132,12 +71,12 @@ setwd("/workdir/data/input")
   
 #loop for climate forcast scenario
 # setwd(workspace)
-  path <- "yield"
+  path <- "yield_normal"
   dir.create(path, FALSE, TRUE)
-  path = "/workdir/data/workspace/yield"
+  path = "/workdir/data/workspace/yield_normal"
   a <- apply(npk, 1, function(i) paste(i, collapse="."))
   f <- file.path(path, paste0("yield.", a, ".tif"))
-  setwd("/workdir/data/workspace/yield")
+  setwd("/workdir/data/workspace/yield_normal")
   # message(noquote("Predicting ..."))
   message(noquote("Predicting yield"))
   #progress bar
@@ -148,7 +87,7 @@ setwd("/workdir/data/input")
     if (file.exists(f[i])) next
     NPK <- data.frame(n = npk$N[i], p = npk$P[i], k = npk$K[i])
       predict(
-        cov_stack, # use below normal, average and above average
+        stack_normal, # use below normal, average and above average
         mod_fit,
         const = NPK,
         filename = f[i],
