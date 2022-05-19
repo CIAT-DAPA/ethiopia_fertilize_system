@@ -1,45 +1,44 @@
 
 import os
 import sys
-
 from flask import Flask, jsonify, request
 from flask_cors import cross_origin, CORS
-from geoserver.catalog import Catalog
-from owslib.wfs import WebFeatureService
 import geopandas as gpd
+import pandas as pd
 
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-workspace = "test_kebele/"
-service = "wfs"
-geo_url = "http://localhost:8600/geoserver/"+workspace + \
-    service  # "https://geo.aclimate.org/geoserver/rest/"
-print(geo_url)
-geo_user = 'admin'
-geo_pwd = 'geoserver'
+workspace = "test_kebele_workspace"
+service = "wFS"
+test_url = "http://localhost:8600/geoserver/"+workspace + \
+    "/ows?service="+service+"&version=1.0.0&request=GetFeature&typeName=test_kebele_workspace:sample_kebele&maxFeatures=50&outputFormat=application%2Fjson"
 
-try:
+# Reading wfs into geodataframe
+geo_data_frame = gpd.read_file(test_url)
 
-    # cat = Catalog("http://localhost:8600/geoserver/rest/",
-    #               username=geo_user, password=geo_pwd)
-    # print("Connected")
-    # that_layer = cat.get_resource(
-    #     "sample_kebele", workspace="test_kebele")
-    # print(that_layer)
-    wfs = WebFeatureService(url=geo_url)
-
-except Exception as err:
-    error = str(err).split()[50:61]
-    print(" ".join(error))
+# Casting to pandas dataframe (easy to manipulate)
+kebeles_data_frame = pd.DataFrame(geo_data_frame)
+# Dropping 'geometry' column
+kebeles_data_frame.drop('geometry', inplace=True, axis=1)
 
 
-@app.route('/test', methods=['GET', 'POST'])
+# Get all woredas
+@app.route('/woredas', methods=['GET'])
 @cross_origin()
-def hello_world():
-    return 'Hello, World!'
+def list_all_woredas_data():
+    return kebeles_data_frame.to_json(orient='records')
+
+# Get a specific kebele
+@app.route('/woredas/<kebele>', methods=['GET'])
+@cross_origin()
+def get_kebele(kebele):
+    search_for = kebele.lower()
+    result = kebeles_data_frame[kebeles_data_frame['kebele']
+                                == search_for.capitalize()]
+    return result.to_json(orient='records')
 
 
 if __name__ == '__main__':
