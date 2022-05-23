@@ -49,6 +49,15 @@ function Fertilization() {
         <div className="row">
             <Sidebar opt_forecast={opt_forecast} opt_crops={opt_crops} opt_scenarios={opt_scenarios} OnChangeForecast={changeForecast} OnChangeCrop={changeCrop} OnChangeScenario={changeScenario} />
             <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <br />
+                <h1>Fertilizer advisories</h1>
+                <p className='text-justify'>
+                    The fertilizer recommendation component of NextGenAgroadvisory is location-, context-, and season- 
+                    intelligent system of advising fertilizer type, amount, and time of application in wheat growing 
+                    environments of Ethiopia. It is a data-driven approach based on systematic integration of large legacy 
+                    agronomic data collated throughout Ethiopia and corresponding co-variates (environmental variables) 
+                    using machine learning algorithms.
+                </p>
                 <MapHeader title={"Type yield"} />
                 <p className='text-justify'>
                     The tool provides many types of yield for a given (optimal nutrient amount). This includes:

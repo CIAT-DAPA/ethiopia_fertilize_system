@@ -12,7 +12,31 @@ function Menu() {
                     <div className="collapse navbar-collapse" id="navbarCollapse">
                         <ul className="navbar-nav me-auto mb-2 mb-md-0">
                             <li className="nav-item">
-                                <a className="nav-link" href="/fertilization">Fertilization</a>
+                                <a className="nav-link" href="/fertilizer_advisories">Fertilizer</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/isfm">ISFM</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/agroclimate">Agroclimate</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/pest_disease">Pest and disease surveillance</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/csa">CSA</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/irrigation">Irrigation scheduling</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/mechanization">Mechanization</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/mechanization">Mechanization</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/bundled_aas">Bundled AAS</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="/about">About</a>
