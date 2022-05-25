@@ -3,9 +3,17 @@ from flask_restful import Resource
 import geopandas as gpd
 import pandas as pd
 
-from conf import test_url
+from conf import config
 
 class Kebele(Resource):
+
+    url = ""
+
+    def __init__(self):
+      self.url = config['GEOSERVER_URL'] + config['WORKSPACE'] + \
+            "/ows?service="+config['SERVICE']+"&version=1.0.0&request=GetFeature&typeName=" + \
+            config['LAYER_NAME'] +"&maxFeatures=50&outputFormat=application%2Fjson"
+      super().__init__()
 
     # Get a specific kebele
     def get(self, kebele_id):
@@ -54,7 +62,7 @@ class Kebele(Resource):
                   default: 0.00
         """
         # Reading wfs into geodataframe
-        geo_data_frame = gpd.read_file(test_url)
+        geo_data_frame = gpd.read_file(self.url)
         # Casting to pandas dataframe (easy to manipulate)
         kebeles_data_frame = pd.DataFrame(geo_data_frame)
         # Dropping 'geometry' column
