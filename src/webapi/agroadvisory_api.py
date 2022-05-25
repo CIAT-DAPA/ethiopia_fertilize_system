@@ -14,10 +14,12 @@ api = Api(app)
 swagger = Swagger(app)
 
 
-workspace = "test_kebele_workspace"
+workspace = "aclimate_et"
+layer_name = workspace+":sample_kebele"
 service = "wFS"
-test_url = "http://localhost:8600/geoserver/"+workspace + \
-    "/ows?service="+service+"&version=1.0.0&request=GetFeature&typeName=test_kebele_workspace:sample_kebele&maxFeatures=50&outputFormat=application%2Fjson"
+test_url = "https://geo.aclimate.org/geoserver/"+workspace + \
+    "/ows?service="+service+"&version=1.0.0&request=GetFeature&typeName=" + \
+    layer_name+"&maxFeatures=50&outputFormat=application%2Fjson"
 
 # Reading wfs into geodataframe
 geo_data_frame = gpd.read_file(test_url)
@@ -32,7 +34,7 @@ class WoredaList(Resource):
     def get(self):
         """
         Get all woredas
-        
+
         ---
         responses:
           200:
@@ -41,13 +43,15 @@ class WoredaList(Resource):
         """
         return kebeles_data_frame.to_json(orient='records')
 
+# fid 	Shape_Area 	Woreda 	kebele 	n 	p 	k 	recom_cla
+
 
 class Woreda(Resource):
 
     def get(self, woreda_id):
         """
         Get a specific woreda
-        
+        Examples of woreda_id: woreda1
         ---
         parameters:
           - in: path
@@ -60,10 +64,34 @@ class Woreda(Resource):
             schema:
               id: Woreda
               properties:
-                username:
+                fid:
+                  type: string
+                  description: fid
+                  default: sample_kebele.4
+                Shape_Area:
+                  type: integer
+                  description: shape area
+                  default: 0.00
+                Woreda:
                   type: string
                   description: The woreda id
                   default: Woreda1
+                kebele:
+                  type: string
+                  description: The kebele id
+                  default: Kebele1
+                N:
+                  type: integer
+                  description: Nitrogen data
+                  default: 0.00
+                P:
+                  type: integer
+                  description: Phosphorus data
+                  default: 0.00
+                K:
+                  type: integer
+                  description: Potassium data
+                  default: 0.00
         """
         search_for = woreda_id.lower()
         result = kebeles_data_frame[kebeles_data_frame['Woreda']
@@ -81,7 +109,7 @@ class Kebele(Resource):
     def get(self, kebele_id):
         """
         Get a specific kebele
-        
+        Examples of kebele_id: kebele1, kebele2, kebele3, kebele5
         ---
         parameters:
           - in: path
@@ -94,10 +122,34 @@ class Kebele(Resource):
             schema:
               id: Kebele
               properties:
-                username:
+                fid:
+                  type: string
+                  description: fid
+                  default: sample_kebele.4
+                Shape_Area:
+                  type: integer
+                  description: shape area
+                  default: 0.00
+                Woreda:
+                  type: string
+                  description: The woreda id
+                  default: Woreda1
+                kebele:
                   type: string
                   description: The kebele id
                   default: Kebele1
+                N:
+                  type: integer
+                  description: Nitrogen data
+                  default: 0.00
+                P:
+                  type: integer
+                  description: Phosphorus data
+                  default: 0.00
+                K:
+                  type: integer
+                  description: Potassium data
+                  default: 0.00
         """
         search_for = kebele_id.lower()
         result = kebeles_data_frame[kebeles_data_frame['kebele']

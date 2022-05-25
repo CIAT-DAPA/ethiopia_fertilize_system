@@ -23,6 +23,14 @@ class TestAgroadisory(unittest.TestCase):
         self.assertEqual(str, type(response.json['Woreda']))
         self.assertEqual(200, response.status_code)
 
+    def test_single_kebele(self):
+
+        response = self.app.get('http://192.168.0.15:105/kebele/kebele1',
+                                headers={"Content-Type": "application/json"})
+        print(response)
+        self.assertEqual(str, type(response.json['Kebele']))
+        self.assertEqual(200, response.status_code)
+
 
 if __name__ == "__main__":
     unittest.main()
