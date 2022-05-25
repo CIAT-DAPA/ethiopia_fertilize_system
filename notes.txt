@@ -2,3 +2,12 @@
 
 pm2 serve agroadvisory 3000 --name agroadvisory --spa
 pm2 delete website
+
+# API
+
+set DEBUG=false
+set WORKSPACE=aclimate_et
+set LAYER_NAME=:sample_kebele
+set SERVICE=WFS
+set GEOSERVER_URL="https://geo.aclimate.org/geoserver/"
+set PORT=5000
