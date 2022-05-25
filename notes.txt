@@ -1,0 +1,4 @@
+# Agroadvisory
+
+pm2 serve agroadvisory 3000 --name agroadvisory --spa
+pm2 delete website
