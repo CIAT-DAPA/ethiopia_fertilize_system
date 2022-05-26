@@ -27,4 +27,4 @@ if __name__ == '__main__':
     else:
         app.run(host=config['HOST'], port=config['PORT'], debug=config['DEBUG'])
 
-# nohup python3 agroadvisory_api.py > log 2>&1 &
+# nohup python3 agroadvisory_api.py > log.txt 2>&1 &
