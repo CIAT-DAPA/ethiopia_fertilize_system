@@ -16,8 +16,8 @@ function About() {
                         climate smart agricultural activities (CSA) and other agricultural investment in Ethiopia.
                         <br />
                         <br />
-                        It is a project by the Alliance of Bioversity International and CIAT in partnership with support of SSHI (BMGF),
-                        AICCRA (World Bank) and EiA (oneCGIAR initiative).
+                        It is a project by the Alliance of Bioversity International and CIAT in partnership with support of SSHI 
+                        (GIZ-Ethiopia) (BMGF), EiA (oneCGIAR initiative), and AICCRA (World Bank).
                     </p>
                 </main>
             </div>

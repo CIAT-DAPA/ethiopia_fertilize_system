@@ -17,7 +17,7 @@ function Home() {
                             <div className="carousel-caption">
                                 <h1>NextGen Agroadvisory</h1>
                                 <p>
-                                    NextGenAgroadvisry is a project designed to develop location-, context-, and climate- specific agricultural
+                                    NextGenAgroadvisory is a project designed to develop location-, context-, and climate- specific agricultural
                                     advisories particularly related to optimal fertilizer application, integrated soil fertility management (ISFM),
                                     climate information service, climate smart agricultural activities (CSA), pest and disease surveillance, and other
                                     agricultural investments in Ethiopia. It is a project by the Alliance of Bioversity International and the International

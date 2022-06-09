@@ -5,7 +5,7 @@ function Footer() {
         <footer className="mt-auto text-center">
             <p>
                 Develop by <a href="https://ciat.cgiar.org/" target="_blank" className="">Alliance Bioversity International - CIAT</a>, 
-                for <span className="">EiA</span>.</p>
+                <span className=""> under SSHI and EiA</span>.</p>
         </footer>
     );
 }

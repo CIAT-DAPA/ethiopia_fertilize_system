@@ -46,37 +46,40 @@ function Fertilization() {
     }
 
     return (
-        <div className="row">
-            <Sidebar opt_forecast={opt_forecast} opt_crops={opt_crops} opt_scenarios={opt_scenarios} OnChangeForecast={changeForecast} OnChangeCrop={changeCrop} OnChangeScenario={changeScenario} />
-            <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <br />
-                <h1>Fertilizer advisories</h1>
-                <p className='text-justify'>
-                    The fertilizer recommendation component of NextGenAgroadvisory is location-, context-, and season- 
-                    intelligent system of advising fertilizer type, amount, and time of application in wheat growing 
-                    environments of Ethiopia. It is a data-driven approach based on systematic integration of large legacy 
-                    agronomic data collated throughout Ethiopia and corresponding co-variates (environmental variables) 
-                    using machine learning algorithms.
-                </p>
-                <MapHeader title={"Type yield"} />
-                <p className='text-justify'>
-                    The tool provides many types of yield for a given (optimal nutrient amount). This includes:
-                </p>
-                <ol>
-                    <li>Agronomic optimal yield</li>
-                    <li>Agronomic attainable yield</li>
-                </ol>
-                <p className='text-justify'>
-                    Based on which yield decomposition can also be calculated
-                </p>
-                <Map id="map_type_yield" init={map_init} type={"yield"} crop={crop} forecast={forecast} scenario={scenario} onClick={onClickMap} />
-                <MapHeader title={"Nutrients"} />
-                <p className='text-justify'>
-                    Optimal nutrient amount (N, P, K) which accounts their interaction effect on yield.
-                </p>
-                <Map id="map_nutrients" init={map_init} type={"nutrients"} crop={crop} forecast={forecast} scenario={scenario} onClick={onClickMap} />
-            </main>
-        </div>
+        
+            <div className="row">
+                <Sidebar opt_forecast={opt_forecast} opt_crops={opt_crops} opt_scenarios={opt_scenarios} OnChangeForecast={changeForecast} OnChangeCrop={changeCrop} OnChangeScenario={changeScenario} />
+                <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    <br />
+                    <h1>Fertilizer advisories</h1>
+                    <p className='text-justify'>
+                        The fertilizer recommendation component of NextGenAgroadvisory is location-, context-, and season- 
+                        intelligent system of advising fertilizer type, amount, and time of application in wheat growing 
+                        environments of Ethiopia. It is a data-driven approach based on systematic integration of large legacy 
+                        agronomic data collated throughout Ethiopia and corresponding co-variates (environmental variables) 
+                        using machine learning algorithms.
+                    </p>
+                    <MapHeader title={"Nutrients"} />
+                    <p className='text-justify'>
+                        Optimal nutrient amount (N, P, K) which accounts their interaction effect on yield.
+                    </p>
+                    <Map id="map_nutrients" init={map_init} type={"nutrients"} crop={crop} forecast={forecast} scenario={scenario} onClick={onClickMap} />
+                    <MapHeader title={"Type yield"} />
+                    <p className='text-justify'>
+                        The tool provides many types of yield for a given (optimal nutrient amount). This includes:
+                    </p>
+                    <ol>
+                        <li>Agronomic optimal yield</li>
+                        <li>Agronomic attainable yield</li>
+                    </ol>
+                    <p className='text-justify'>
+                        Based on which yield decomposition can also be calculated
+                    </p>
+                    <Map id="map_type_yield" init={map_init} type={"yield"} crop={crop} forecast={forecast} scenario={scenario} onClick={onClickMap} />
+                </main>
+
+            </div>
+     
     );
 }
 
