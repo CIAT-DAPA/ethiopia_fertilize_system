@@ -19,6 +19,8 @@ function About() {
                         It is a project by the Alliance of Bioversity International and CIAT in partnership with support of SSHI 
                         (GIZ-Ethiopia) (BMGF), EiA (oneCGIAR initiative), and AICCRA (World Bank).
                     </p>
+                    
+                    <h1 className='text-center'>Acknowledgements</h1>
                 </main>
             </div>
         </section>

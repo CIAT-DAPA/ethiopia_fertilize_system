@@ -4,8 +4,10 @@ import L from "leaflet";
 import Sidebar from '../../components/sidebar/Sidebar';
 import MapHeader from '../../components/map_header/MapHeader';
 import Map from '../../components/map/Map';
+import LineChart from '../../components/chart/LineChart';
 
 import GeoFeatures from '../../services/GeoFeatures';
+import Table from '../../components/table/Table';
 
 function Fertilization() {
     const [opt_forecast, setOptForecast] = React.useState([{ label: "2022-04", value: "beta" }]);
@@ -75,7 +77,19 @@ function Fertilization() {
                     <p className='text-justify'>
                         Based on which yield decomposition can also be calculated
                     </p>
-                    <Map id="map_type_yield" init={map_init} type={"yield"} crop={crop} forecast={forecast} scenario={scenario} onClick={onClickMap} />
+                   
+                    <div className="row justify-content-center">
+                            <div className='col'>
+                                <Map id="map_type_yield" init={map_init} type={"yield"} crop={crop} forecast={forecast} scenario={scenario} onClick={onClickMap} />
+                            </div>
+                            <div className='col'>
+                                <LineChart/>
+                                <Table/>
+                            </div>
+
+                    </div>
+                        
+                  
                 </main>
 
             </div>

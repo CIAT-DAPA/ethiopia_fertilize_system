@@ -31,9 +31,9 @@ function Sidebar(props) {
                         </h2>
                         <div id="collapse_filters" className="accordion-collapse collapse show" aria-labelledby="heading_filters" data-bs-parent="#accordion_sidebar">
                             <div className="accordion-body">
-                                <div>
-                                <img className="bd-placeholder-img rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" src={infoIcon}/>
-                                <label htmlFor="cboForecast">Forecast:</label>
+                                <div className="d-flex justify-content-between">
+                                    <label htmlFor="cboForecast">Forecast:</label>
+                                    <img className="bd-placeholder-img rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="(Forecast explanation)" src={infoIcon}/>
                                 </div>
                                 <Select id="cboForecast"
                                     options={props.opt_forecast}
@@ -41,14 +41,20 @@ function Sidebar(props) {
                                     defaultValue={props.opt_forecast[0]}
                                     onChange={handleChangeForecast}
                                     placeholder={"Select"} />
-                                <label htmlFor="cboCrop">Crop:</label>
+                                <div className="d-flex justify-content-between">
+                                    <label htmlFor="cboForecast">Crop:</label>
+                                    <img className="bd-placeholder-img rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="(Crop explanation)" src={infoIcon}/>
+                                </div>
                                 <Select id="cboCrop"
                                     options={props.opt_crops}
                                     isSearchable={false}
                                     defaultValue={props.opt_crops[0]}
                                     onChange={handleChangeCrops}
                                     placeholder={"Select"} />
-                                <label htmlFor="cboScenario">Scenario:</label>
+                                <div className="d-flex justify-content-between">
+                                    <label htmlFor="cboForecast">Scenario:</label>
+                                    <img className="bd-placeholder-img rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="(Scenario explanation)" src={infoIcon}/>
+                                </div>
                                 <Select id="cboScenario"
                                     options={props.opt_scenarios}
                                     isSearchable={false}
