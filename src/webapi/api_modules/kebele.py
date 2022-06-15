@@ -5,25 +5,27 @@ import pandas as pd
 
 from conf import config
 
+
 class Kebele(Resource):
 
     url = ""
 
     def __init__(self):
-      self.url = config['GEOSERVER_URL'] + config['WORKSPACE'] + \
+        self.url = config['GEOSERVER_URL'] + config['WORKSPACE'] + \
             "/ows?service="+config['SERVICE']+"&version=1.0.0&request=GetFeature&typeName=" + \
-            config['LAYER_NAME'] +"&maxFeatures=50&outputFormat=application%2Fjson"
-      super().__init__()
+            config['LAYER_NAME'] + \
+            "&maxFeatures=50&outputFormat=application%2Fjson"
+        super().__init__()
 
     # Get a specific kebele
-    def get(self, kebele_id):
+    def get(self, kebele_name):
         """
         Get a specific kebele
-        Examples of kebele_id: kebele1, kebele2, kebele3, kebele5
+        Examples of kebele_name: Abaya, 
         ---
         parameters:
           - in: path
-            name: kebele_id
+            name: kebele_name
             type: string
             required: true
         responses:
@@ -63,16 +65,19 @@ class Kebele(Resource):
         """
         # Reading wfs into geodataframe
         geo_data_frame = gpd.read_file(self.url)
+        print(self.url)
         # Casting to pandas dataframe (easy to manipulate)
         kebeles_data_frame = pd.DataFrame(geo_data_frame)
+        print(kebeles_data_frame)
         # Dropping 'geometry' column
         kebeles_data_frame.drop('geometry', inplace=True, axis=1)
+        print(kebeles_data_frame)
 
-        search_for = kebele_id.lower()
-        result = kebeles_data_frame[kebeles_data_frame['kebele']
-                                    == search_for.capitalize()]
+        search_for = kebele_name.capitalize()
+        result = kebeles_data_frame[kebeles_data_frame['RK_NAME'].str.capitalize(
+        ) == search_for]
+
         if not result.empty:
             return result.to_json(orient='records')
         else:
-            return 'No kebele found with id: ' + kebele_id, 404
-
+            return 'No kebele found with id: ' + kebele_name, 404

@@ -6,8 +6,10 @@ import { MapContainer, TileLayer, GeoJSON, LayersControl, WMSTileLayer, Polygon,
 
 function Map(props) {
     const [url_service, setUrlService] = React.useState(Configuration.get_geoserver_url() + Configuration.get_geoserver_service());
-    const [types_yield, setTypesYield] = React.useState(["optimal", "attainable"]);
-    const [nutrients, setNutrients] = React.useState(["n", "p", "k"]);
+    //const [types_yield, setTypesYield] = React.useState(["optimal", "attainable"]);
+    const [types_yield, setTypesYield] = React.useState(["optimal"]);
+    //const [nutrients, setNutrients] = React.useState(["n", "p", "k"]);
+    const [nutrients, setNutrients] = React.useState(["n", "p"]);
     const { BaseLayer } = LayersControl;
 
     const handleEventsMap = (map) => {
@@ -28,9 +30,9 @@ function Map(props) {
                 <LayersControl position="topright">
                     {props.type == "yield" ?
                         types_yield.map((item) => {
-                            return <BaseLayer key={"yield_" + item} name={item}>
+                            return <BaseLayer key={"yield_" + item} name={item}> 	
                                 <WMSTileLayer
-                                    layers={"fertilizer_et:yieldtypes_" + props.crop + "_" + item + "_yield_" + props.scenario}
+                                    layers={"fertilizer_et:et_" + props.crop + "_yieldtypes_"  + item +"_"+ props.scenario}
                                     attribution=''
                                     url={url_service}
                                     format={"image/png"}
@@ -40,9 +42,10 @@ function Map(props) {
                         })
                         :
                         nutrients.map((item) => {
-                            return <BaseLayer key={"nutrients_" + item} name={item}>
+                            return <BaseLayer key={"nutrients_" + item} name={item}>fertilizer_et:et_wheat_optimal_nutrients_p_normal
                                 <WMSTileLayer
-                                    layers={"fertilizer_et:nutrients_" + props.crop + "_" + item + "_" + props.scenario}
+                                    // layers={"fertilizer_et:nutrients_" + props.crop + "_" + item + "_" + props.scenario}
+                                    layers={"fertilizer_et:et_" + props.crop +"_optimal_nutrients_"+item + "_" +props.scenario}
                                     attribution=''
                                     url={url_service}
                                     format={"image/png"}

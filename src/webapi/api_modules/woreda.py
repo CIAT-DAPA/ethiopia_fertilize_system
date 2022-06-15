@@ -5,26 +5,28 @@ import pandas as pd
 
 from conf import config
 
+
 class Woreda(Resource):
 
     url = ""
 
     def __init__(self):
-      self.url = config['GEOSERVER_URL'] + config['WORKSPACE'] + \
+        self.url = config['GEOSERVER_URL'] + config['WORKSPACE'] + \
             "/ows?service="+config['SERVICE']+"&version=1.0.0&request=GetFeature&typeName=" + \
-            config['LAYER_NAME'] +"&maxFeatures=50&outputFormat=application%2Fjson"
-      super().__init__()
+            config['LAYER_NAME'] + \
+            "&maxFeatures=50&outputFormat=application%2Fjson"
+        super().__init__()
 
-    def get(self, woreda_id=None):
+    def get(self, woreda_name=None):
         """
         Get all or a specific woreda
-        If you want all woredas ommit woreda_id
-        Examples of woreda_id: woreda1
+        If you want all woredas ommit woreda_name
+        Examples of woreda_name: Goba, Saya Debirna Wayu, Lenmo, Mareqo, Basona Werana
 
         ---
         parameters:
           - in: path
-            name: woreda_id
+            name: woreda_name
             type: string
             required: false
         responses:
@@ -66,18 +68,20 @@ class Woreda(Resource):
         geo_data_frame = gpd.read_file(self.url)
         # Casting to pandas dataframe (easy to manipulate)
         kebeles_data_frame = pd.DataFrame(geo_data_frame)
+
         # Dropping 'geometry' column
         kebeles_data_frame.drop('geometry', inplace=True, axis=1)
 
-        if woreda_id is None:
+        if woreda_name is None:
             return kebeles_data_frame.to_json(orient='records')
 
         else:
 
-            search_for = woreda_id.lower()
-            result = kebeles_data_frame[kebeles_data_frame['Woreda']
+            search_for = woreda_name.lower()
+
+            result = kebeles_data_frame[kebeles_data_frame['W_NAME']
                                         == search_for.capitalize()]
             if not result.empty:
                 return result.to_json(orient='records')
             else:
-                return 'No woreda found with id: ' + woreda_id, 404
+                return 'No woreda found with id: ' + woreda_name, 404
