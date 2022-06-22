@@ -20,7 +20,7 @@ function About() {
                         (GIZ-Ethiopia) (BMGF), EiA (oneCGIAR initiative), and AICCRA (World Bank).
                     </p>
                     
-                    <h1 className='text-center'>Acknowledgements</h1>
+                    
                 </main>
             </div>
         </section>

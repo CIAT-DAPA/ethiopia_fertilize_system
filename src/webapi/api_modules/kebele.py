@@ -14,14 +14,14 @@ class Kebele(Resource):
         self.url = config['GEOSERVER_URL'] + config['WORKSPACE'] + \
             "/ows?service="+config['SERVICE']+"&version=1.0.0&request=GetFeature&typeName=" + \
             config['LAYER_NAME'] + \
-            "&maxFeatures=50&outputFormat=application%2Fjson"
+            "&maxFeatures=700&outputFormat=application%2Fjson"
         super().__init__()
 
     # Get a specific kebele
     def get(self, kebele_name):
         """
         Get a specific kebele
-        Examples of kebele_name: Abaya, 
+        Examples of kebele_name: Abaya, Kasima, Rira, Weltie Tosha, AlosheTilo, Adasa Washe
         ---
         parameters:
           - in: path
@@ -65,13 +65,13 @@ class Kebele(Resource):
         """
         # Reading wfs into geodataframe
         geo_data_frame = gpd.read_file(self.url)
-        print(self.url)
+
         # Casting to pandas dataframe (easy to manipulate)
         kebeles_data_frame = pd.DataFrame(geo_data_frame)
-        print(kebeles_data_frame)
+
         # Dropping 'geometry' column
         kebeles_data_frame.drop('geometry', inplace=True, axis=1)
-        print(kebeles_data_frame)
+    
 
         search_for = kebele_name.capitalize()
         result = kebeles_data_frame[kebeles_data_frame['RK_NAME'].str.capitalize(

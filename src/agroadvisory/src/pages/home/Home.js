@@ -84,6 +84,7 @@ function Home() {
                     </div>
                 </div>
             </div>
+            <h1 className='text-center'>Acknowledgements</h1>
         </main>
     );
 }

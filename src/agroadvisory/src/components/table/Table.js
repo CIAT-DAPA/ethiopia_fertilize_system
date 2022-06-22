@@ -1,32 +1,32 @@
 import React from 'react';
 
-function Table() {
+function Table({tableData}) {
+
+    React.useEffect(() => {
+        console.log(tableData)
+      }, [tableData])
 
     return (
 
-        
         <div id="table">
-            <table className="table">
+            <table className="table table-striped table-hover">
                 <thead>
                     <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    
+                    <th scope="col">N</th>
+                    <th scope="col">P</th>
+                    <th scope="col">Yield</th>
+                    <th scope="col">Unit</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
+                  
+                    <td>{tableData.n}</td>
+                    <td>{tableData.p}</td>
+                    <td>{tableData.yieldData}</td>
+                    <td>kg/ha</td>
                     </tr>
                 </tbody>
             </table>

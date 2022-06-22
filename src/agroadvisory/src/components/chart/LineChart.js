@@ -6,8 +6,8 @@ function LineChart() {
     let state = {
           
         series: [{
-            name: "Desktops",
-            data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+            name: "N",
+            data: [10, 41, 35, 51, 49, 62]
         }],
         options: {
           chart: {
@@ -24,7 +24,7 @@ function LineChart() {
             curve: 'straight'
           },
           title: {
-            text: 'Product Trends by Month',
+            text: 'Relation between N, P and yield (Dummy data)',
             align: 'left'
           },
           grid: {
@@ -34,7 +34,7 @@ function LineChart() {
             },
           },
           xaxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+            categories: ['10', '20', '30', '40', '50', '60'],
           }
         },
       
@@ -45,7 +45,7 @@ function LineChart() {
 
         
         <div id="chart">
-            <Chart options={state.options} series={state.series} type="line" height={350} width="500"/>
+            <Chart options={state.options} series={state.series} type="line" height={300} width="350"/>
         </div>
         
 

@@ -1,8 +1,12 @@
 import React from 'react';
 
 import Configuration from "../../conf/Configuration";
+import MapLegend from '../map_legend/MapLegend';
+import ZoomControlWithReset from '../map_zoom_reset/ZoomControlWithReset';
 
-import { MapContainer, TileLayer, GeoJSON, LayersControl, WMSTileLayer, Polygon, CircleMarker, Tooltip, Marker, Popup, Polyline } from 'react-leaflet';
+import { MapContainer, TileLayer, GeoJSON, LayersControl, WMSTileLayer, ScaleControl, CircleMarker, Tooltip, Marker, Popup, Polyline } from 'react-leaflet';
+
+const ETHIOPIA_BOUNDS = [  [10, 30],  [8.5, 50],];
 
 function Map(props) {
     const [url_service, setUrlService] = React.useState(Configuration.get_geoserver_url() + Configuration.get_geoserver_service());
@@ -15,7 +19,7 @@ function Map(props) {
     const handleEventsMap = (map) => {
         map.target.on("click", function (e) {
             props.onClick(e, map);
-            //const { lat, lng } = e.latlng;
+            //console.log(e.latlng);
             //L.marker([lat, lng], { icon }).addTo(map.target);
         });
     };
@@ -27,6 +31,9 @@ function Map(props) {
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+                <div className="leaflet-top leaflet-left">
+                    <ZoomControlWithReset bounds={ETHIOPIA_BOUNDS} />
+                </div>
                 <LayersControl position="topright">
                     {props.type == "yield" ?
                         types_yield.map((item) => {
@@ -42,9 +49,8 @@ function Map(props) {
                         })
                         :
                         nutrients.map((item) => {
-                            return <BaseLayer key={"nutrients_" + item} name={item}>fertilizer_et:et_wheat_optimal_nutrients_p_normal
+                            return <BaseLayer key={"nutrients_" + item} name={item}>
                                 <WMSTileLayer
-                                    // layers={"fertilizer_et:nutrients_" + props.crop + "_" + item + "_" + props.scenario}
                                     layers={"fertilizer_et:et_" + props.crop +"_optimal_nutrients_"+item + "_" +props.scenario}
                                     attribution=''
                                     url={url_service}
@@ -55,6 +61,8 @@ function Map(props) {
                         })
                     }
                 </LayersControl>
+                {/* <MapLegend/> */}
+                <ScaleControl position="topright" />
             </MapContainer>
         </>
     );
