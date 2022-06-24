@@ -2,10 +2,6 @@ import React from 'react';
 
 function Table({tableData}) {
 
-    React.useEffect(() => {
-        console.log(tableData)
-      }, [tableData])
-
     return (
 
         <div id="table">

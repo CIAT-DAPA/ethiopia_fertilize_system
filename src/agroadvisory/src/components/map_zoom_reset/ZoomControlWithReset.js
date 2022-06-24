@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';import { useMap } from 'react-leaflet';
 
 function ZoomControlWithReset(props) {
   const { zoomInTitle, zoomResetTitle, zoomOutTitle, bounds } = props;
-  console.log(zoomInTitle);
-  console.log(bounds);
   const map = useMap();
 
   return (

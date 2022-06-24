@@ -47,9 +47,12 @@ function Menu() {
                             <li className="nav-item">
                                 <a className="nav-link" href="/bundled_aas">Bundled AAS</a>
                             </li> 
-                            <li className="nav-item">
-                                <a className="nav-link" href="/about">About</a>
-                            </li>
+                            <div className="position-absolute top-50 end-0 translate-middle-y">
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/about">About</a>
+                                </li>
+
+                            </div>
                         </ul>
                     </div>
                 </div>

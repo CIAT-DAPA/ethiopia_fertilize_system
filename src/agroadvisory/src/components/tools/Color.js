@@ -1,20 +1,74 @@
 class Color {
-    get_color(d) {
-        return d > 100.0
-            ? "#800026"
-            : d > 80.0
-                ? "#BD0026"
-                : d > 60.0
-                    ? "#E31A1C"
-                    : d > 40.0
-                        ? "#FC4E2A"
-                        : d > 20.0
-                            ? "#FD8D3C"
-                            : d > 10.0
-                                ? "#FEB24C"
-                                : d > 5.0
-                                    ? "#FED976"
-                                    : "#FFEDA0";
+
+    get_n_color(d) {
+        return d >= 200.0
+                 ? "#FF66B3" 
+                 : d >= 190.0
+                     ? "#d966ff" 
+                     : d >= 180.0
+                         ? "#8c66ff"
+                         : d >= 170.0
+                             ? "#668cff"
+                             : d >= 160.0
+                                 ? "#66d9ff"
+                                 : d >= 150.0
+                                     ? "#66ffd9"
+                                     : d >= 140.0
+                                         ? "#66ff99"
+                                         : d >= 130.0 
+                                             ? "#8cff66"
+                                             : d >= 120.0
+                                                 ? "#d9ff66"
+                                                 : d >= 110.0
+                                                     ? "#ffd966"
+                                                     : d >= 100.0
+                                                         ? "#ff6666": "#ffffff";
+    }
+    get_p_color(d) {
+        return d >= 33.0
+                 ? "#ff0000" 
+                 : d >= 29.0
+                     ? "#ffb3b3" 
+                     : d >= 25.0
+                         ? "#660000"
+                         : d >= 21.0
+                             ? "#004de6"
+                             : d >= 17.0
+                                 ? "#80aaff"
+                                 : d >= 13.0
+                                     ? "#c2c2a3"
+                                     : d >= 9.0
+                                         ? "#d9ffb3"
+                                         : d >= 5.0 
+                                             ? "#4dff88" : "#ffffff";
+    }
+    get_yield_color(d){
+        return d >= 10447.60
+                 ? "#00e600" 
+                 : d >= 8997.60 && d < 10447.60
+                     ? "#aaff80" 
+                     : d >= 7547.60 && d < 8997.60
+                         ? "#662200"
+                         : d >= 6097.60 && d < 7547.60
+                             ? "#ac00e6"
+                             : d >= 1 && d < 6097.60
+                                 ? "#80aaff" : "#ffffff";
+
+    }
+    
+    get_layer_color (d, layer, geoserverLayers){
+        if (layer === geoserverLayers[0]){
+            return this.get_n_color(d);
+        }
+        else if (layer === geoserverLayers[1]){
+           return this.get_p_color(d);
+        }
+        else if (layer === geoserverLayers[2]){
+           return this.get_yield_color(d);
+        }
+        else {
+            return "#ffffff";
+        }
     }
 }
 
