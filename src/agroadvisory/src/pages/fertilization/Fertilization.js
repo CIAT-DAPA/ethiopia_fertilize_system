@@ -9,12 +9,7 @@ import GeoFeatures from '../../services/GeoFeatures';
 import LineChart from '../../components/chart/LineChart';
 import Table from '../../components/table/Table';
 
-const auxTableData = [];
-const geoserverLayers = ["optimal_nutrients_n", 
-        "optimal_nutrients_p", "yieldtypes_optimal", 
-        "urea_probabilistic", "nps_probabilistic", 
-        "vcompost_probabilistic", "compost_probabilistic"];
-let popUpMessage = '';
+import '../../assets/styles/font.css';
 
 function Fertilization() {
     const [opt_forecast, setOptForecast] = React.useState([{ label: "2022-06", value: "beta" }]);
@@ -47,36 +42,30 @@ function Fertilization() {
                 <Sidebar opt_forecast={opt_forecast} opt_crops={opt_crops} opt_scenarios={opt_scenarios} OnChangeForecast={changeForecast} OnChangeCrop={changeCrop} OnChangeScenario={changeScenario}/>
                 <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <br />
-                    <h3>Fertilizer advisories</h3>
-                    <p className='text-justify'>
+                    <h3 className="font-link">Fertilizer advisories</h3>
+                    <div className='text-justify'>
+                        <p className="font-link-body">
                         The fertilizer recommendation component of NextGenAgroadvisory is location-, context-, and season- 
                         intelligent system of advising fertilizer type, amount, and time of application in wheat growing 
                         environments of Ethiopia. It is a data-driven approach based on systematic integration of large legacy 
                         agronomic data collated throughout Ethiopia and corresponding co-variates (environmental variables) 
                         using machine learning algorithms.
-                    </p>
+
+                        </p>
+                    </div>
                     <MapHeader title={"Nutrients and Yield"} />
-                    <p className='text-justify'>
-                        Optimal nutrient amount (N, P, K) which accounts their interaction effect on yield.
-                    </p>
-                    <Map id="map_nutrients_yield" init={map_init} type={"nutrients_yield"} crop={crop} forecast={forecast} 
-                        scenario={scenario} setTableData={setTableData}/>
-                    <MapHeader title={"Fertilizer NPS Urea"} />
-                    <p className='text-justify'>
-                        The tool provides many types of yield for a given (optimal nutrient amount). This includes:
-                    </p>
-                    <ol>
-                        <li>Agronomic optimal yield (kg/ha)</li>
-                        <li>Agronomic attainable yield (kg/ha)</li>
-                    </ol>
-                    <p className='text-justify'>
-                        Based on which yield decomposition can also be calculated
-                    </p>
-            
+                    <div className='text-justify'>
+                        <p className="font-link-body">
+                            Optimal nutrient amount (N, P, K) which accounts their interaction effect on yield.
+                        
+                        </p>
+                    </div>
+
                         <div className="row justify-content-start">
                                 <div className='col-8'>
-                                    <Map id="map_nps_urea" init={map_init} type={"nps_urea"} crop={crop} forecast={forecast} 
-                                        scenario={scenario}/>
+                                    <Map id="map_nutrients_yield" init={map_init} type={"nutrients_yield"} crop={crop} forecast={forecast} 
+                                        scenario={scenario} setTableData={setTableData}/>
+
                                 </div>
                                 <div className='col-4'>
                                     
@@ -92,6 +81,20 @@ function Fertilization() {
                         </div>
 
 
+                    <MapHeader title={"Fertilizer NPS Urea"} />
+                    <p className='text-justify'>
+                        The tool provides many types of yield for a given (optimal nutrient amount). This includes:
+                    </p>
+                    <ol>
+                        <li>Agronomic optimal yield (kg/ha)</li>
+                        <li>Agronomic attainable yield (kg/ha)</li>
+                    </ol>
+                    <p className='text-justify'>
+                        Based on which yield decomposition can also be calculated
+                    </p>
+            
+                    <Map id="map_nps_urea" init={map_init} type={"nps_urea"} crop={crop} forecast={forecast} 
+                                        scenario={scenario}/>
                         
                   
                 </main>

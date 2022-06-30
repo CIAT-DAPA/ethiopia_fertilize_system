@@ -5,7 +5,7 @@ import Configuration from "../../conf/Configuration";
 import MapLegend from '../map_legend/MapLegend';
 import ZoomControlWithReset from '../map_zoom_reset/ZoomControlWithReset';
 
-import { MapContainer, TileLayer, GeoJSON, LayersControl, WMSTileLayer, ScaleControl, CircleMarker, Tooltip, Marker, Popup, Polyline } from 'react-leaflet';
+import { MapContainer, TileLayer, GeoJSON, LayersControl, WMSTileLayer, ScaleControl } from 'react-leaflet';
 
 //For reset map view
 const ETHIOPIA_BOUNDS = [  [10, 30],  [8.5, 50],];
@@ -29,7 +29,11 @@ function Map(props) {
     const [currentLayer, setCurrentLayer] = React.useState();
     const { BaseLayer } = LayersControl;
     const icon = L.icon({iconSize: [25, 41],iconAnchor: [10, 41],popupAnchor: [2, -40],iconUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-icon.png",shadowUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-shadow.png"});
+    const [coord, setPosition] = React.useState([]);
     let layerType;
+
+    //Current marker
+    var marker = null;
 
     //For changing Map legend and popup message according to each layer (each one uses differents colors and values)
     const onLayerChange = (currentLayerName) => {
@@ -50,10 +54,16 @@ function Map(props) {
     
 
     const handleEventsMap = (map) => {
+       
         map.target.on("click", function (e) {
             //props.onClick(e, map);
             const { lat, lng } = e.latlng;
 
+            //Just one marker at once
+            if (marker !== null) {
+                map.target.removeLayer(marker);
+            }
+                
             // The object map has many layers. By default OSM is 35, but custom layers have different ids
             Object.keys(map.target._layers).forEach(function(key,index) {
                 if(map.target._layers[key].wmsParams !== undefined){
@@ -64,16 +74,22 @@ function Map(props) {
                         //Getting N data  	fertilizer_et:et_wheat_optimal_nutrients_n_normal 
                         let nLayer = "fertilizer_et:et_"+props.crop+"_"+geoserverLayers[0]+"_"+props.scenario
                         GeoFeatures.get_value(nLayer,lat,lng).then((data)=>{
-                            auxTableData[0] = data.features[0].properties.GRAY_INDEX.toFixed(2);
-                            props.setTableData({n: auxTableData[0], p: auxTableData[1], yieldData: auxTableData[2]})
+                            if(data.features[0].properties.GRAY_INDEX.toFixed(2) > 0) {
+                                auxTableData[0] = data.features[0].properties.GRAY_INDEX.toFixed(2);
+                                props.setTableData({n: auxTableData[0], p: auxTableData[1], yieldData: auxTableData[2]})
+
+                            }
                     
                         });
                         //Getting P data
                         let pLayer = "fertilizer_et:et_"+props.crop+"_"+geoserverLayers[1]+"_"+props.scenario
                         GeoFeatures.get_value(pLayer,lat,lng).then((data)=>{
-                            auxTableData[1] = data.features[0].properties.GRAY_INDEX.toFixed(2);
-                            //setting table data
-                            props.setTableData({n: auxTableData[0], p: auxTableData[1], yieldData: auxTableData[2]})
+                            if(data.features[0].properties.GRAY_INDEX.toFixed(2) > 0) {
+                                auxTableData[1] = data.features[0].properties.GRAY_INDEX.toFixed(2);
+                                //setting table data
+                                props.setTableData({n: auxTableData[0], p: auxTableData[1], yieldData: auxTableData[2]})
+
+                            }
                                 
                         });
 
@@ -83,14 +99,19 @@ function Map(props) {
                     //Making a popup
                     GeoFeatures.get_value(layer_name,lat,lng)
                     .then((data)=>{ 
-                        L.marker([lat, lng], { icon }).addTo(map.target)
-                            .bindPopup(popUpMessage + data.features[0].properties.GRAY_INDEX.toFixed(2) + " kg/ha")
-                            .openPopup();
-                            auxTableData[2] = data.features[0].properties.GRAY_INDEX.toFixed(2);
-                            if((layer_name.includes(geoserverLayers[2]))){
-                                props.setTableData({n: auxTableData[0], p: auxTableData[1], yieldData: auxTableData[2]})
+                        if(data.features[0].properties.GRAY_INDEX.toFixed(2) > 0) {
+                            
+                            marker = L.marker([lat, lng], { icon }).addTo(map.target)
+                                .bindPopup(popUpMessage + data.features[0].properties.GRAY_INDEX.toFixed(2) + " kg/ha")
+                                .openPopup();
+                                auxTableData[2] = data.features[0].properties.GRAY_INDEX.toFixed(2);
+                                if(layer_name.includes(geoserverLayers[2])){
+                                    props.setTableData({n: auxTableData[0], p: auxTableData[1], yieldData: auxTableData[2]})
 
-                            }
+                                }
+    
+                                
+                        }
                     });
                     
                 }
@@ -102,7 +123,7 @@ function Map(props) {
 
     return (
         <>
-            <MapContainer center={props.init.center} zoom={props.init.zoom} style={{ height: '500px' }} scrollWheelZoom={true} whenReady={handleEventsMap} >
+            <MapContainer center={props.init.center} zoom={props.init.zoom} style={{ height: '500px' }} scrollWheelZoom={true} whenReady={handleEventsMap}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
