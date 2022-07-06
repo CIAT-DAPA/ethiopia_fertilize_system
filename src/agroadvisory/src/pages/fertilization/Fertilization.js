@@ -12,7 +12,7 @@ import Table from '../../components/table/Table';
 import '../../assets/styles/font.css';
 
 function Fertilization() {
-    const [opt_forecast, setOptForecast] = React.useState([{ label: "2022-06", value: "beta" }]);
+    const [opt_forecast, setOptForecast] = React.useState([{ label: "2022-07", value: "202207" }]);
     const [opt_crops, setOptCrops] = React.useState([{ label: "Wheat", value: "wheat" }]);
     const [opt_scenarios, setOptScenarios] = React.useState([{ label: "Normal", value: "normal" }]);
     const [map_init, setMap_init] = React.useState({ center: [9.3988271, 39.9405962], zoom: 6 });
@@ -42,8 +42,8 @@ function Fertilization() {
                 <Sidebar opt_forecast={opt_forecast} opt_crops={opt_crops} opt_scenarios={opt_scenarios} OnChangeForecast={changeForecast} OnChangeCrop={changeCrop} OnChangeScenario={changeScenario}/>
                 <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <br />
-                    <h3 className="font-link">Fertilizer advisories</h3>
-                    <div className='text-justify'>
+                    <h2 className="font-link text-center">Fertilizer advisories</h2>
+                    
                         <p className="font-link-body">
                         The fertilizer recommendation component of NextGenAgroadvisory is location-, context-, and season- 
                         intelligent system of advising fertilizer type, amount, and time of application in wheat growing 
@@ -52,13 +52,25 @@ function Fertilization() {
                         using machine learning algorithms.
 
                         </p>
-                    </div>
+                    
                     <MapHeader title={"Nutrients and Yield"} />
                     <div className='text-justify'>
                         <p className="font-link-body">
-                            Optimal nutrient amount (N, P, K) which accounts their interaction effect on yield.
+                        Optimal nutrient amount (N & P) shows their interaction effect on optimal yield and the yield shows its maximum value based the optimal nutrient amount.
                         
                         </p>
+                        {/* <ol className="font-link-body">
+                            <li>Agronomic optimal yield (kg/ha)</li>
+                            {/* <li>Agronomic attainable yield (kg/ha)</li>
+                        </ol> */}
+
+                    {/* <div className='text-justify'>
+                        <p className="font-link-body">
+                            Based on which yield decomposition can also be calculated
+
+                        </p>
+                    </div> */}
+            
                     </div>
 
                         <div className="row justify-content-start">
@@ -69,7 +81,7 @@ function Fertilization() {
                                 </div>
                                 <div className='col-4'>
                                     
-                                    <LineChart/>
+                                    {/* <LineChart/> */}
                                     {
                                         tableData &&
                                             <Table 
@@ -82,16 +94,14 @@ function Fertilization() {
 
 
                     <MapHeader title={"Fertilizer NPS Urea"} />
-                    <p className='text-justify'>
-                        The tool provides many types of yield for a given (optimal nutrient amount). This includes:
-                    </p>
-                    <ol>
-                        <li>Agronomic optimal yield (kg/ha)</li>
-                        <li>Agronomic attainable yield (kg/ha)</li>
-                    </ol>
-                    <p className='text-justify'>
-                        Based on which yield decomposition can also be calculated
-                    </p>
+                    
+                        <p className="font-link-body">
+                            The amount of NPS and Urea that should be recommended to get optimal yield.
+
+                        </p>
+                    
+                   
+                    
             
                     <Map id="map_nps_urea" init={map_init} type={"nps_urea"} crop={crop} forecast={forecast} 
                                         scenario={scenario}/>

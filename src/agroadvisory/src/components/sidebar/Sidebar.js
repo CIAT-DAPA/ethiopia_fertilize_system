@@ -33,7 +33,7 @@ function Sidebar(props) {
                             <div className="accordion-body">
                                 <div className="d-flex justify-content-between">
                                     <label htmlFor="cboForecast">Forecast:</label>
-                                    <img className="bd-placeholder-img rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="(Forecast explanation)" src={infoIcon}/>
+                                    <img className="bd-placeholder-img rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Seasonal forecast date" src={infoIcon}/>
                                 </div>
                                 <Select id="cboForecast"
                                     options={props.opt_forecast}
@@ -43,7 +43,7 @@ function Sidebar(props) {
                                     placeholder={"Select"} />
                                 <div className="d-flex justify-content-between">
                                     <label htmlFor="cboForecast">Crop:</label>
-                                    <img className="bd-placeholder-img rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="(Crop explanation)" src={infoIcon}/>
+                                    <img className="bd-placeholder-img rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Crop type" src={infoIcon}/>
                                 </div>
                                 <Select id="cboCrop"
                                     options={props.opt_crops}
@@ -53,7 +53,7 @@ function Sidebar(props) {
                                     placeholder={"Select"} />
                                 <div className="d-flex justify-content-between">
                                     <label htmlFor="cboForecast">Scenario:</label>
-                                    <img className="bd-placeholder-img rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="(Scenario explanation)" src={infoIcon}/>
+                                    <img className="bd-placeholder-img rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Probabilistic scenario" src={infoIcon}/>
                                 </div>
                                 <Select id="cboScenario"
                                     options={props.opt_scenarios}

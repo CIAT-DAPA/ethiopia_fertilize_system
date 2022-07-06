@@ -20,10 +20,10 @@ import BundledAAS from './pages/bundled_aas/BundledAAS';
 class App extends Component {
   render() {
     return (
-      <>
-        <Menu />
-        <div className="container-fluid">
-          <Router>
+      <Router>
+            
+            <Menu />
+          <div className="container-fluid">
             <Routes>
               <Route exact path='/' element={<Home />} />
               <Route path='/fertilizer_advisories' element={<Fertilization />} />
@@ -36,10 +36,11 @@ class App extends Component {
               <Route path='/bundled_aas' element={<BundledAAS />} />
               <Route path='/about' element={<About />} />
             </Routes>
+          </div>
+            <br/>
+            <Footer />
+          
           </Router>
-        </div>
-        <Footer />
-      </>
     );
   }
 

@@ -15,8 +15,8 @@ function Home() {
                         <img className='bd-placeholder-img' width="100%" height="100%" aria-hidden="true" alt="" src={landscape} />
                         <div className="container">
                             <div className="carousel-caption">
-                                <h1>NextGen Agroadvisory</h1>
-                                <p>
+                                <h1 className='font-link'>NextGen Agroadvisory</h1>
+                                <p className='font-link-body'>
                                     NextGenAgroadvisory is a project designed to develop location-, context-, and climate- specific agricultural
                                     advisories particularly related to optimal fertilizer application, integrated soil fertility management (ISFM),
                                     climate information service, climate smart agricultural activities (CSA), pest and disease surveillance, and other
@@ -66,25 +66,27 @@ function Home() {
                 <div className="row">
                     <div className="col-lg-4">
                         <img className="bd-placeholder-img rounded-circle" alt="" src={soil_climate_specific} width="140" height="140" role="img" />
-                        <h2>Site specific</h2>
-                        <p>The fertilizer advisory is site-specific that accounts the local soil topography, climate condition.</p>
+                        <h2 className='font-link'>Site specific</h2>
+                        <p className='font-link-body'>The fertilizer advisory is site-specific that accounts the local soil topography, climate condition.</p>
                         <p></p>
                     </div>
                     <div className="col-lg-4">
                         <img className="bd-placeholder-img rounded-circle" alt="" src={segmentation} width="140" height="140" role="img" />
-                        <h2>Farmer segmentation</h2>
-                        <p>It is context specific that provides targeted advisory for various segments of the society based on gender and resource endowment.</p>
+                        <h2 className='font-link'>Farmer segmentation</h2>
+                        <p className='font-link-body'>It is context specific that provides targeted advisory for various segments of the society based on gender and resource endowment.</p>
                         <p></p>
                     </div>
                     <div className="col-lg-4">
                         <img className="bd-placeholder-img rounded-circle" alt="" src={season_specific} width="140" height="140" role="img" />
-                        <h2>Season smart</h2>
-                        <p>It is season-smart in which the advisories are based on the next growing period forecast weather conditions.</p>
+                        <h2 className='font-link'>Season smart</h2>
+                        <p className='font-link-body'>It is season-smart in which the advisories are based on the next growing period forecast weather conditions.</p>
                         <p></p>
                     </div>
                 </div>
             </div>
-            <h1 className='text-center'>Acknowledgements</h1>
+            
+                <h1 className='text-center font-link'>Acknowledgements</h1>
+           
         </main>
     );
 }

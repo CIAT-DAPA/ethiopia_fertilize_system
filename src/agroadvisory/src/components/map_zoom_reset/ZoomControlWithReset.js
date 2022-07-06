@@ -34,7 +34,8 @@ function ZoomControlWithReset(props) {
         -
       </a>
       <a
-        className="leaflet-control-zoom-out"        href="#"
+        className="leaflet-control-zoom-out"       
+        href="#"
         title={zoomResetTitle}
         role="button"
         aria-label="Reset zoom"
@@ -42,7 +43,7 @@ function ZoomControlWithReset(props) {
           map.fitBounds(bounds);          e.preventDefault();
         }}
       >
-        &#x21ba;      </a>
+        &#8962;      </a>
     </div>
   );
 }

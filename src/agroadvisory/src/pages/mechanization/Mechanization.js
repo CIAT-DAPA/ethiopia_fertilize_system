@@ -7,8 +7,8 @@ function Mechanization() {
             <br />
             <section className='row'>
                 <div className='col-lg-12'>
-                    <h1 className='text-center'>Mechanization</h1>
-                    <p class="lead">
+                    <h2 className='font-link text-center'>Mechanization</h2>
+                    <p class="font-link-body">
                         This component guides the targeting of suitable mechanization options considering farming system,
                         land use, farm/plot size, soil, topography, climate and other variables.
                     </p>

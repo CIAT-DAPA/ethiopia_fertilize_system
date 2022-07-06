@@ -7,8 +7,8 @@ function Irrigation() {
             <br />
             <section className='row'>
                 <div className='col-lg-12'>
-                    <h1 className='text-center'>Irrigation scheduling advisories</h1>
-                    <p class="lead">
+                    <h2 className='text-center font-link'>Irrigation scheduling advisories</h2>
+                    <p class="font-link-body text-center">
                         This component provides advisories on irrigation scheduling for optimal water 
                         application based on remote sensing and moisture balance approach.
                     </p>

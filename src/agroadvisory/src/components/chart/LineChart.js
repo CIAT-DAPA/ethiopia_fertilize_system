@@ -24,7 +24,7 @@ function LineChart() {
             curve: 'straight'
           },
           title: {
-            text: 'Relation between N, P and yield (Dummy data)',
+            text: 'Relation between N, P and yield',
             align: 'left'
           },
           grid: {

@@ -8,8 +8,8 @@ function About() {
         <section className='d-flex h-100 text-center'>
             <div className='cover-container d-flex w-100 h-100 p-3 mx-auto flex-column'>
                 <main className='px-3'>
-                    <h1 className='text-center'>About</h1>
-                    <p class="lead">
+                    <h1 className='font-link'>About</h1>
+                    <p className='font-link-body'>
                         NextGenAgroadvisry is a project designed to develop site, context, and climate specific
                         agricultural advisories particularly in fertilizer application,
                         integrated soil fertility management (ISFM), climate information service,

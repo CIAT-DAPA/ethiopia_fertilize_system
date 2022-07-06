@@ -4,8 +4,8 @@ import GeoFeatures from '../../services/GeoFeatures';
 import Configuration from "../../conf/Configuration";
 import MapLegend from '../map_legend/MapLegend';
 import ZoomControlWithReset from '../map_zoom_reset/ZoomControlWithReset';
-
-import { MapContainer, TileLayer, GeoJSON, LayersControl, WMSTileLayer, ScaleControl } from 'react-leaflet';
+import { MapContainer, TileLayer, GeoJSON, LayersControl, WMSTileLayer, ScaleControl, withLeaflet} from 'react-leaflet';
+import "leaflet-easyprint";
 
 //For reset map view
 const ETHIOPIA_BOUNDS = [  [10, 30],  [8.5, 50],];
@@ -35,6 +35,8 @@ function Map(props) {
     //Current marker
     var marker = null;
 
+   
+
     //For changing Map legend and popup message according to each layer (each one uses differents colors and values)
     const onLayerChange = (currentLayerName) => {
 
@@ -54,6 +56,17 @@ function Map(props) {
     
 
     const handleEventsMap = (map) => {
+
+
+        // Adding print/export button on the map
+        L.easyPrint({
+            title: 'Download map',
+            position: 'topright',
+            sizeModes: ['Current', 'A4Portrait', 'A4Landscape'],
+            exportOnly: true,
+            hideControlContainer: true
+            
+        }).addTo(map.target);
        
         map.target.on("click", function (e) {
             //props.onClick(e, map);
@@ -74,7 +87,7 @@ function Map(props) {
                         //Getting N data  	fertilizer_et:et_wheat_optimal_nutrients_n_normal 
                         let nLayer = "fertilizer_et:et_"+props.crop+"_"+geoserverLayers[0]+"_"+props.scenario
                         GeoFeatures.get_value(nLayer,lat,lng).then((data)=>{
-                            if(data.features[0].properties.GRAY_INDEX.toFixed(2) > 0) {
+                            if(data.features[0] && data.features[0].properties.GRAY_INDEX.toFixed(2) > 0) {
                                 auxTableData[0] = data.features[0].properties.GRAY_INDEX.toFixed(2);
                                 props.setTableData({n: auxTableData[0], p: auxTableData[1], yieldData: auxTableData[2]})
 
@@ -84,7 +97,7 @@ function Map(props) {
                         //Getting P data
                         let pLayer = "fertilizer_et:et_"+props.crop+"_"+geoserverLayers[1]+"_"+props.scenario
                         GeoFeatures.get_value(pLayer,lat,lng).then((data)=>{
-                            if(data.features[0].properties.GRAY_INDEX.toFixed(2) > 0) {
+                            if(data.features[0] && data.features[0].properties.GRAY_INDEX.toFixed(2) > 0) {
                                 auxTableData[1] = data.features[0].properties.GRAY_INDEX.toFixed(2);
                                 //setting table data
                                 props.setTableData({n: auxTableData[0], p: auxTableData[1], yieldData: auxTableData[2]})
@@ -99,7 +112,7 @@ function Map(props) {
                     //Making a popup
                     GeoFeatures.get_value(layer_name,lat,lng)
                     .then((data)=>{ 
-                        if(data.features[0].properties.GRAY_INDEX.toFixed(2) > 0) {
+                        if(data.features[0] && data.features[0].properties.GRAY_INDEX.toFixed(2) > 0) {
                             
                             marker = L.marker([lat, lng], { icon }).addTo(map.target)
                                 .bindPopup(popUpMessage + data.features[0].properties.GRAY_INDEX.toFixed(2) + " kg/ha")
@@ -123,7 +136,7 @@ function Map(props) {
 
     return (
         <>
-            <MapContainer center={props.init.center} zoom={props.init.zoom} style={{ height: '500px' }} scrollWheelZoom={true} whenReady={handleEventsMap}>
+            <MapContainer center={props.init.center} zoom={props.init.zoom} zoomControl={false} style={{ height: '500px' }} scrollWheelZoom={true} whenReady={handleEventsMap}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -180,7 +193,8 @@ function Map(props) {
                     }
                 </LayersControl>
                 <MapLegend currentLayer={currentLayer} geoserverLayers={geoserverLayers}/>
-                <ScaleControl position="topright" />
+                <ScaleControl position="bottomleft" />
+      
             </MapContainer>
         </>
     );
