@@ -4,8 +4,8 @@ FROM ubuntu
 WORKDIR /workdir
 
 COPY ./r-libraries/ /workdir/r-install-libraries
-COPY ./script/ /workdir/script
-COPY ./data/ /workdir/data
+COPY ./scripts/ /workdir/scripts
+#COPY ./data/ /workdir/data
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Bogota
@@ -38,7 +38,7 @@ RUN apt-get clean \
     ca-certificates \
     software-properties-common \
     gnupg \
-    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 'E298A3A825C0D65DFD57CBB651716619E084DAB9' \
+    # && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 \
     && add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/' \
     && apt-get -y install r-base \
     && Rscript /workdir/r-install-libraries/imports.r

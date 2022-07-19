@@ -15,7 +15,7 @@ function MapLegend(props) {
 
 
     const Legend = () => {
-        console.log(props.currentLayer);
+      
 
         let grades;
         

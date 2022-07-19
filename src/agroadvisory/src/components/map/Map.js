@@ -1,11 +1,12 @@
 import React from 'react';
 import L from "leaflet";
+import { MapContainer, TileLayer, LayersControl, WMSTileLayer, ScaleControl} from 'react-leaflet';
+import "leaflet-easyprint";
 import GeoFeatures from '../../services/GeoFeatures';
 import Configuration from "../../conf/Configuration";
 import MapLegend from '../map_legend/MapLegend';
 import ZoomControlWithReset from '../map_zoom_reset/ZoomControlWithReset';
-import { MapContainer, TileLayer, GeoJSON, LayersControl, WMSTileLayer, ScaleControl, withLeaflet} from 'react-leaflet';
-import "leaflet-easyprint";
+import DrawControl from '../map_draw/DrawControl';
 
 //For reset map view
 const ETHIOPIA_BOUNDS = [  [10, 30],  [8.5, 50],];
@@ -16,6 +17,7 @@ const geoserverLayers = ["optimal_nutrients_n",
         "urea_probabilistic", "nps_probabilistic", 
         "vcompost_probabilistic", "compost_probabilistic"];
 let popUpMessage = '';
+
 
 
 function Map(props) {
@@ -29,7 +31,7 @@ function Map(props) {
     const [currentLayer, setCurrentLayer] = React.useState();
     const { BaseLayer } = LayersControl;
     const icon = L.icon({iconSize: [25, 41],iconAnchor: [10, 41],popupAnchor: [2, -40],iconUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-icon.png",shadowUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-shadow.png"});
-    const [coord, setPosition] = React.useState([]);
+    const [polygonCoords, setPolygonCoords] = React.useState();
     let layerType;
 
     //Current marker
@@ -57,16 +59,16 @@ function Map(props) {
 
     const handleEventsMap = (map) => {
 
-
         // Adding print/export button on the map
         L.easyPrint({
             title: 'Download map',
             position: 'topright',
             sizeModes: ['Current', 'A4Portrait', 'A4Landscape'],
-            exportOnly: true,
+            exportOnly: true, //If false it will print
             hideControlContainer: true
             
         }).addTo(map.target);
+        
        
         map.target.on("click", function (e) {
             //props.onClick(e, map);
@@ -134,6 +136,7 @@ function Map(props) {
             });
     };
 
+
     return (
         <>
             <MapContainer center={props.init.center} zoom={props.init.zoom} zoomControl={false} style={{ height: '500px' }} scrollWheelZoom={true} whenReady={handleEventsMap}>
@@ -141,11 +144,9 @@ function Map(props) {
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <div className="leaflet-top leaflet-left">
-                    <ZoomControlWithReset bounds={ETHIOPIA_BOUNDS} />
-                </div>
+                
                 <LayersControl position="topright">
-                    {props.type == "nutrients_yield" ?
+                    {props.type === "nutrients_yield" ?
                         nutrients_yield.map((item) => {
                             return <BaseLayer key={"nutrients_yield_" + item} name={item}> 
                                 {
@@ -162,10 +163,12 @@ function Map(props) {
                                     url={url_service}
                                     format={"image/png"}
                                     transparent={true}
+                                    params={{'time': props.forecast}}
+                                    
                                 />
                             </BaseLayer>
                         })
-                        : props.type == "nps_urea" ?
+                        : props.type === "nps_urea" ?
                             fertilizer.map((item) => {
                                 return <BaseLayer key={"nps_urea" + item} name={item}>
                                    
@@ -175,6 +178,7 @@ function Map(props) {
                                         url={url_service}
                                         format={"image/png"}
                                         transparent={true}
+                                        params={{'time': props.forecast}}
                                     />
                                 </BaseLayer>
                             })
@@ -187,6 +191,7 @@ function Map(props) {
                                         url={url_service}
                                         format={"image/png"}
                                         transparent={true}
+                                        params={{'time': props.forecast}}
                                     />
                                 </BaseLayer>
                             })
@@ -194,8 +199,15 @@ function Map(props) {
                 </LayersControl>
                 <MapLegend currentLayer={currentLayer} geoserverLayers={geoserverLayers}/>
                 <ScaleControl position="bottomleft" />
+                <div className="leaflet-top leaflet-left">
+                    <ZoomControlWithReset bounds={ETHIOPIA_BOUNDS} />
+                </div>
+                <DrawControl
+                setPolygonCoords={setPolygonCoords}
+                />
       
             </MapContainer>
+            {console.log(polygonCoords)}
         </>
     );
 
