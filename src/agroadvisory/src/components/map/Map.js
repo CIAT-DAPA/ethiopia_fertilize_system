@@ -44,7 +44,8 @@ function Map(props) {
 
         for(let i = 0; i < geoserverLayers.length; i++) {
             if(currentLayerName.includes(geoserverLayers[i])) {
-                setCurrentLayer(geoserverLayers[i])
+                setCurrentLayer(geoserverLayers[i]);
+                break;
             }
         }
 

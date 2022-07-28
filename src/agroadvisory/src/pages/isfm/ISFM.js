@@ -7,7 +7,7 @@ import Map from '../../components/map/Map';
 
 function ISFM() {
 
-    const [opt_forecast, setOptForecast] = React.useState([{ label: "2022-07", value: "202207" }]);
+    const [opt_forecast, setOptForecast] = React.useState([{ label: "2022-07", value: "2022-07" }]);
     const [opt_crops, setOptCrops] = React.useState([{ label: "Wheat", value: "wheat" }]);
     const [opt_scenarios, setOptScenarios] = React.useState([{ label: "Normal", value: "normal" }]);
     const [map_init, setMap_init] = React.useState({ center: [9.3988271, 39.9405962], zoom: 6 });
