@@ -14,7 +14,7 @@ import '../../assets/styles/font.css';
 function Fertilization() {
     const [opt_forecast, setOptForecast] = React.useState([{ label: "2022-07", value: "2022-07" }, { label: "2022-06", value: "2022-06" }]);
     const [opt_crops, setOptCrops] = React.useState([{ label: "Wheat", value: "wheat" }]);
-    const [opt_scenarios, setOptScenarios] = React.useState([{ label: "Normal", value: "normal" }]);
+    const [opt_scenarios, setOptScenarios] = React.useState([{ label: "Normal", value: "normal" }, { label: "Above", value: "above" }, { label: "Below", value: "below" }]);
     const [map_init, setMap_init] = React.useState({ center: [9.3988271, 39.9405962], zoom: 6 });
     const [forecast, setForecast] = React.useState(opt_forecast[0].value);
     const [crop, setCrop] = React.useState(opt_crops[0].value);
@@ -106,6 +106,13 @@ function Fertilization() {
                     <Map id="map_nps_urea" init={map_init} type={"nps_urea"} crop={crop} forecast={forecast} 
                                         scenario={scenario}/>
                         
+
+                    {/* <MapHeader title={"Fertilizer Recommendation"} />
+                    <p className="font-link-body">
+                        Recommendation by Woreda.
+                    </p>
+                    <Map id="map_fertilizer_recommendation" init={map_init} type={"fertilizer_recommendation"} crop={crop} forecast={forecast} 
+                                    scenario={scenario}/> */}
                   
                 </main>
 

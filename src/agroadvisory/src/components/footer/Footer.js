@@ -8,12 +8,8 @@ import aiccraLogo from '../../assets/images/aiccra-logo.png';
 import eiaLogo from '../../assets/images/eia-logo.png'
 import gizLogo from '../../assets/images/giz-logo.jpg'
 
-const mystyle = {
-    position: "absolute",
-    left: 0,
-    bottom: 0,
-    right: 0
-}
+import './Footer.css'
+
 function Footer() {
     return (
 

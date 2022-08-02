@@ -69,7 +69,6 @@ function Map(props) {
             hideControlContainer: true
             
         }).addTo(map.target);
-        
        
         map.target.on("click", function (e) {
             //props.onClick(e, map);
@@ -110,8 +109,7 @@ function Map(props) {
                         });
 
                     }
-                    
-                    onLayerChange(layer_name);
+                
                     //Making a popup
                     GeoFeatures.get_value(layer_name,lat,lng)
                     .then((data)=>{ 
@@ -144,6 +142,7 @@ function Map(props) {
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    
                 />
                 
                 <LayersControl position="topright">
@@ -165,6 +164,11 @@ function Map(props) {
                                     format={"image/png"}
                                     transparent={true}
                                     params={{'time': props.forecast}}
+                                    eventHandlers={{
+                                        add: (e) => {
+                                          onLayerChange(e.target.options.layers);
+                                        }
+                                      }}
                                     
                                 />
                             </BaseLayer>
@@ -180,10 +184,15 @@ function Map(props) {
                                         format={"image/png"}
                                         transparent={true}
                                         params={{'time': props.forecast}}
+                                        eventHandlers={{
+                                            add: (e) => {
+                                              onLayerChange(e.target.options.layers);
+                                            }
+                                          }}
                                     />
                                 </BaseLayer>
                             })
-                            :
+                            : props.type === "compost" ?
                             compost.map((item) => {
                                 return <BaseLayer key={"compost_" + item} name={item}>
                                     <WMSTileLayer
@@ -193,9 +202,33 @@ function Map(props) {
                                         format={"image/png"}
                                         transparent={true}
                                         params={{'time': props.forecast}}
+                                        eventHandlers={{
+                                            add: (e) => {
+                                              onLayerChange(e.target.options.layers);
+                                            }
+                                          }}
                                     />
                                 </BaseLayer>
                             })
+                            :
+                            
+                                <BaseLayer key={"recommendation_"} name={"recommendation"}>
+                                    <WMSTileLayer
+                                        layers={"fertilizer_et:et_wheat_fertilizer_recommendation_normal"}
+                                        attribution=''
+                                        url={url_service}
+                                        format={"image/png"}
+                                        transparent={true}
+                                        //params={{'time': props.forecast}}
+                                        // eventHandlers={{
+                                        //     add: (e) => {
+                                        //       onLayerChange(e.target.options.layers);
+                                        //     }
+                                        //   }}
+                                    />
+                                </BaseLayer>
+                            
+
                     }
                 </LayersControl>
                 <MapLegend currentLayer={currentLayer} geoserverLayers={geoserverLayers}/>
