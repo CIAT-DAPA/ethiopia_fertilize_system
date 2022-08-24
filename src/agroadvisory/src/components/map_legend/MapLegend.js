@@ -78,7 +78,7 @@ function MapLegend(props) {
             <div className="leaflet-control leaflet-bar">
                 <div className='info legend'>
                     {
-                        props.currentLayer ? <h6>amounts (kg/ha)</h6> : <h6>select a layer and clicks!</h6>
+                        props.currentLayer ? <h6>amounts (kg/ha)</h6> : <h6>select a layer</h6>
                     }
                     <Legend/>
                     

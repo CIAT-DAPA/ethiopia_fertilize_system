@@ -32,12 +32,42 @@ function Map(props) {
     const { BaseLayer } = LayersControl;
     const icon = L.icon({iconSize: [25, 41],iconAnchor: [10, 41],popupAnchor: [2, -40],iconUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-icon.png",shadowUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-shadow.png"});
     const [polygonCoords, setPolygonCoords] = React.useState();
+    const request = "http://127.0.0.1:5000/clip_raster";
     let layerType;
 
     //Current marker
     var marker = null;
 
-   
+    React.useEffect(() => {
+
+        if(polygonCoords){
+
+            // fetch(request, {
+            //     method: 'POST',
+            //     headers: {
+            //       'Content-Type': 'application/json',
+            //       'Access-Control-Allow-Origin': '*'
+            //     },
+            //     body: JSON.stringify({minx: polygonCoords._southWest.lng, miny: polygonCoords._southWest.lat, maxx: polygonCoords._northEast.lng, maxy: polygonCoords._northEast.lat})
+            //   }).then(async (response) => {
+            //         if (response.ok) {
+            //             console.log(await response.json())
+                      
+            //         } else{
+                      
+                      
+            //         }
+            //       })
+            //       .catch((err) => {
+            //         //setError(err.message);
+            //       });
+
+            console.log(polygonCoords);
+
+        }
+
+    
+    }, [polygonCoords]);
 
     //For changing Map legend and popup message according to each layer (each one uses differents colors and values)
     const onLayerChange = (currentLayerName) => {

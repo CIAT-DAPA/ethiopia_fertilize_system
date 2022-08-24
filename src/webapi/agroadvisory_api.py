@@ -3,13 +3,16 @@ import os
 import sys
 from flask import Flask, redirect
 from flask_restful import Api
+from flask_cors import CORS
 from flasgger import Swagger
 from conf import config
 
 from api_modules.kebele import Kebele
 from api_modules.woreda import Woreda
+from api_modules.clipping_raster import ClippingRaster
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 swagger = Swagger(app)
 
@@ -22,6 +25,7 @@ def home():
 api.add_resource(Woreda, '/woredas', endpoint="woredas")
 api.add_resource(Woreda, '/woredas/<woreda_name>', endpoint="woreda")
 api.add_resource(Kebele, '/kebele/<kebele_name>')
+api.add_resource(ClippingRaster, '/clip_raster')
 
 if __name__ == '__main__':
     if config['DEBUG']:
