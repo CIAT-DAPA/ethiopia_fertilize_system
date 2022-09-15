@@ -33,7 +33,7 @@ function Fertilization() {
     };
 
     const changeScenario = event => {
-        setCrop(event.value);
+        setScenario(event.value);
     };
 
     return (

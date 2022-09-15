@@ -7,8 +7,8 @@ import "leaflet-draw/dist/leaflet.draw.css";
 
 function DrawControl(props){
     //const _created = (e) => props.setPolygonCoords(e.layer.editing.latlngs[0][0]);
-    //const _created = (e) => props.setPolygonCoords(e.layer._bounds);
-    const _created = (e) => props.setPolygonCoords(e.layer);
+    const _created = (e) => props.setPolygonCoords(e.layer._bounds);
+    //const _created = (e) => props.setPolygonCoords(e.layer);
 
     return(
         <FeatureGroup>
@@ -21,7 +21,7 @@ function DrawControl(props){
                 circlemarker: false,
                 marker: false,
                 polyline: false,
-                polygon: true
+                polygon: false
             }}
         />
         {/* <Circle center={[51.51, -0.06]} radius={200} /> */}

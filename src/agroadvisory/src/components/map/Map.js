@@ -32,37 +32,38 @@ function Map(props) {
     const { BaseLayer } = LayersControl;
     const icon = L.icon({iconSize: [25, 41],iconAnchor: [10, 41],popupAnchor: [2, -40],iconUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-icon.png",shadowUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-shadow.png"});
     const [polygonCoords, setPolygonCoords] = React.useState();
-    const request = "http://127.0.0.1:5000/clip_raster";
+    const request = Configuration.get_raster_crop_url();
     let layerType;
+
+    console.log(props.scenario)
 
     //Current marker
     var marker = null;
 
     React.useEffect(() => {
-
+        
         if(polygonCoords){
+            let parameters = {minx: polygonCoords._southWest.lng, miny: polygonCoords._southWest.lat, maxx: polygonCoords._northEast.lng, maxy: polygonCoords._northEast.lat, layer: "et_"+props.crop+"_"+currentLayer+"_"+props.scenario}
+            let requestFormatted = request+"?"+"boundaries="+parameters["minx"]+","+parameters["miny"]+","+parameters["maxx"]+","+parameters["maxy"]+"&"+"layer="+parameters["layer"]
+            fetch(requestFormatted, {
+                method: 'GET',
+                headers: {
+                  'Access-Control-Allow-Origin': '*'
+                },
+              }).then(async (response) => {
+                    if (response.ok) {
+                        console.log(await response);
+                      
+                    } else{
+                      
+                      
+                    }
+                  })
+                  .catch((err) => {
+                    //setError(err.message);
+                  });
 
-            // fetch(request, {
-            //     method: 'POST',
-            //     headers: {
-            //       'Content-Type': 'application/json',
-            //       'Access-Control-Allow-Origin': '*'
-            //     },
-            //     body: JSON.stringify({minx: polygonCoords._southWest.lng, miny: polygonCoords._southWest.lat, maxx: polygonCoords._northEast.lng, maxy: polygonCoords._northEast.lat})
-            //   }).then(async (response) => {
-            //         if (response.ok) {
-            //             console.log(await response.json())
-                      
-            //         } else{
-                      
-                      
-            //         }
-            //       })
-            //       .catch((err) => {
-            //         //setError(err.message);
-            //       });
-
-            console.log(polygonCoords);
+           
 
         }
 
@@ -78,6 +79,7 @@ function Map(props) {
                 break;
             }
         }
+        
 
         popUpMessage = (currentLayerName.includes("optimal_nutrients")) ? "optimal nutrient amount: ": 
             (currentLayerName.includes("yieldtypes")) ? "optimal yield amount: " : 
@@ -178,6 +180,7 @@ function Map(props) {
                 <LayersControl position="topright">
                     {props.type === "nutrients_yield" ?
                         nutrients_yield.map((item) => {
+                            
                             return <BaseLayer key={"nutrients_yield_" + item} name={item}> 
                                 {
                                     layerType = (item === "optimal yield")?"_yieldtypes_":"_optimal_nutrients_"
@@ -235,6 +238,7 @@ function Map(props) {
                                         eventHandlers={{
                                             add: (e) => {
                                               onLayerChange(e.target.options.layers);
+                                              
                                             }
                                           }}
                                     />
@@ -271,7 +275,7 @@ function Map(props) {
                 />
       
             </MapContainer>
-            {console.log(polygonCoords)}
+           
         </>
     );
 

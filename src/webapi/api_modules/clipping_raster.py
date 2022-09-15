@@ -7,16 +7,22 @@ import geopandas as gpd
 from fiona.crs import from_epsg
 import pycrs
 
-from flask import Flask, jsonify, request, send_file
-from flask_restful import Resource
+from flask import Flask, jsonify, request, send_from_directory
+from flask_restful import Resource, reqparse
 import geopandas as gpd
 import pandas as pd
 import requests
 
+import os
+
 from conf import config
 
 
-# 
+# Define parser and request args
+parser = reqparse.RequestParser()
+parser.add_argument('boundaries', type=str, required=True, help='Boundaries')
+parser.add_argument('layer', type=str, default=False, required=True, help='Layer name')
+
 class ClippingRaster(Resource):
 
     url = ""
@@ -28,27 +34,49 @@ class ClippingRaster(Resource):
             "&maxFeatures=700&outputFormat=application%2Fjson"
         super().__init__()
 
-    def getFeatures(gdf):
+    def getFeatures(self, gdf):
         """Function to parse features from GeoDataFrame in such a manner that rasterio wants them"""
         import json
         return [json.loads(gdf.to_json())['features'][0]['geometry']]
 
     
-    def post(self):
-        boundaries = request.json
-        response = send_file('D:\OneDrive - CGIAR\Documents\GitHub\ethiopia_fertilize_system\src\webapi\seasonal_et_62d5b8b657c82c33d53dfd3b_jul_ond_above_202211.tif', attachment_filename='seasonal_et_62d5b8b657c82c33d53dfd3b_jul_ond_above_202211.tif')
+    def get(self):
         
-        # fp = r"D:\OneDrive - CGIAR\Documents\GitHub\ethiopia_fertilize_system\src\webapi\fertilizer_et-et_wheat_compost_probabilistic_above.tif"
-        # data = rasterio.open(fp)
+        args = parser.parse_args()
+        minx, miny, maxx, maxy = args['boundaries'].split(',')
+        layer = args['layer'] 
 
-        # minx, miny = boundaries.minx, boundaries.miny
-        # maxx, maxy = boundaries.maxx, boundaries.maxy
-        # bbox = box(minx, miny, maxx, maxy)
+        rasters_dir = ".//raster_files//fertilizer_et//"
+        raster_folder = rasters_dir+layer+"/"
+        entries = os.listdir(raster_folder)
+        
+        fp = raster_folder+entries[0]
+        out = config["FERTILIZER_RASTERS_DIR"]+entries[0]
+        data = rasterio.open(fp)
 
-        # geo = gpd.GeoDataFrame({'geometry': bbox}, index=[0], crs=from_epsg(4326))
-        # geo = geo.to_crs(crs=data.crs.data)
-        # coords = self.getFeatures(geo) 
-        return response
+        bbox = box(float(minx), float(miny), float(maxx), float(maxy))
+
+        geo = gpd.GeoDataFrame({'geometry': bbox}, index=[0], crs=from_epsg(4326))
+        geo = geo.to_crs(crs=data.crs.data)
+
+        coords = self.getFeatures(geo)    
+
+        out_img, out_transform = mask(dataset=data, shapes=coords, crop=True)
+        out_meta = data.meta.copy()
+    
+        epsg_code = int(data.crs.data['init'][5:])
+        
+        out_meta.update({"driver": "GTiff", 
+                        "height": out_img.shape[1],
+                        "width": out_img.shape[2],
+                        "transform": out_transform,
+                        "crs": pycrs.parse.from_epsg_code(epsg_code).to_proj4()})
+
+        with rasterio.open(out, "w", **out_meta) as dest:
+            dest.write(out_img)
+
+        print(entries[0])
+        return send_from_directory(config["FERTILIZER_RASTERS_DIR"], entries[0], as_attachment=True)
 
 
 

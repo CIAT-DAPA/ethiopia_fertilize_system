@@ -10,6 +10,7 @@ if os.getenv('DEBUG', "true").lower() == "true":
         ":et_wheat_fertilizer_recommendation_normal"
     config['SERVICE'] = 'WFS'
     config['GEOSERVER_URL'] = "https://geo.aclimate.org/geoserver/"
+    config['FERTILIZER_RASTERS_DIR'] = "./raster_files/cropped/"
     config['HOST'] = 'localhost'
     config['PORT'] = 5000
 else:
@@ -18,5 +19,6 @@ else:
     config['LAYER_NAME'] = config['WORKSPACE']+os.getenv('LAYER_NAME')
     config['SERVICE'] = os.getenv('SERVICE')
     config['GEOSERVER_URL'] = os.getenv('GEOSERVER_URL')
+    config['FERTILIZER_RASTERS_DIR'] = os.getenv('FERTILIZER_RASTERS_DIR')
     config['HOST'] = '0.0.0.0'
     config['PORT'] = os.getenv('PORT')
