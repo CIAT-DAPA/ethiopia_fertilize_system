@@ -45,23 +45,25 @@ function Map(props) {
         if(polygonCoords){
             let parameters = {minx: polygonCoords._southWest.lng, miny: polygonCoords._southWest.lat, maxx: polygonCoords._northEast.lng, maxy: polygonCoords._northEast.lat, layer: "et_"+props.crop+"_"+currentLayer+"_"+props.scenario}
             let requestFormatted = request+"?"+"boundaries="+parameters["minx"]+","+parameters["miny"]+","+parameters["maxx"]+","+parameters["maxy"]+"&"+"layer="+parameters["layer"]
-            fetch(requestFormatted, {
-                method: 'GET',
-                headers: {
-                  'Access-Control-Allow-Origin': '*'
-                },
-              }).then(async (response) => {
-                    if (response.ok) {
-                        console.log(await response);
+            console.log(requestFormatted);
+            window.location.href = requestFormatted;
+            // fetch(requestFormatted, {
+            //     method: 'GET',
+            //     headers: {
+            //       'Access-Control-Allow-Origin': '*'
+            //     },
+            //   }).then(async (response) => {
+            //         if (response.ok) {
+            //             console.log(await response);
                       
-                    } else{
+            //         } else{
                       
                       
-                    }
-                  })
-                  .catch((err) => {
-                    //setError(err.message);
-                  });
+            //         }
+            //       })
+            //       .catch((err) => {
+            //         //setError(err.message);
+            //       });
 
            
 

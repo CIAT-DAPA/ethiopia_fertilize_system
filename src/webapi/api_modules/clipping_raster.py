@@ -1,3 +1,4 @@
+from ast import arg
 import rasterio
 from rasterio.plot import show
 from rasterio.plot import show_hist
@@ -7,8 +8,8 @@ import geopandas as gpd
 from fiona.crs import from_epsg
 import pycrs
 
-from flask import Flask, jsonify, request, send_from_directory
-from flask_restful import Resource, reqparse
+from flask import send_from_directory
+from flask_restful import Resource, request
 import geopandas as gpd
 import pandas as pd
 import requests
@@ -16,12 +17,6 @@ import requests
 import os
 
 from conf import config
-
-
-# Define parser and request args
-parser = reqparse.RequestParser()
-parser.add_argument('boundaries', type=str, required=True, help='Boundaries')
-parser.add_argument('layer', type=str, default=False, required=True, help='Layer name')
 
 class ClippingRaster(Resource):
 
@@ -42,7 +37,7 @@ class ClippingRaster(Resource):
     
     def get(self):
         
-        args = parser.parse_args()
+        args = request.args
         minx, miny, maxx, maxy = args['boundaries'].split(',')
         layer = args['layer'] 
 

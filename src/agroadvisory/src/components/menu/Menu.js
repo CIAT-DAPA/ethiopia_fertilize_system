@@ -49,13 +49,13 @@ function Menu() {
                                 <a className="nav-link" href="/bundled_aas">Bundled AAS</a>
                             </li>
                              
-                            <div className="position-absolute top-50 end-0 translate-middle-y">
-                                <li className="nav-item">
-                                    <a className="nav-link" href="/about">About</a>
-                                </li>
-
-                            </div>
                         </ul>
+                           
+                            <span className="navbar-text">
+                                <a className="nav-link font-link" href="/about">About</a>
+                            </span>
+
+                            
                     </div>
                 </div>
             </nav>

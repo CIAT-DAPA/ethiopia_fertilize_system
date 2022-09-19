@@ -37,8 +37,9 @@ function Fertilization() {
     };
 
     return (
-        
-            <div className="row">
+        <main>
+
+            <section className="row">
                 <Sidebar opt_forecast={opt_forecast} opt_crops={opt_crops} opt_scenarios={opt_scenarios} OnChangeForecast={changeForecast} OnChangeCrop={changeCrop} OnChangeScenario={changeScenario}/>
                 <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <br />
@@ -116,7 +117,9 @@ function Fertilization() {
                   
                 </main>
 
-            </div>
+            </section>
+
+        </main>
      
     );
 }

@@ -20,27 +20,33 @@ import BundledAAS from './pages/bundled_aas/BundledAAS';
 class App extends Component {
   render() {
     return (
-      <Router>
+      <div>
+        
+      
+        <Router>
+              
+              <Menu />
+            <div className="container-fluid">
+              <Routes>
+                <Route exact path='/' element={<Home />} />
+                <Route path='/fertilizer_advisories' element={<Fertilization />} />
+                <Route path='/isfm' element={<ISFM />} />
+                <Route path='/agroclimate' element={<Agroclimate />} />
+                <Route path='/pest_disease' element={<PestDisease />} />
+                <Route path='/csa' element={<CSA />} />
+                <Route path='/irrigation' element={<Irrigation />} />
+                <Route path='/mechanization' element={<Mechanization />} />
+                <Route path='/bundled_aas' element={<BundledAAS />} />
+                <Route path='/about' element={<About />} />
+              </Routes>
+            </div>
+              <br/>
             
-            <Menu />
-          <div className="container-fluid">
-            <Routes>
-              <Route exact path='/' element={<Home />} />
-              <Route path='/fertilizer_advisories' element={<Fertilization />} />
-              <Route path='/isfm' element={<ISFM />} />
-              <Route path='/agroclimate' element={<Agroclimate />} />
-              <Route path='/pest_disease' element={<PestDisease />} />
-              <Route path='/csa' element={<CSA />} />
-              <Route path='/irrigation' element={<Irrigation />} />
-              <Route path='/mechanization' element={<Mechanization />} />
-              <Route path='/bundled_aas' element={<BundledAAS />} />
-              <Route path='/about' element={<About />} />
-            </Routes>
-          </div>
-            <br/>
+            </Router>
+            
             <Footer />
-          
-          </Router>
+      </div>
+      
     );
   }
 
