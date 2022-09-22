@@ -29,44 +29,27 @@ function Map(props) {
     //const [nutrients, setNutrients] = React.useState(["n", "p", "k"]);
     const [fertilizer, setNutrients] = React.useState(["nps", "urea"]);
     const [currentLayer, setCurrentLayer] = React.useState();
+    const [warning, setWarning] = React.useState(false);
     const { BaseLayer } = LayersControl;
     const icon = L.icon({iconSize: [25, 41],iconAnchor: [10, 41],popupAnchor: [2, -40],iconUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-icon.png",shadowUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-shadow.png"});
     const [polygonCoords, setPolygonCoords] = React.useState();
     const request = Configuration.get_raster_crop_url();
     let layerType;
 
-    console.log(props.scenario)
-
     //Current marker
     var marker = null;
 
     React.useEffect(() => {
         
-        if(polygonCoords){
+        if(polygonCoords && currentLayer){
             let parameters = {minx: polygonCoords._southWest.lng, miny: polygonCoords._southWest.lat, maxx: polygonCoords._northEast.lng, maxy: polygonCoords._northEast.lat, layer: "et_"+props.crop+"_"+currentLayer+"_"+props.scenario}
             let requestFormatted = request+"?"+"boundaries="+parameters["minx"]+","+parameters["miny"]+","+parameters["maxx"]+","+parameters["maxy"]+"&"+"layer="+parameters["layer"]
-            console.log(requestFormatted);
             window.location.href = requestFormatted;
-            // fetch(requestFormatted, {
-            //     method: 'GET',
-            //     headers: {
-            //       'Access-Control-Allow-Origin': '*'
-            //     },
-            //   }).then(async (response) => {
-            //         if (response.ok) {
-            //             console.log(await response);
-                      
-            //         } else{
-                      
-                      
-            //         }
-            //       })
-            //       .catch((err) => {
-            //         //setError(err.message);
-            //       });
+            setWarning(false);
+            
 
-           
-
+        }else if(polygonCoords && !currentLayer){
+            setWarning(true);
         }
 
     
@@ -88,6 +71,12 @@ function Map(props) {
             (currentLayerName.includes(geoserverLayers[3]) || currentLayerName.includes(geoserverLayers[4])) ? "fertilizer amount: " : 
             (currentLayerName.includes(geoserverLayers[5])) ? "vermi-compost: " : 
             (currentLayerName.includes(geoserverLayers[6])) ? "compost: " : "" 
+
+    }
+
+    const layerExists = (map) => {
+
+        console.log(map);
 
     }
     
@@ -172,13 +161,19 @@ function Map(props) {
 
     return (
         <>
+            {
+                warning && <div class="alert alert-warning text-center" role="alert">
+                                To download the clipping of a raster you must select a layer first
+                            </div>
+
+            }
+        
             <MapContainer center={props.init.center} zoom={props.init.zoom} zoomControl={false} style={{ height: '500px' }} scrollWheelZoom={true} whenReady={handleEventsMap}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     
                 />
-                
                 <LayersControl position="topright">
                     {props.type === "nutrients_yield" ?
                         nutrients_yield.map((item) => {
@@ -190,8 +185,7 @@ function Map(props) {
                                 {
                                     item = (item === "optimal yield")?"optimal": item
                                 }
-
-
+                    
                                 <WMSTileLayer
                                     layers={"fertilizer_et:et_" + props.crop + layerType  + item +"_"+ props.scenario}
                                     attribution=''
@@ -202,6 +196,7 @@ function Map(props) {
                                     eventHandlers={{
                                         add: (e) => {
                                           onLayerChange(e.target.options.layers);
+                                          layerExists(e.target);
                                         }
                                       }}
                                     

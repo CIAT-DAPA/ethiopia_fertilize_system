@@ -12,64 +12,62 @@ import './Footer.css'
 
 function Footer() {
     return (
-        <footer className='footer'>
 
-            <div className="card text-center">
-                <div className="card-header">
-                    Partners
-                </div>
+        <div className="card text-center">
+            <div className="card-header">
+                Partners
+            </div>
 
-                <div className="card-body">
+            <div className="card-body">
 
-                    <div className="d-flex justify-content-center">
-                        <div className="row">
+                <div className="d-flex justify-content-center">
+                    <div className="row">
 
-                            <div className="col">
-                                <img className="figure-img rounded" alt="" src={allianceLogo} width="145" height="75" role="img" />
-                            </div>
-                            
-                            <div className="col">
-                                <img className="figure-img rounded" alt="" src={moaLogo} width="120" height="75" role="img" />
-                            
-                            </div>
+                        <div className="col">
+                            <img className="figure-img rounded" alt="" src={allianceLogo} width="145" height="75" role="img" />
+                        </div>
+                        
+                        <div className="col">
+                            <img className="figure-img rounded" alt="" src={moaLogo} width="120" height="75" role="img" />
+                        
+                        </div>
 
-                            <div className="col">
-                                <img className="figure-img" alt="" src={eiarLogo} width="150" height="50" role="img" />
-                            </div>
+                        <div className="col">
+                            <img className="figure-img" alt="" src={eiarLogo} width="150" height="50" role="img" />
+                        </div>
 
-                            <div className="col">
-                                <img className="figure-img rounded" alt="" src={dgLogo} width="200" height="50" role="img" />
-                            </div>
+                        <div className="col">
+                            <img className="figure-img rounded" alt="" src={dgLogo} width="200" height="50" role="img" />
+                        </div>
 
-                            <div className="col">
-                                <img className="figure-img rounded" alt="" src={eiaLogo} width="75" height="50" role="img" />
-                            </div>
+                        <div className="col">
+                            <img className="figure-img rounded" alt="" src={eiaLogo} width="75" height="50" role="img" />
+                        </div>
 
-                            <div className="col">
-                                <img className="figure-img rounded" alt="" src={aiccraLogo} width="150" height="50" role="img" />
-                            </div>
+                        <div className="col">
+                            <img className="figure-img rounded" alt="" src={aiccraLogo} width="150" height="50" role="img" />
+                        </div>
 
-                            <div className="col">
-                                <img className="figure-img rounded" alt="" src={gizLogo} width="150" height="50" role="img" />
-                            </div>
+                        <div className="col">
+                            <img className="figure-img rounded" alt="" src={gizLogo} width="150" height="50" role="img" />
+                        </div>
 
-                            
-                            <div className="col">
-                                <h2 className="card-title">CoW</h2>
-                            </div>
+                        
+                        <div className="col">
+                            <h2 className="card-title">CoW</h2>
                         </div>
                     </div>
                 </div>
-
-                
-                <div className="card-footer text-muted">
-                        <p>Develop by <a href="https://ciat.cgiar.org/" target="_blank" className="">Alliance Bioversity International - CIAT</a>, 
-                            under SSHI and EiA.</p>
-                </div>
-
-                
             </div>
-        </footer>
+
+            
+            <div className="card-footer text-muted">
+                    <p>Develop by <a href="https://ciat.cgiar.org/" target="_blank" className="">Alliance Bioversity International - CIAT</a>, 
+                        under SSHI and EiA.</p>
+            </div>
+
+            
+        </div>
     );
 }
 

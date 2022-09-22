@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../assets/styles/font.css';
 
 function MapHeader(props) {
     return (

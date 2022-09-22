@@ -1,4 +1,3 @@
-from ast import arg
 import rasterio
 from rasterio.plot import show
 from rasterio.plot import show_hist
@@ -12,7 +11,8 @@ from flask import send_from_directory
 from flask_restful import Resource, request
 import geopandas as gpd
 import pandas as pd
-import requests
+
+import shutil
 
 import os
 
@@ -34,8 +34,43 @@ class ClippingRaster(Resource):
         import json
         return [json.loads(gdf.to_json())['features'][0]['geometry']]
 
-    
+    def delete_folder_content(self, folder_path):
+        """Function to delete al folder content"""
+        list_dir = os.listdir(folder_path)
+        for filename in list_dir:
+            file_path = os.path.join(folder_path, filename)
+
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                print("deleting file:", file_path)
+                os.unlink(file_path)
+
+            elif os.path.isdir(file_path):
+                print("deleting folder:", file_path)
+                shutil.rmtree(file_path)
+
     def get(self):
+        """
+        Get a cropped raster tif file
+        ---
+        parameters:
+          - in: path
+            name: boundaries
+            type: string
+            required: true
+            description: minx, miny, maxx, maxy separated by comas (without spaces)
+          - in: path
+            name: layer
+            type: string
+            required: true
+            description: layer name at https://geo.aclimate.org/geoserver/web/wicket/bookmarkable/org.geoserver.web.data.layer.LayerPage?7&filter=true example et_wheat_compost_probabilistic_above
+            
+        responses:
+          200:
+            description: A tif file
+            
+        """
+
+        self.delete_folder_content(config["FERTILIZER_RASTERS_DIR"])
         
         args = request.args
         minx, miny, maxx, maxy = args['boundaries'].split(',')
