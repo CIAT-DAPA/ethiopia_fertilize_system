@@ -73,14 +73,7 @@ function Map(props) {
             (currentLayerName.includes(geoserverLayers[6])) ? "compost: " : "" 
 
     }
-
-    const layerExists = (map) => {
-
-        console.log(map);
-
-    }
     
-
     const handleEventsMap = (map) => {
 
         // Adding print/export button on the map
@@ -196,7 +189,6 @@ function Map(props) {
                                     eventHandlers={{
                                         add: (e) => {
                                           onLayerChange(e.target.options.layers);
-                                          layerExists(e.target);
                                         }
                                       }}
                                     
