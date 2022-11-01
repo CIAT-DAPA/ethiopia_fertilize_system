@@ -16,6 +16,7 @@ import CSA from './pages/csa/CSA';
 import Irrigation from './pages/irrigation/Irrigation';
 import Mechanization from './pages/mechanization/Mechanization';
 import BundledAAS from './pages/bundled_aas/BundledAAS';
+import Report from './pages/report/Report';
 
 class App extends Component {
   render() {
@@ -34,6 +35,7 @@ class App extends Component {
             <Route path='/irrigation' element={<Irrigation />} />
             <Route path='/mechanization' element={<Mechanization />} />
             <Route path='/bundled_aas' element={<BundledAAS />} />
+            <Route path='/report' element={<Report />} />
             <Route path='/about' element={<About />} />
           </Routes>
         </div>

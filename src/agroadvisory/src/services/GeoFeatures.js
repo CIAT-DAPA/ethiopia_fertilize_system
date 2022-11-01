@@ -30,6 +30,14 @@ class GeoFeatures {
             });
     }
 
+    geojson(ids){
+        const url = Configuration.get_geoserver_url()+ "localities/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=localities:adm&maxFeatures=50&outputFormat=application/json&CQL_FILTER=adm3_id in (" + ids + ")&SRSNAME=EPSG:4326";
+        return axios.get(url, {})
+            .then(response => {
+                return response.data;
+            });
+    }
+
 }
 
 export default new GeoFeatures();

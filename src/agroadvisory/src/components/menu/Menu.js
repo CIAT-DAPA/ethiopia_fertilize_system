@@ -4,7 +4,7 @@ import './Menu.css';
 function Menu() {
     return (
         <header>
-            <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <nav className="navbar navbar-expand-md navbar-light fixed-top bg-light">
                 <div className="container-fluid">
                     <a className="navbar-brand" href="/">NextGen Agroadvisory</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,6 +47,9 @@ function Menu() {
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="/bundled_aas">Bundled AAS</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/report">Report</a>
                             </li>
                              
                         </ul>

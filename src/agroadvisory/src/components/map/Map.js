@@ -33,6 +33,7 @@ function Map(props) {
     const { BaseLayer } = LayersControl;
     const icon = L.icon({iconSize: [25, 41],iconAnchor: [10, 41],popupAnchor: [2, -40],iconUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-icon.png",shadowUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-shadow.png"});
     const [polygonCoords, setPolygonCoords] = React.useState();
+    const [lastSelected, setLastSelected] = React.useState("optimal");
     const request = Configuration.get_raster_crop_url();
     let layerType;
 
@@ -54,6 +55,22 @@ function Map(props) {
 
     
     }, [polygonCoords]);
+
+    // React.useEffect(() => {
+        
+    //     if(polygonCoords && currentLayer){
+    //         let parameters = {minx: polygonCoords._southWest.lng, miny: polygonCoords._southWest.lat, maxx: polygonCoords._northEast.lng, maxy: polygonCoords._northEast.lat, layer: "et_"+props.crop+"_"+currentLayer+"_"+props.scenario}
+    //         let requestFormatted = request+"?"+"boundaries="+parameters["minx"]+","+parameters["miny"]+","+parameters["maxx"]+","+parameters["maxy"]+"&"+"layer="+parameters["layer"]
+    //         window.location.href = requestFormatted;
+    //         setWarning(false);
+            
+
+    //     }else if(polygonCoords && !currentLayer){
+    //         setWarning(true);
+    //     }
+
+    
+    // }, [polygonCoords]);
 
     //For changing Map legend and popup message according to each layer (each one uses differents colors and values)
     const onLayerChange = (currentLayerName) => {
@@ -167,19 +184,22 @@ function Map(props) {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     
                 />
-                <LayersControl position="topright">
+                <LayersControl position="topright" >
                     {props.type === "nutrients_yield" ?
                         nutrients_yield.map((item) => {
+                           
                             
-                            return <BaseLayer key={"nutrients_yield_" + item} name={item}> 
+                            return <BaseLayer key={"nutrients_yield_" + item} name={item} checked={item===lastSelected?true:false}> 
                                 {
                                     layerType = (item === "optimal yield")?"_yieldtypes_":"_optimal_nutrients_"
                                 }
                                 {
                                     item = (item === "optimal yield")?"optimal": item
                                 }
+                                
                     
                                 <WMSTileLayer
+                                    key={"fertilizer_etet_" + props.crop + layerType  + item +"_"+ props.scenario}
                                     layers={"fertilizer_et:et_" + props.crop + layerType  + item +"_"+ props.scenario}
                                     attribution=''
                                     url={url_service}
@@ -189,6 +209,10 @@ function Map(props) {
                                     eventHandlers={{
                                         add: (e) => {
                                           onLayerChange(e.target.options.layers);
+                                          console.log(item);
+                                          console.log(e);
+                                          setLastSelected(item);
+                                          console.log(lastSelected);
                                         }
                                       }}
                                     
