@@ -1,6 +1,6 @@
 import React from 'react';
 import L from "leaflet";
-import { MapContainer, TileLayer, LayersControl, WMSTileLayer, ScaleControl} from 'react-leaflet';
+import { MapContainer, TileLayer, LayersControl, WMSTileLayer, ScaleControl, GeoJSON} from 'react-leaflet';
 import "leaflet-easyprint";
 import GeoFeatures from '../../services/GeoFeatures';
 import Configuration from "../../conf/Configuration";
@@ -199,7 +199,7 @@ function Map(props) {
                                 
                     
                                 <WMSTileLayer
-                                    key={"fertilizer_etet_" + props.crop + layerType  + item +"_"+ props.scenario}
+                                    key={"fertilizer_et:et_" + props.crop + layerType  + item +"_"+ props.scenario}
                                     layers={"fertilizer_et:et_" + props.crop + layerType  + item +"_"+ props.scenario}
                                     attribution=''
                                     url={url_service}
@@ -257,8 +257,45 @@ function Map(props) {
                                     />
                                 </BaseLayer>
                             })
-                            :
+                            : props.type === "location_report" ?
                             
+                                 <BaseLayer key={props.type} name={"location"}>
+                                    <WMSTileLayer
+                                        //layers={"fertilizer_et:Admin_fertilizerAdvisoryZone1"}
+                                        attribution=''
+                                        url={url_service}
+                                        format={"image/png"}
+                                        transparent={true}
+                                        // params={{'time': props.forecast}}
+                                        // eventHandlers={{
+                                        //     add: (e) => {
+                                        //       onLayerChange(e.target.options.layers);
+                                              
+                                        //     }
+                                        //   }}
+                                    />
+                                </BaseLayer>
+                            
+                            : props.type === "seasonal_dominant" ?
+                            
+                                 <BaseLayer key={props.type} name={"dominant"}>
+                                    <WMSTileLayer
+                                        layers={"aclimate_et:seasonal_country_et_dominant"}
+                                        attribution=''
+                                        url={'https://geo.aclimate.org/geoserver/aclimate_et/wms'}
+                                        format={"image/png"}
+                                        transparent={true}
+                                        // params={{'time': props.forecast}}
+                                        // eventHandlers={{
+                                        //     add: (e) => {
+                                        //       onLayerChange(e.target.options.layers);
+                                              
+                                        //     }
+                                        //   }}
+                                    />
+                                </BaseLayer>
+                            
+                            :// props.type === "recommendation" ?
                                 <BaseLayer key={"recommendation_"} name={"recommendation"}>
                                     <WMSTileLayer
                                         layers={"fertilizer_et:et_wheat_fertilizer_recommendation_normal"}
@@ -274,6 +311,7 @@ function Map(props) {
                                         //   }}
                                     />
                                 </BaseLayer>
+                                
                             
 
                     }
@@ -286,6 +324,9 @@ function Map(props) {
                 <DrawControl
                 setPolygonCoords={setPolygonCoords}
                 />
+            
+
+            {props.geo ? <GeoJSON attribution="" key={"advisory_geojson"} data={props.geo} /> : <GeoJSON attribution="" />}
       
             </MapContainer>
            
