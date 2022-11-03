@@ -9,27 +9,99 @@ function Home() {
 
     return (
         <main>
-            <div className='row'>
-                <div className='col-lg-12'>
-                    <div className="carousel-item active">
-                        <img className='bd-placeholder-img' width="100%" height="100%" aria-hidden="true" alt="" src={landscape} />
-                        <div className="container">
-                            <div className="carousel-caption">
-                                <h1 className='font-link'>NextGen Agroadvisory</h1>
-                                <p className='font-link-body'>
-                                    NextGenAgroadvisory is a project designed to develop location-, context-, and climate- specific agricultural
-                                    advisories particularly related to optimal fertilizer application, integrated soil fertility management (ISFM),
-                                    climate information service, climate smart agricultural activities (CSA), pest and disease surveillance, and other
-                                    agricultural investments in Ethiopia. It is a project by the Alliance of Bioversity International and the International
-                                    Center for Tropical Agriculture (CIAT) in partnership with support of SSHI (BMGF), EiA (oneCGIAR initiative),
-                                    AICCRA (World Bank), and SI-MFS (oneCGIAR initiative).
-                                </p>
-                            </div>
-                        </div>
+            <br/>
+            <div className='container'>
+                <div className='row'>
+                    <div className='col'>
+                        
+                                    <h1 className='font-link text-center'>NextGen Agroadvisory</h1>
+                                    <p className='font-link-body text-center'>
+                                        NextGenAgroadvisory is a project designed to develop location-, context-, and climate- specific agricultural
+                                        advisories particularly related to optimal fertilizer application, integrated soil fertility management (ISFM),
+                                        climate information service, climate smart agricultural activities (CSA), pest and disease surveillance, and other
+                                        agricultural investments in Ethiopia. It is a project by the Alliance of Bioversity International and the International
+                                        Center for Tropical Agriculture (CIAT) in partnership with support of SSHI (BMGF), EiA (oneCGIAR initiative),
+                                        AICCRA (World Bank), and SI-MFS (oneCGIAR initiative).
+                                    </p>
+
+                        
+                                
                     </div>
+
+                </div>
+                <div className='row row-content mt-5'>
+                    <form>
+                        <div className='row form-group'>
+                            <div className='col-6'>
+                                <label>Region</label>
+                                <select class="form-select" aria-label="Disabled select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+
+                            </div>
+                            <div className='col-6'>
+                                <label>Zone</label>
+                                <select className="form-select" aria-label="Disabled select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+
+                            </div>
+                            <div className='col-6 mt-4'>
+                                <label>Woreda</label>
+                                <select className="form-select" aria-label="Disabled select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+
+                            </div>
+                            <div className='col-6 mt-4'>
+                                <label>Kebele</label>
+                                <select className="form-select" aria-label="Disabled select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+
+                            </div>
+
+                            <div className="row form-check mt-4">
+                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                                <label className="form-check-label" for="flexCheckDefault">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div className="row form-check mt-4">
+                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                                <label className="form-check-label" for="flexCheckDefault">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div className="row form-check mt-4">
+                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                                <label className="form-check-label" for="flexCheckDefault">
+                                    Default checkbox
+                                </label>
+                            </div>
+
+                        </div>
+
+
+
+                    </form>
+
                 </div>
 
             </div>
+            
             {
                 /* 
                 <div id="myCarousel" className="carousel slide" data-bs-ride="carousel">
@@ -61,31 +133,8 @@ function Home() {
             </div>
                 */
             }
-            <br />
-            <div className="container marketing">
-                <div className="row">
-                    <div className="col-lg-4">
-                        <img className="bd-placeholder-img rounded-circle" alt="" src={soil_climate_specific} width="140" height="140" role="img" />
-                        <h2 className='font-link'>Site specific</h2>
-                        <p className='font-link-body'>The fertilizer advisory is site-specific that accounts the local soil topography, climate condition.</p>
-                        <p></p>
-                    </div>
-                    <div className="col-lg-4">
-                        <img className="bd-placeholder-img rounded-circle" alt="" src={segmentation} width="140" height="140" role="img" />
-                        <h2 className='font-link'>Farmer segmentation</h2>
-                        <p className='font-link-body'>It is context specific that provides targeted advisory for various segments of the society based on gender and resource endowment.</p>
-                        <p></p>
-                    </div>
-                    <div className="col-lg-4">
-                        <img className="bd-placeholder-img rounded-circle" alt="" src={season_specific} width="140" height="140" role="img" />
-                        <h2 className='font-link'>Season smart</h2>
-                        <p className='font-link-body'>It is season-smart in which the advisories are based on the next growing period forecast weather conditions.</p>
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-            
-                <h1 className='text-center font-link'>Acknowledgements</h1>
+           
+        
            
         </main>
     );

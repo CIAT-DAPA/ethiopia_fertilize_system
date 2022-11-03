@@ -5,9 +5,11 @@ body {
 
 .font-link {
     font-family: 'Poppins', serif;
+    color: rgb(0, 0, 99);
 }
 
 .font-link-body {
     font-family: 'Poppins', serif;
+    color: rgb(0, 0, 99);
     font-size: 15px;
 }
