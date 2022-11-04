@@ -60,7 +60,7 @@ function Report() {
             <section className='container'>
                 <div className="d-flex justify-content-between">
                     <h4>Report</h4>
-                    <button type="button" class="btn btn-primary">Export</button>
+                    <button type="button" className="btn btn-primary">Export</button>
                 </div>
                     
                 <div className='row'>

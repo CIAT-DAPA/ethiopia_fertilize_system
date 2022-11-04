@@ -5,16 +5,20 @@ import landscape from '../../assets/images/landscape.jpg';
 import soil_climate_specific from '../../assets/images/soil_climate_specific.jpg';
 import season_specific from '../../assets/images/season_specific.jpg';
 import segmentation from '../../assets/images/segmentation.jpg';
+import Map from '../../components/map/Map';
+
 function Home() {
+    const [map_init, setMap_init] = React.useState({ center: [9.3988271, 39.9405962], zoom: 5 });
 
     return (
         <main>
+            <br/>
             <br/>
             <div className='container'>
                 <div className='row'>
                     <div className='col'>
                         
-                                    <h1 className='font-link text-center'>NextGen Agroadvisory</h1>
+                                    <h1 className='font-link text-center'><b>NextGen Agroadvisory</b></h1>
                                     <p className='font-link-body text-center'>
                                         NextGenAgroadvisory is a project designed to develop location-, context-, and climate- specific agricultural
                                         advisories particularly related to optimal fertilizer application, integrated soil fertility management (ISFM),
@@ -29,13 +33,14 @@ function Home() {
                     </div>
 
                 </div>
-                <div className='row row-content mt-5'>
-                    <form>
+                <div className='row row-content mt-5 font-link-body'>
+                    <form className='col-6'>
+                        <p>Choose a location</p>
                         <div className='row form-group'>
                             <div className='col-6'>
-                                <label>Region</label>
-                                <select class="form-select" aria-label="Disabled select example">
-                                    <option selected>Open this select menu</option>
+                                <b>Region</b>
+                                <select className="form-select" aria-label="Disabled select example">
+                               
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
@@ -43,9 +48,9 @@ function Home() {
 
                             </div>
                             <div className='col-6'>
-                                <label>Zone</label>
+                                <b>Zone</b>
                                 <select className="form-select" aria-label="Disabled select example">
-                                    <option selected>Open this select menu</option>
+                                   
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
@@ -53,9 +58,9 @@ function Home() {
 
                             </div>
                             <div className='col-6 mt-4'>
-                                <label>Woreda</label>
+                                <b>Woreda</b>
                                 <select className="form-select" aria-label="Disabled select example">
-                                    <option selected>Open this select menu</option>
+                                    
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
@@ -63,9 +68,8 @@ function Home() {
 
                             </div>
                             <div className='col-6 mt-4'>
-                                <label>Kebele</label>
+                                <b>Kebele</b>
                                 <select className="form-select" aria-label="Disabled select example">
-                                    <option selected>Open this select menu</option>
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
@@ -74,22 +78,31 @@ function Home() {
                             </div>
 
                             <div className="row form-check mt-4">
-                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                                <label className="form-check-label" for="flexCheckDefault">
-                                    Default checkbox
-                                </label>
+                                <div className='col 12'>
+                                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                                    <label className="form-check-label" htmlFor="flexCheckDefault">
+                                        Advisory Fertilizer
+                                    </label>
+
+                                </div>
                             </div>
-                            <div className="row form-check mt-4">
-                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                                <label className="form-check-label" for="flexCheckDefault">
-                                    Default checkbox
-                                </label>
+                            <div className="row form-check">
+                                <div className='col 12'>
+                                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                                    <label className="form-check-label" htmlFor="flexCheckDefault">
+                                        Advisory Aclimate
+                                    </label>
+
+                                </div>
                             </div>
-                            <div className="row form-check mt-4">
-                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                                <label className="form-check-label" for="flexCheckDefault">
-                                    Default checkbox
-                                </label>
+                            <div className="row form-check">
+                                <div className='col 12'>
+                                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                                    <label className="form-check-label" htmlFor="flexCheckDefault">
+                                        Advisory ISFM
+                                    </label>
+
+                                </div>
                             </div>
 
                         </div>
@@ -97,6 +110,20 @@ function Home() {
 
 
                     </form>
+                    <div className='col-6'>
+                        <Map id="location_report" init={map_init} type={"location_report"} style={{ height: '300px' }}/>
+
+                    </div>
+                    <div className='row'>
+                        <div className='col d-flex justify-content-center mt-4 mb-4'>
+                        <button type="button" className="btn btn-primary">Advisory</button>
+                        
+                        </div>
+
+                    </div>
+
+                    
+
 
                 </div>
 

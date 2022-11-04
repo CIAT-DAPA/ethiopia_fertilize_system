@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux'
 
 import Menu from "./components/menu/Menu";
 import Footer from "./components/footer/Footer";
@@ -17,30 +18,34 @@ import Irrigation from './pages/irrigation/Irrigation';
 import Mechanization from './pages/mechanization/Mechanization';
 import BundledAAS from './pages/bundled_aas/BundledAAS';
 import Report from './pages/report/Report';
+import store from './redux/store/store';
 
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Provider store={store}>
+        <Router>
 
-        <div className="container-fluid">
-          <Menu />
-          <Routes>
-            <Route exact path='/' element={<Home />} />
-            <Route path='/fertilizer_advisories' element={<Fertilization />} />
-            <Route path='/isfm' element={<ISFM />} />
-            <Route path='/agroclimate' element={<Agroclimate />} />
-            <Route path='/pest_disease' element={<PestDisease />} />
-            <Route path='/csa' element={<CSA />} />
-            <Route path='/irrigation' element={<Irrigation />} />
-            <Route path='/mechanization' element={<Mechanization />} />
-            <Route path='/bundled_aas' element={<BundledAAS />} />
-            <Route path='/report' element={<Report />} />
-            <Route path='/about' element={<About />} />
-          </Routes>
-        </div>
-        <Footer />
-      </Router>
+          <div className="container-fluid">
+            <Menu />
+            <Routes>
+              <Route exact path='/' element={<Home />} />
+              <Route path='/fertilizer_advisories' element={<Fertilization />} />
+              <Route path='/isfm' element={<ISFM />} />
+              <Route path='/agroclimate' element={<Agroclimate />} />
+              <Route path='/pest_disease' element={<PestDisease />} />
+              <Route path='/csa' element={<CSA />} />
+              <Route path='/irrigation' element={<Irrigation />} />
+              <Route path='/mechanization' element={<Mechanization />} />
+              <Route path='/bundled_aas' element={<BundledAAS />} />
+              <Route path='/report' element={<Report />} />
+              <Route path='/about' element={<About />} />
+            </Routes>
+          </div>
+          <Footer />
+        </Router>
+
+      </Provider>
     );
   }
 
