@@ -6,6 +6,4 @@ const setReport = (homeForm) => {
         payload: homeForm
     }
 
-    
-
 }

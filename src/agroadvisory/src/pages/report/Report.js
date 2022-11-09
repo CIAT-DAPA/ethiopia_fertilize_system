@@ -1,6 +1,8 @@
 import React from 'react';
-import './Report.css'
 
+import { Carousel, CarouselItem } from 'react-bootstrap';
+
+import './Report.css'
 import MapHeader from '../../components/map_header/MapHeader';
 import Map from '../../components/map/Map';
 import GeoFeatures from '../../services/GeoFeatures';
@@ -56,40 +58,27 @@ function Report() {
 
     }
 
-    const SeasonalChart = () => {
+    const SeasonalChartCarousel = () => {
         return(
             <div className='col-4 mt-4' style={{backgroundColor: "white"}}>
                 <h4>Seasonal</h4>
-                <div id="carouselExampleControls" className="carousel carousel-dark slide" data-bs-ride="carousel">
-                    <div className="carousel-inner">
-                        {
-                            donutChartData.climate[0].data.map((value, i) => {
-                                console.log(value);
+                <Carousel variant="dark">
+                            
+                    {
+                
+                            donutChartData.climate[0].data.map(value => (
+                                <Carousel.Item>
+                                    <DonutChart data={value}/>
+                                </Carousel.Item>
 
-                                
-                                    i>0 ? <div className='carousel-item active'>
-                                            <DonutChart />
-                                        </div> : 
-                                        <div className='carousel-item'>
-                                            <DonutChart/>
-                                        </div>
-
-                                
-                            }
-                        )
+                            
+                            ))
                     }
+
+                </Carousel>
                        
+
                         
-                    </div>
-                    <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span className="visually-hidden">Previous</span>
-                    </button>
-                    <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span className="visually-hidden">Next</span>
-                    </button>
-                </div>    
             </div>
 
         )
@@ -110,7 +99,7 @@ function Report() {
                         <SeasonalDominant/>    
                 </div>
                 <div className='row'>
-                        <SeasonalChart/>
+                        <SeasonalChartCarousel/>
                            
                 </div>
 

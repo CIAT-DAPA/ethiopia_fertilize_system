@@ -3,11 +3,22 @@ import Chart from "react-apexcharts";
 
 function DonutChart({data}) {
 
-    console.log(data)
+    function toMonthName(monthNumber) {
+      const date = new Date();
+      date.setMonth(monthNumber - 1);
+    
+      return date.toLocaleString('en-US', {
+        month: 'long',
+      });
+    }
+
+    console.log(data.probabilities[0].below)
+    console.log(data.probabilities[0].normal)
+    console.log(data.probabilities[0].upper)
 
     let state = {
           
-        series: [0.546114998, 0.183562279, 0.270322762],
+        series: [data.probabilities[0].lower, data.probabilities[0].normal, data.probabilities[0].upper],
         options: {
           plotOptions: {
             pie: {
@@ -39,11 +50,11 @@ function DonutChart({data}) {
     return (
 
         
-        <div id="chart">
-            <h4 className='text-center'>2023</h4>
-            <h4 className='text-center'>January - February - March</h4>
+        <div id="donutChart" className='mb-5 ms-5 me-5'>
+            <h4 className='text-center'>{data.year}</h4>
+            <h4 className='text-center'>{toMonthName(data.month - 1)} - {toMonthName(data.month)} - {toMonthName(data.month + 1)}</h4>
             <h6 className='text-center'>Precipitation probabilities (%)</h6>
-            <Chart options={state.options} series={state.series} type="donut" height={300} width="350"/>
+            <Chart options={state.options} series={state.series} type="donut" height={300} width="350" />
         </div>
         
 

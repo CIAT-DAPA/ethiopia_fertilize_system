@@ -28,6 +28,11 @@
     height: 32rem;
   } */
   
+  .carousel {
+    width:430px;
+    height:380px;
+    margin: auto;
+  }
   
   /* MARKETING CONTENT
   -------------------------------------------------- */
@@ -86,3 +91,10 @@
     }
   }
    */
+
+   /* @media (max-width: 900px) {
+    .carousel {
+      width:auto;
+      height:auto;
+    }
+} */
