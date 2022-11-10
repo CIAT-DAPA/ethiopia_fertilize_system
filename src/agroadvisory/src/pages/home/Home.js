@@ -7,8 +7,28 @@ import season_specific from '../../assets/images/season_specific.jpg';
 import segmentation from '../../assets/images/segmentation.jpg';
 import Map from '../../components/map/Map';
 
+import { setReportInput } from '../../slices/reportSlice';
+
+import { useState } from 'react';
+
+//redux
+import {useDispatch} from 'react-redux';
+
 function Home() {
     const [map_init, setMap_init] = React.useState({ center: [9.3988271, 39.9405962], zoom: 5 });
+
+    const [formValues, setFormValues] = useState();
+
+    const dispatch = useDispatch();
+
+    const onFormSubmit = (e) =>{
+        e.preventDefault();
+        console.log(formValues);
+        dispatch(setReportInput({formValues}));
+
+    }
+
+
 
     return (
         <main>
@@ -34,12 +54,12 @@ function Home() {
 
                 </div>
                 <div className='row row-content mt-5 font-link-body'>
-                    <form className='col-6'>
+                    <form className='col-6' onSubmit={onFormSubmit}>
                         <p>Choose a location</p>
                         <div className='row form-group'>
                             <div className='col-6'>
                                 <b>Region</b>
-                                <select className="form-select" aria-label="Disabled select example">
+                                <select className="form-select" aria-label="Disabled select example" onChange={e => setFormValues({ ...formValues, region: e.target.value })}>
                                
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
@@ -49,7 +69,7 @@ function Home() {
                             </div>
                             <div className='col-6'>
                                 <b>Zone</b>
-                                <select className="form-select" aria-label="Disabled select example">
+                                <select className="form-select" aria-label="Disabled select example" onChange={e => setFormValues({ ...formValues, zone: e.target.value })}>
                                    
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
@@ -59,7 +79,7 @@ function Home() {
                             </div>
                             <div className='col-6 mt-4'>
                                 <b>Woreda</b>
-                                <select className="form-select" aria-label="Disabled select example">
+                                <select className="form-select" aria-label="Disabled select example" onChange={e => setFormValues({ ...formValues, woreda: e.target.value })}>
                                     
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
@@ -69,7 +89,7 @@ function Home() {
                             </div>
                             <div className='col-6 mt-4'>
                                 <b>Kebele</b>
-                                <select className="form-select" aria-label="Disabled select example">
+                                <select className="form-select" aria-label="Disabled select example" onChange={e => setFormValues({ ...formValues, kebele: e.target.value })}>
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
@@ -79,7 +99,7 @@ function Home() {
 
                             <div className="row form-check mt-4">
                                 <div className='col 12'>
-                                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" onChange={e => setFormValues({ ...formValues, ad_fertilizer: e.target.checked })}/>
                                     <label className="form-check-label" htmlFor="flexCheckDefault">
                                         Advisory Fertilizer
                                     </label>
@@ -109,16 +129,16 @@ function Home() {
 
 
 
+                        <div className='row'>
+                            <div className='col d-flex justify-content-center mt-4 mb-4'>
+                            <button type="submit" className="btn btn-primary">Advisory</button>
+                            
+                            </div>
+
+                        </div>
                     </form>
                     <div className='col-6'>
                         <Map id="location_report" init={map_init} type={"location_report"} style={{ height: '300px' }}/>
-
-                    </div>
-                    <div className='row'>
-                        <div className='col d-flex justify-content-center mt-4 mb-4'>
-                        <button type="button" className="btn btn-primary">Advisory</button>
-                        
-                        </div>
 
                     </div>
 

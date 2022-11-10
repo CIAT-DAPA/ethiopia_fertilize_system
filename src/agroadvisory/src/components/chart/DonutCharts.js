@@ -12,7 +12,7 @@ function DonutChart({data}) {
       });
     }
 
-    console.log(data.probabilities[0].below)
+    console.log(data.probabilities[0].lower)
     console.log(data.probabilities[0].normal)
     console.log(data.probabilities[0].upper)
 
