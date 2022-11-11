@@ -17,7 +17,17 @@ import {useDispatch} from 'react-redux';
 function Home() {
     const [map_init, setMap_init] = React.useState({ center: [9.3988271, 39.9405962], zoom: 5 });
 
-    const [formValues, setFormValues] = useState();
+    const [formValues, setFormValues] = useState({
+        type: null,
+        region: null,
+        zone: null,
+        woreda: null,
+        kebele: null,
+        ad_fertilizer: null,
+        ad_aclimate: null,
+        ad_isfm: null
+  
+      });
 
     const dispatch = useDispatch();
 
@@ -108,7 +118,7 @@ function Home() {
                             </div>
                             <div className="row form-check">
                                 <div className='col 12'>
-                                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" onChange={e => setFormValues({ ...formValues, ad_aclimate: e.target.checked })}/>
                                     <label className="form-check-label" htmlFor="flexCheckDefault">
                                         Advisory Aclimate
                                     </label>
@@ -117,7 +127,7 @@ function Home() {
                             </div>
                             <div className="row form-check">
                                 <div className='col 12'>
-                                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" onChange={e => setFormValues({ ...formValues, ad_isfm: e.target.checked })}/>
                                     <label className="form-check-label" htmlFor="flexCheckDefault">
                                         Advisory ISFM
                                     </label>

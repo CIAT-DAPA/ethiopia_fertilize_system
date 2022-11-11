@@ -260,7 +260,7 @@ function Map(props) {
                             : props.type === "location_report" ?
                             
                                  <BaseLayer key={props.type} name={"location"}>
-                                    <WMSTileLayer
+                                    {/* <WMSTileLayer
                                         //layers={"fertilizer_et:Admin_fertilizerAdvisoryZone1"}
                                         attribution=''
                                         url={url_service}
@@ -273,7 +273,8 @@ function Map(props) {
                                               
                                         //     }
                                         //   }}
-                                    />
+                                    /> */}
+                                    {props.geo ? <GeoJSON attribution="" key={"advisory_geojson"} data={props.geo} /> : <GeoJSON attribution="" />}
                                 </BaseLayer>
                             
                             : props.type === "seasonal_dominant" ?
@@ -326,7 +327,7 @@ function Map(props) {
                 />
             
 
-            {props.geo ? <GeoJSON attribution="" key={"advisory_geojson"} data={props.geo} /> : <GeoJSON attribution="" />}
+            
       
             </MapContainer>
            

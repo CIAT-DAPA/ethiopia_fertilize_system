@@ -2,12 +2,26 @@ import { createSlice } from'@reduxjs/toolkit';
 
 export const reportSlice = createSlice({
     name: 'report',
-    initialState: {},
+    initialState: {
+      type: null,
+      region: null,
+      zone: null,
+      woreda: null,
+      kebele: null,
+      ad_fertilizer: null,
+      ad_aclimate: null,
+      ad_isfm: null
+
+    },
     reducers: {
        // Reducer y acciones asociadas.
-       setReportInput: (state, action) => action.payload
+       setReportInput: (state, action) => {
 
-       
+        const { type, region, zone, woreda, kebele, ad_fertilizer, ad_aclimate, ad_isfm } = action.payload.formValues;
+        Object.assign(state, { type, region, zone, woreda, kebele, ad_fertilizer, ad_aclimate, ad_isfm });
+        console.log(state);
+
+       }
     },
   });
 
