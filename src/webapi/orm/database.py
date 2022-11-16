@@ -39,4 +39,4 @@ class Metric(Document):
     adm4 = ReferenceField(Adm4)
     forecast = ReferenceField(Forecast)
     type = ReferenceField(MetricType)
-    values = DictField(required=True)
+    values = ListField(DictField(required=True))
