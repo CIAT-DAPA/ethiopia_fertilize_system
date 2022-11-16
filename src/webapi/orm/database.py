@@ -21,6 +21,7 @@ class Adm3(Document):
 class Adm4(Document):
     name = StringField(required=True)
     ext_id = StringField(required=False)
+    aclimate_id = StringField(required=False)
     adm3 = ReferenceField(Adm3)
 
 class Crop(Document):
@@ -31,7 +32,7 @@ class Forecast(Document):
     crop = ReferenceField(Crop)
 
 class MetricType(Document):
-    date = DateTimeField(required=True)
+    name = StringField(required=True)
 
 class Metric(Document):
     # kebele
@@ -39,4 +40,3 @@ class Metric(Document):
     forecast = ReferenceField(Forecast)
     type = ReferenceField(MetricType)
     values = DictField(required=True)
-    scenario = IntField()

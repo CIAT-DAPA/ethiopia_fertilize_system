@@ -11,6 +11,7 @@ from api_modules.kebele import Kebele
 from api_modules.woreda import Woreda
 from api_modules.clipping_raster import ClippingRaster
 # New Modules
+from mongoengine import *
 from api_modules.adm1 import AdministrativeLevel1
 from api_modules.adm2 import AdministrativeLevel2
 from api_modules.adm3 import AdministrativeLevel3
@@ -48,6 +49,9 @@ api.add_resource(Metrics, '/metrics')
 
 
 if __name__ == '__main__':
+    connect(host=config['CONNECTION_DB'])
+    print("Connected DB")
+    
     if config['DEBUG']:
         app.run(threaded=True, port=config['PORT'], debug=config['DEBUG'])
     else:
