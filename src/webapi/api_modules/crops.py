@@ -14,18 +14,18 @@ class Crops(Resource):
         ---
         responses:
           200:
-            description: List of the crops
+            description: Crop
             schema:
-              id: Crops
+              id: Crop
               properties:
-                _id:
+                id:
                   type: string
-                  description: Id crop
+                  description: Crop ID
                 name:
                   type: string
-                  description: Crop's name
+                  description: Crop name
         """
         q_set = None
         q_set = Crop.objects()
-        json_data = q_set.to_json()
-        return json.loads(json_data)
+        json_data = [{"id":str(x.id),"name":x.name} for x in q_set]
+        return json_data

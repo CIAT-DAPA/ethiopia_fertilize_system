@@ -40,10 +40,10 @@ api.add_resource(ClippingRaster, '/clip_raster')
 api.add_resource(AdministrativeLevel1, '/adm1')
 api.add_resource(AdministrativeLevel2, '/adm2/<adm1>')
 api.add_resource(AdministrativeLevel3, '/adm3/<adm2>')
-#api.add_resource(AdministrativeLevel4, '/adm4')
-#api.add_resource(Crops, '/crops')
-#api.add_resource(Forecasts, '/forecasts')
-#api.add_resource(Metrics, '/metrics')
+api.add_resource(AdministrativeLevel4, '/adm4/<adm3>')
+api.add_resource(Crops, '/crops')
+api.add_resource(Forecasts, '/forecast/<crop>')
+api.add_resource(Metrics, '/metrics/<adm4>')
 
 
 

@@ -10,39 +10,38 @@ class AdministrativeLevel4(Resource):
 
     def get(self, adm3 = None):
         """
-        Get all kebeles from database
+        Get all Administrative levels 4 from database (Kebele)
         ---
         parameters:
           - in: path
             name: adm3
             type: string
             required: false
-        responses:
-          200:
-            description: List of regions
-            schema:
-              id: Kebele
-              properties:
-                _id:
-                  type: string
-                  description: Id Region
-                name:
-                  type: string
-                  description: Region's name
-                ext_id:
-                  type: string
-                  description: Extern Id to identify region
-                aclimate_id:
-                  type: string
-                  description: Id into aclimate system
-                adm3:
-                  type: string
-                  description: Id of the woreda
+        200:
+          description: Administrative levels 4
+          schema:
+            id: Adm3
+            properties:
+              id:
+                type: string
+                description: Id Administrative level 4
+              name:
+                type: string
+                description: Administrative level 4 name
+              ext_id:
+                type: string
+                description: Extern Id to identify Administrative level 4
+              aclimate_id:
+                type: string
+                description: Id to identify Administrative level 4 in Aclimate Platform
+              adm3:
+                type: string
+                description: Id Administrative level 3
         """
         q_set = None
         if adm3 is None:
             q_set = Adm4.objects()
         else:
             q_set = Adm4.objects(adm3=adm3)
-        json_data = q_set.to_json()
-        return json.loads(json_data)
+        json_data = [{"id":str(x.id),"name":x.name,"ext_id":x.ext_id,"aclimate_id":x.aclimate_id,"adm3":str(x.adm3.id)} for x in q_set]
+        return json_data

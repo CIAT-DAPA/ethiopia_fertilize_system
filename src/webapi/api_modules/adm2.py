@@ -40,5 +40,5 @@ class AdministrativeLevel2(Resource):
             q_set = Adm2.objects()
         else:
             q_set = Adm2.objects(adm1=adm1)
-        json_data = [{"id":str(x.id),"name":x.name,"ext_id":x.ext_id,"adm1":str(x.adm1)} for x in q_set]
+        json_data = [{"id":str(x.id),"name":x.name,"ext_id":x.ext_id,"adm1":str(x.adm1.id)} for x in q_set]
         return json_data

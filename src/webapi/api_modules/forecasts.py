@@ -1,6 +1,7 @@
-from flask import Flask, jsonify
-from flask_restful import Resource
+from flask import Flask, request
+from flask_restful import Resource, reqparse
 from orm.database import Forecast
+import datetime
 import json
 
 class Forecasts(Resource):
@@ -8,35 +9,35 @@ class Forecasts(Resource):
     def __init__(self):
         super().__init__()
 
-    def get(self, date = None):
+    def get(self, crop = None):
         """
-        Get all forecast from database
+        Get forecast list from database
         ---
         parameters:
           - in: path
-            name: date
-            type: datetime
+            name: crop
+            type: string
             required: false
-        responses:
-          200:
-            description: List of forecast
-            schema:
-              id: Forecast
-              properties:
-                _id:
-                  type: string
-                  description: Id Forecast
-                date:
-                  type: datetime
-                  description: Date of forecast
-                crop:
-                  type: string
-                  description: Id crop
+        200:
+          description: Forecast
+          schema:
+            id: Forecast
+            properties:
+              id:
+                type: string
+                description: Id Forecast
+              date:
+                type: datetime
+                description: Date of forecast
+              crop:
+                type: string
+                description: Id crop
         """
         q_set = None
-        if date is None:
+        if crop is None:
             q_set = Forecast.objects()
         else:
-            q_set = Forecast.objects(date=date)
-        json_data = q_set.to_json()
-        return json.loads(json_data)
+            print("entro 2")
+            q_set = Forecast.objects(crop=crop)
+        json_data = [{"id":str(x.id),"date":x.date.strftime("%Y-%m"),"crop":str(x.crop.id)} for x in q_set]
+        return json_data
