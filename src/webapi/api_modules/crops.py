@@ -12,7 +12,6 @@ class Crops(Resource):
         """
         Get all crops from database
         ---
-        parameters:
         responses:
           200:
             description: List of the crops

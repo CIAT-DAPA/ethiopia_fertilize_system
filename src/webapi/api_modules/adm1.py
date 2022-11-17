@@ -10,26 +10,28 @@ class AdministrativeLevel1(Resource):
 
     def get(self):
         """
-        Get all adm1 from database
+        Get all Administrative levels 1 from database (Regions)
         ---
-        parameters:
         responses:
           200:
-            description: List of regions
+            description: Administrative level 1
             schema:
-              id: Region
+              id: Adm1
               properties:
-                _id:
+                id:
                   type: string
-                  description: Id Region
+                  description: Id Administrative level 1
                 name:
                   type: string
-                  description: Region's name
+                  description: Administrative level 1 name
                 ext_id:
                   type: string
-                  description: Extern Id to identify region
+                  description: Extern Id to identify Administrative level 1
         """
         q_set = None
         q_set = Adm1.objects()
-        json_data = q_set.to_json()
-        return json.loads(json_data)
+        json_data = [{"id":str(x.id),"name":x.name,"ext_id":x.ext_id} for x in q_set]
+        return json_data
+
+
+

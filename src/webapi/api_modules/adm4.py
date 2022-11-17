@@ -13,6 +13,10 @@ class AdministrativeLevel4(Resource):
         Get all kebeles from database
         ---
         parameters:
+          - in: path
+            name: adm3
+            type: string
+            required: false
         responses:
           200:
             description: List of regions

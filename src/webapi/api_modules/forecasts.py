@@ -13,6 +13,10 @@ class Forecasts(Resource):
         Get all forecast from database
         ---
         parameters:
+          - in: path
+            name: date
+            type: datetime
+            required: false
         responses:
           200:
             description: List of forecast
