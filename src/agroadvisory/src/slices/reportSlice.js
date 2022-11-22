@@ -18,14 +18,19 @@ export const reportSlice = createSlice({
        setReportInput: (state, action) => {
 
         const { type, region, zone, woreda, kebele, ad_fertilizer, ad_aclimate, ad_isfm } = action.payload.formValues;
+       
+        // state = {
+        //   ...action.payload.formValues
+        // }
+      
+
         Object.assign(state, { type, region, zone, woreda, kebele, ad_fertilizer, ad_aclimate, ad_isfm });
-        console.log(state);
+        return state;
 
        }
     },
   });
 
-console.log(reportSlice);
   // Exportamos los actions desde el slice que acabamos de crear:
 export const { setReportInput } = reportSlice.actions;
 

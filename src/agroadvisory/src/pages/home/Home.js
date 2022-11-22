@@ -33,7 +33,6 @@ function Home() {
 
     const onFormSubmit = (e) =>{
         e.preventDefault();
-        console.log(formValues);
         dispatch(setReportInput({formValues}));
 
     }

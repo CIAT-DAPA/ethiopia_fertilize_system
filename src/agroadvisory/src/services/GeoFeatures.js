@@ -32,7 +32,6 @@ class GeoFeatures {
 
     geojson(ids){
         const url = Configuration.get_geoserver_url()+ "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=fertilizer_et:Admin_fertilizerAdvisoryZone1&maxFeatures=50&outputFormat=application/json&CQL_FILTER=ws_id in (" + ids + ")&SRSNAME=EPSG:4326";
-        console.log(url);
         return axios.get(url, {})
             .then(response => {
                 return response.data;

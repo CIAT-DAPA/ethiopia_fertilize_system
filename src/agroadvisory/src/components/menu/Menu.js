@@ -1,28 +1,29 @@
 import React from 'react';
 import './Menu.css';
+import {Link} from 'react-router-dom'
 
 function Menu() {
     return (
         <header>
             <nav className="navbar navbar-expand-md navbar-light fixed-top bg-light">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="/">NextGen Agroadvisory</a>
+                    <Link className="navbar-brand" to="/">NextGen Agroadvisory</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarCollapse">
                         <ul className="navbar-nav me-auto mb-2 mb-md-0">
                             <li className="nav-item">
-                                <a className="nav-link" href="/fertilizer_advisories">Fertilizer</a>
+                                <Link className="nav-link" to="/fertilizer_advisories">Fertilizer</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/agroclimate">Agroclimate</a>
+                                <Link className="nav-link" to="/agroclimate">Agroclimate</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/isfm">ISFM</a>
+                                <Link className="nav-link" to="/isfm">ISFM</Link>
                             </li>
                             <li className="nav-item">
-                               <a className="nav-link" href="/irrigation">Irrigation scheduling</a>
+                               <Link className="nav-link" to="/irrigation">Irrigation scheduling</Link>
                            </li>
                             {/* <li className="nav-item">
                                 <a className="nav-link" href="/pest_disease">Pest and disease surveillance</a>
@@ -40,22 +41,22 @@ function Menu() {
                                 More tools
                                 </a>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a className="dropdown-item" href="/csa">CSA</a>
-                                    <a className="dropdown-item" href="/pest_disease">Pest and disease surveillance</a>
-                                    <a className="dropdown-item"href="/mechanization">Mechanization</a>
+                                    <Link className="dropdown-item" to="/csa">CSA</Link>
+                                    <Link className="dropdown-item" to="/pest_disease">Pest and disease surveillance</Link>
+                                    <Link className="dropdown-item" to="/mechanization">Mechanization</Link>
                                 </div>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/bundled_aas">Bundled AAS</a>
+                                <Link className="nav-link" to="/bundled_aas">Bundled AAS</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/report">Report</a>
+                                <Link className="nav-link" to="/report">Report</Link>
                             </li>
                              
                         </ul>
                            
                             <span className="navbar-text">
-                                <a className="nav-link font-link" href="/about">About</a>
+                                <Link className="nav-link font-link" to="/about">About</Link>
                             </span>
 
                             

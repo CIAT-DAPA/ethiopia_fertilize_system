@@ -12,10 +12,6 @@ function DonutChart({data}) {
       });
     }
 
-    console.log(data.probabilities[0].lower)
-    console.log(data.probabilities[0].normal)
-    console.log(data.probabilities[0].upper)
-
     let state = {
           
         series: [data.probabilities[0].lower, data.probabilities[0].normal, data.probabilities[0].upper],
