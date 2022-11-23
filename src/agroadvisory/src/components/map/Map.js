@@ -326,9 +326,13 @@ function Map(props) {
                 setPolygonCoords={setPolygonCoords}
                 />
             
-
+                {
+                    console.log(props.geo)
+                }
             
-                {props.geo ? <GeoJSON attribution="" key={"advisory_geojson"} data={props.geo.value} /> : <GeoJSON attribution="" />}
+                {
+                props.geo ? <GeoJSON attribution="" key={"advisory_geojson"} data={props.geo} /> : <GeoJSON attribution="" />
+                }
             </MapContainer>
            
         </>
