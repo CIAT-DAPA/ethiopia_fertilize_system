@@ -178,13 +178,13 @@ function Map(props) {
 
             }
         
-            <MapContainer center={props.init.center} zoom={props.init.zoom} zoomControl={false} style={{ height: '500px' }} scrollWheelZoom={true} whenReady={handleEventsMap}>
+            <MapContainer center={props.init.center} zoom={props.init.zoom} zoomControl={false} style={props.style} scrollWheelZoom={true} whenReady={handleEventsMap}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     
                 />
-                <LayersControl position="topright" >
+                <LayersControl position="topright" collapsed={false}>
                     {props.type === "nutrients_yield" ?
                         nutrients_yield.map((item) => {
                            
@@ -274,7 +274,7 @@ function Map(props) {
                                         //     }
                                         //   }}
                                     /> */}
-                                    {props.geo ? <GeoJSON attribution="" key={"advisory_geojson"} data={props.geo} /> : <GeoJSON attribution="" />}
+                                    
                                 </BaseLayer>
                             
                             : props.type === "seasonal_dominant" ?
@@ -328,7 +328,7 @@ function Map(props) {
             
 
             
-      
+                {props.geo ? <GeoJSON attribution="" key={"advisory_geojson"} data={props.geo.value} /> : <GeoJSON attribution="" />}
             </MapContainer>
            
         </>
