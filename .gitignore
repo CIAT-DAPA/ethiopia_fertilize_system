@@ -19,5 +19,15 @@
 
 docker/data/
 
+/data/inputs/Admin_fertilizerAdvisoryZone1
+/data/inputs/Admin_fertilizerAdvisoryZone1/*.csv
+/data/inputs/Admin_fertilizerAdvisoryZone1/*.xls
+/data/inputs/Admin_fertilizerAdvisoryZone1/*.xlsx
+/data/inputs/Admin_fertilizerAdvisoryZone1/*.tif
+/data/inputs/Admin_fertilizerAdvisoryZone1/*.shp
+
+/data/inputs/forecast
+/data/inputs/forecast/
+
 # VENV
 /webapi

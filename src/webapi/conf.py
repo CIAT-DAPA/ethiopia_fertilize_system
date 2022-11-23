@@ -13,6 +13,7 @@ if os.getenv('DEBUG', "true").lower() == "true":
     config['FERTILIZER_RASTERS_DIR'] = "./raster_files/cropped/"
     config['HOST'] = 'localhost'
     config['PORT'] = 5000
+    config['CONNECTION_DB']='mongodb://root:s3cr3t@localhost:27017/nextgen?authSource=admin'
 else:
     config['DEBUG'] = False
     config['WORKSPACE'] = os.getenv('WORKSPACE')
@@ -22,3 +23,4 @@ else:
     config['FERTILIZER_RASTERS_DIR'] = os.getenv('FERTILIZER_RASTERS_DIR')
     config['HOST'] = '0.0.0.0'
     config['PORT'] = os.getenv('PORT')
+    config['CONNECTION_DB']=os.getenv('CONNECTION_DB')
