@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from "axios";
 
 import './Home.css';
 import landscape from '../../assets/images/landscape.jpg';
@@ -6,6 +7,7 @@ import soil_climate_specific from '../../assets/images/soil_climate_specific.jpg
 import season_specific from '../../assets/images/season_specific.jpg';
 import segmentation from '../../assets/images/segmentation.jpg';
 import Map from '../../components/map/Map';
+import Configuration from "../../conf/Configuration";
 
 import { setReportInput } from '../../slices/reportSlice';
 
@@ -13,9 +15,12 @@ import { useState } from 'react';
 
 //redux
 import {useDispatch} from 'react-redux';
+import { current } from '@reduxjs/toolkit';
 
 function Home() {
     const [map_init, setMap_init] = React.useState({ center: [9.3988271, 39.9405962], zoom: 5 });
+    const [selectsValues, setSelectsValues] = React.useState();
+    const [disabledSelect, setDisabledSelect] = React.useState(true);
 
     const [formValues, setFormValues] = useState({
         type: null,
@@ -30,6 +35,56 @@ function Home() {
       });
 
     const dispatch = useDispatch();
+
+    React.useEffect(() => {
+        //Regions
+        if(!selectsValues){
+            axios.get(Configuration.get_url_api_base()+"adm1")
+                .then(response => {
+                    setSelectsValues({... selectsValues, regions: response.data})
+                    
+                    
+                });
+
+        }
+        if(formValues.region){
+            //Zones
+            axios.get(Configuration.get_url_api_base()+"adm2/"+formValues.region[0])
+                .then(response => {
+                    console.log(response);
+                    setSelectsValues({... selectsValues, zones: response.data})
+                    console.log(selectsValues);
+                    
+                });
+
+        }
+        
+        if(formValues.zone){
+            //Woredas
+            axios.get(Configuration.get_url_api_base()+"adm3/"+formValues.zone[0])
+                .then(response => {
+                    console.log(response);
+                    setSelectsValues({... selectsValues, woredas: response.data})
+                    console.log(selectsValues);
+                    
+                });
+
+        }
+
+        if(formValues.woreda){
+            //Kebeles
+            axios.get(Configuration.get_url_api_base()+"adm4/"+formValues.woreda[0])
+                .then(response => {
+                    console.log(response);
+                    setSelectsValues({... selectsValues, kebeles: response.data})
+                    console.log(selectsValues);
+                    
+                });
+
+        }
+
+
+    }, [formValues]);
 
     const onFormSubmit = (e) =>{
         e.preventDefault();
@@ -62,46 +117,55 @@ function Home() {
                     </div>
 
                 </div>
+                
                 <div className='row row-content mt-5 font-link-body'>
                     <form className='col-6' onSubmit={onFormSubmit}>
                         <p>Choose a location</p>
                         <div className='row form-group'>
                             <div className='col-6'>
                                 <b>Region</b>
-                                <select className="form-select" aria-label="Disabled select example" onChange={e => setFormValues({ ...formValues, region: e.target.value })}>
+                                <select className="form-select" aria-label="Disabled select example" onChange={e =>{setDisabledSelect(false); setFormValues({ ...formValues, region: e.target.value.split(",") })} }>
+                                    <option key={"region default"} value={null}>Select a region</option>
                                
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    {
+                                        selectsValues?.regions && selectsValues?.regions.map((currentRegion) => <option key={currentRegion.id} value={[currentRegion.id, currentRegion.name]}>{currentRegion.name}</option>)
+                                    }
                                 </select>
 
                             </div>
                             <div className='col-6'>
                                 <b>Zone</b>
-                                <select className="form-select" aria-label="Disabled select example" onChange={e => setFormValues({ ...formValues, zone: e.target.value })}>
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect} onChange={e => setFormValues({ ...formValues, zone: e.target.value.split(",") })}>
                                    
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    <option key={"zone default"} value={null}>Select a zone</option>
+                               
+                                    {
+                                        selectsValues?.zones && selectsValues?.zones.map((currentZone) => <option key={currentZone.id} value={[currentZone.id, currentZone.name]}>{currentZone.name}</option>)
+                                    }
                                 </select>
 
                             </div>
                             <div className='col-6 mt-4'>
                                 <b>Woreda</b>
-                                <select className="form-select" aria-label="Disabled select example" onChange={e => setFormValues({ ...formValues, woreda: e.target.value })}>
-                                    
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect} onChange={e => setFormValues({ ...formValues, woreda: e.target.value.split(",") })}>
+                                   
+                                    <option key={"woreda default"} value={null}>Select a zone</option>
+                               
+                                    {
+                                        selectsValues?.woredas && selectsValues?.woredas.map((currentWoreda) => <option key={currentWoreda.id} value={[currentWoreda.id, currentWoreda.name]}>{currentWoreda.name}</option>)
+                                    }
                                 </select>
 
                             </div>
                             <div className='col-6 mt-4'>
                                 <b>Kebele</b>
-                                <select className="form-select" aria-label="Disabled select example" onChange={e => setFormValues({ ...formValues, kebele: e.target.value })}>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect} onChange={e => setFormValues({ ...formValues, kebele: e.target.value.split(",") })}>
+                                   
+                                    <option key={"zone default"} value={null}>Select a zone</option>
+                               
+                                    {
+                                        selectsValues?.kebeles && selectsValues?.kebeles.map((currentKebele) => <option key={currentKebele.id} value={[currentKebele.id, currentKebele.name]}>{currentKebele.name}</option>)
+                                    }
                                 </select>
 
                             </div>
