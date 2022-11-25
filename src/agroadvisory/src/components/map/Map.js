@@ -327,10 +327,6 @@ function Map(props) {
                 />
             
                 {
-                    console.log(props.geo)
-                }
-            
-                {
                 props.geo ? <GeoJSON attribution="" key={"advisory_geojson"} data={props.geo} /> : <GeoJSON attribution="" />
                 }
             </MapContainer>

@@ -8,6 +8,7 @@ import season_specific from '../../assets/images/season_specific.jpg';
 import segmentation from '../../assets/images/segmentation.jpg';
 import Map from '../../components/map/Map';
 import Configuration from "../../conf/Configuration";
+import GeoFeatures from '../../services/GeoFeatures';
 
 import { setReportInput } from '../../slices/reportSlice';
 
@@ -20,7 +21,8 @@ import { current } from '@reduxjs/toolkit';
 function Home() {
     const [map_init, setMap_init] = React.useState({ center: [9.3988271, 39.9405962], zoom: 5 });
     const [selectsValues, setSelectsValues] = React.useState();
-    const [disabledSelect, setDisabledSelect] = React.useState(true);
+    const [disabledSelect, setDisabledSelect] = React.useState({z:true, w:true, k:true});
+    const [geoJson, setGeoJson] = React.useState();
 
     const [formValues, setFormValues] = useState({
         type: null,
@@ -51,9 +53,9 @@ function Home() {
             //Zones
             axios.get(Configuration.get_url_api_base()+"adm2/"+formValues.region[0])
                 .then(response => {
-                    console.log(response);
+                    
                     setSelectsValues({... selectsValues, zones: response.data})
-                    console.log(selectsValues);
+                    
                     
                 });
 
@@ -63,9 +65,9 @@ function Home() {
             //Woredas
             axios.get(Configuration.get_url_api_base()+"adm3/"+formValues.zone[0])
                 .then(response => {
-                    console.log(response);
+                    
                     setSelectsValues({... selectsValues, woredas: response.data})
-                    console.log(selectsValues);
+                    
                     
                 });
 
@@ -75,9 +77,9 @@ function Home() {
             //Kebeles
             axios.get(Configuration.get_url_api_base()+"adm4/"+formValues.woreda[0])
                 .then(response => {
-                    console.log(response);
+                    
                     setSelectsValues({... selectsValues, kebeles: response.data})
-                    console.log(selectsValues);
+                    
                     
                 });
 
@@ -124,7 +126,7 @@ function Home() {
                         <div className='row form-group'>
                             <div className='col-6'>
                                 <b>Region</b>
-                                <select className="form-select" aria-label="Disabled select example" onChange={e =>{setDisabledSelect(false); setFormValues({ ...formValues, region: e.target.value.split(",") })} }>
+                                <select className="form-select" aria-label="Disabled select example" onChange={e =>{setDisabledSelect({...disabledSelect, z:false}); setFormValues({ ...formValues, region: e.target.value.split(",") })} }>
                                     <option key={"region default"} value={null}>Select a region</option>
                                
                                     {
@@ -135,7 +137,7 @@ function Home() {
                             </div>
                             <div className='col-6'>
                                 <b>Zone</b>
-                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect} onChange={e => setFormValues({ ...formValues, zone: e.target.value.split(",") })}>
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.z} onChange={e => {setDisabledSelect({...disabledSelect, w:false}); setFormValues({ ...formValues, zone: e.target.value.split(",") })}}>
                                    
                                     <option key={"zone default"} value={null}>Select a zone</option>
                                
@@ -147,7 +149,7 @@ function Home() {
                             </div>
                             <div className='col-6 mt-4'>
                                 <b>Woreda</b>
-                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect} onChange={e => setFormValues({ ...formValues, woreda: e.target.value.split(",") })}>
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.w} onChange={e => {setDisabledSelect({...disabledSelect, k:false}); setFormValues({ ...formValues, woreda: e.target.value.split(",") })}}>
                                    
                                     <option key={"woreda default"} value={null}>Select a zone</option>
                                
@@ -159,7 +161,7 @@ function Home() {
                             </div>
                             <div className='col-6 mt-4'>
                                 <b>Kebele</b>
-                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect} onChange={e => setFormValues({ ...formValues, kebele: e.target.value.split(",") })}>
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.k} onChange={e => {setFormValues({ ...formValues, kebele: e.target.value.split(",") }); GeoFeatures.geojson("'"+e.target.value.split(",")[1]+"'").then((data_geo) => {setGeoJson(data_geo)});}}>
                                    
                                     <option key={"zone default"} value={null}>Select a zone</option>
                                
@@ -211,7 +213,11 @@ function Home() {
                         </div>
                     </form>
                     <div className='col-6'>
-                        <Map id="location_report" init={map_init} type={"location_report"} style={{ height: '300px' }}/>
+                    {
+                        geoJson 
+                        ? <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} style={{height: '300px'}}/>
+                        : <Map id="location_report" init={map_init} type={"location_report"} style={{height: '300px'}}/>
+                    }
 
                     </div>
 
