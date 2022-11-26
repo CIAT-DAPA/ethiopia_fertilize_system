@@ -3,7 +3,8 @@ const GEOSERVER_SERVICE = "wms";
 const GEOSERVER_FEATURE = "oms";
 
 const CROP_RASTER_URL = "https://webapi.nextgenagroadvisory.com/clip_raster";
-const NEXTGEN_API_BASE = "http://localhost:5000/"
+//const NEXTGEN_API_BASE = "http://localhost:5000/"
+const NEXTGEN_API_BASE = "https://webapi.nextgenagroadvisory.com/"
 
 class Configuration {
     get_geoserver_url() {

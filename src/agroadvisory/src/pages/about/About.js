@@ -6,9 +6,9 @@ function About() {
 
     return (
         <section className='d-flex h-100 text-center'>
-            <div className='cover-container d-flex w-100 h-100 p-3 mx-auto flex-column'>
+            <div className='row mt-5 mb-5'>
                 <main className='px-3'>
-                    <h1 className='font-link'>About</h1>
+                    <h1 className='font-link'>About us</h1>
                     <p className='font-link-body'>
                         NextGenAgroadvisry is a project designed to develop site, context, and climate specific
                         agricultural advisories particularly in fertilizer application,

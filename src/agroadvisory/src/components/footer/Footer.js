@@ -24,37 +24,37 @@ function Footer() {
                     <div className="row">
 
                         <div className="col">
-                            <img className="figure-img rounded" alt="" src={allianceLogo} width="145" height="75" role="img" />
+                            <img className="figure-img rounded" alt="" src={allianceLogo} width="175" height="75" role="img" />
                         </div>
                         
                         <div className="col">
-                            <img className="figure-img rounded" alt="" src={moaLogo} width="120" height="75" role="img" />
+                            <img className="figure-img rounded" alt="" src={moaLogo} width="140" height="75" role="img" />
                         
                         </div>
 
                         <div className="col">
-                            <img className="figure-img" alt="" src={eiarLogo} width="150" height="50" role="img" />
+                            <img className="figure-img" alt="" src={eiarLogo} width="175" height="75" role="img" />
                         </div>
 
                         <div className="col">
-                            <img className="figure-img rounded" alt="" src={dgLogo} width="200" height="50" role="img" />
+                            <img className="figure-img rounded" alt="" src={dgLogo} width="230" height="75" role="img" />
                         </div>
 
                         <div className="col">
-                            <img className="figure-img rounded" alt="" src={eiaLogo} width="75" height="50" role="img" />
+                            <img className="figure-img rounded" alt="" src={eiaLogo} width="125" height="75" role="img" />
                         </div>
 
                         <div className="col">
-                            <img className="figure-img rounded" alt="" src={aiccraLogo} width="150" height="50" role="img" />
+                            <img className="figure-img rounded" alt="" src={aiccraLogo} width="175" height="75" role="img" />
                         </div>
 
                         <div className="col">
-                            <img className="figure-img rounded" alt="" src={gizLogo} width="150" height="50" role="img" />
+                            <img className="figure-img rounded" alt="" src={gizLogo} width="200" height="75" role="img" />
                         </div>
 
                         
-                        <div className="col">
-                            <h2 className="card-title">CoW</h2>
+                        <div className="col mt-2">
+                            <h1 className="card-title">CoW</h1>
                         </div>
                     </div>
                 </div>

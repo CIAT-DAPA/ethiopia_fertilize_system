@@ -14,7 +14,7 @@ function DonutChart({data}) {
 
     let state = {
           
-        series: [data.probabilities[0].lower, data.probabilities[0].normal, data.probabilities[0].upper],
+        series: [data.probabilities[0].upper, data.probabilities[0].normal, data.probabilities[0].lower],
         options: {
           plotOptions: {
             pie: {
@@ -23,7 +23,7 @@ function DonutChart({data}) {
                   }
                 }
               },
-          labels: ['Below normal', 'Inside normal', 'Above normal'],  
+          labels: ['Above normal', 'Inside normal', 'Below normal'],  
           chart: {
             type: 'donut',
           },

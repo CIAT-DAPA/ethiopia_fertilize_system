@@ -32,7 +32,7 @@ class GeoFeatures {
 
     geojson(ids){
         const url = "https://geo.aclimate.org/geoserver/administrative/"+ "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=administrative:admin_levels&maxFeatures=50&outputFormat=application/json&CQL_FILTER=name_adm4 in (" + ids + ")&SRSNAME=EPSG:4326";
-        console.log(url);
+        
         return axios.get(url, {})
             .then(response => {
                 return response.data;

@@ -8,6 +8,7 @@ import Footer from "./components/footer/Footer";
 import Home from './pages/home/Home';
 import About from './pages/about/About';
 import Fertilization from './pages/fertilization/Fertilization';
+import FertilizationUreaNPS from './pages/fertilization/FertilizationUreaNPS';
 
 import './App.css';
 import ISFM from './pages/isfm/ISFM';
@@ -31,6 +32,7 @@ class App extends Component {
             <Routes>
               <Route exact path='/' element={<Home />} />
               <Route path='/fertilizer_advisories' element={<Fertilization />} />
+              <Route path='/fertilizer_advisories_nps_urea' element={<FertilizationUreaNPS />} />
               <Route path='/isfm' element={<ISFM />} />
               <Route path='/agroclimate' element={<Agroclimate />} />
               <Route path='/pest_disease' element={<PestDisease />} />

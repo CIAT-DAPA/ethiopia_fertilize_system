@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from "axios";
+import center from "@turf/center";
+import {Link} from 'react-router-dom'
 
 import './Home.css';
 import landscape from '../../assets/images/landscape.jpg';
@@ -21,7 +23,7 @@ import { current } from '@reduxjs/toolkit';
 function Home() {
     const [map_init, setMap_init] = React.useState({ center: [9.3988271, 39.9405962], zoom: 5 });
     const [selectsValues, setSelectsValues] = React.useState();
-    const [disabledSelect, setDisabledSelect] = React.useState({z:true, w:true, k:true});
+    const [disabledSelect, setDisabledSelect] = React.useState({z:true, w:true, k:true, b:true});
     const [geoJson, setGeoJson] = React.useState();
 
     const [formValues, setFormValues] = useState({
@@ -85,16 +87,33 @@ function Home() {
 
         }
 
+        // if(geoJson){
+        //     console.log(geoJson);
+        //     var features = ([
+        //         [ 39.74409621, 13.35065102 ]
+        //       ]);
+              
+        //     var center = center(geoJson);
+        //     console.log(center)
+
+        // }
+
 
     }, [formValues]);
 
     const onFormSubmit = (e) =>{
         e.preventDefault();
-        dispatch(setReportInput({formValues}));
+        //dispatch(setReportInput({formValues}));
 
     }
 
-
+    const Alert =() =>{
+        return(
+            <div className="alert alert-primary" role="alert">
+                You must select a Kebele
+            </div>
+        )
+    }
 
     return (
         <main>
@@ -161,7 +180,7 @@ function Home() {
                             </div>
                             <div className='col-6 mt-4'>
                                 <b>Kebele</b>
-                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.k} onChange={e => {setFormValues({ ...formValues, kebele: e.target.value.split(",") }); GeoFeatures.geojson("'"+e.target.value.split(",")[1]+"'").then((data_geo) => {setGeoJson(data_geo)});}}>
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.k} onChange={e => {setFormValues({ ...formValues, kebele: e.target.value.split(",") }); setDisabledSelect({...disabledSelect, b:false}); GeoFeatures.geojson("'"+e.target.value.split(",")[1]+"'").then((data_geo) => {setGeoJson(data_geo)});}}>
                                    
                                     <option key={"zone default"} value={null}>Select a zone</option>
                                
@@ -205,17 +224,33 @@ function Home() {
 
 
                         <div className='row'>
-                            <div className='col d-flex justify-content-center mt-4 mb-4'>
-                            <button type="submit" className="btn btn-primary">Advisory</button>
+                            {
+                                !disabledSelect.b 
+                                ?   <Link className='col d-flex justify-content-center mt-4 mb-4' to="/report">
+                                        <button type="submit" className="btn btn-primary" disabled={disabledSelect.b} onClick={e =>{dispatch(setReportInput({formValues}));}}>Advisory</button>
+                                    </Link>
+                                : 
+                                <div>
+                                    <Alert/>
+                                    <div className='d-flex justify-content-center mt-4 mb-4'>
+                                        
+                                        <button type="submit" className="btn btn-primary" disabled={disabledSelect.b}>Advisory</button>
+
+                                    </div>
+
+                                </div>
+                                
+                            }
                             
-                            </div>
+                                
 
                         </div>
                     </form>
                     <div className='col-6'>
                     {
+                        
                         geoJson 
-                        ? <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} style={{height: '300px'}}/>
+                        ? <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} style={{height: '300px'}} zoomOnGeojson={map_init}/>
                         : <Map id="location_report" init={map_init} type={"location_report"} style={{height: '300px'}}/>
                     }
 

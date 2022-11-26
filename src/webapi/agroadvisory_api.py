@@ -45,7 +45,7 @@ api.add_resource(AdministrativeLevel4, '/adm4/<adm3>')
 api.add_resource(Crops, '/crops')
 api.add_resource(Forecasts, '/forecast/<crop>')
 api.add_resource(Metrics, '/metrics/<adm4>')
-api.add_resource(MetricType, '/metric_types')
+#api.add_resource(MetricType, '/metric_types')
 
 
 

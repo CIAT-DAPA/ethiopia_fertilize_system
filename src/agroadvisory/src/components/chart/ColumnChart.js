@@ -1,20 +1,49 @@
 import React from 'react';
 import Chart from "react-apexcharts";
 
-function ColumnChart({data}) {
-    let state = {
+function ColumnChart({data, type}) {
+
+  const [dataFormatted, setDataFormatted] = React.useState();
+  const typeToTypeName = new Map();
+    typeToTypeName.set('637e459f6b22dee825f5b84e','compost');
+    typeToTypeName.set('637e45e66b22dee825f5b84f','nps');
+    typeToTypeName.set('637e462c6b22dee825f5b850','optimal yield');
+    typeToTypeName.set('637e466f6b22dee825f5b851','urea');
+    typeToTypeName.set('637e46b46b22dee825f5b852','vermi compost')
+
+  React.useEffect(() => {
+    
+      let aux = {metric_name: [], above:[], normal:[], below:[]}
+  
+      data.map(value => (
+        aux.metric_name.push(typeToTypeName.get(value.type)),
+        aux.above.push(value.values[0].values[0].toFixed(2)),
+        aux.normal.push(value.values[1][0].values[0].toFixed(2)),
+        aux.below.push(value.values[2][0].values[0].toFixed(2))
+        
+      ));
+      setDataFormatted(aux);
+
+    
+    
+    
+    
+}, [data]);
+
+let state;
+if(dataFormatted){
+  
+  if(type === 'fertilizer_rate'){
+    state = {
         series: [{
-            name: 'PRODUCT A',
-            data: [44, 55, 41, 67, 22, 43]
+            name: 'Above normal',
+            data: dataFormatted.above
           }, {
-            name: 'PRODUCT B',
-            data: [13, 23, 20, 8, 13, 27]
+            name: 'Inside normal',
+            data: dataFormatted.normal
           }, {
-            name: 'PRODUCT C',
-            data: [11, 17, 15, 15, 21, 14]
-          }, {
-            name: 'PRODUCT D',
-            data: [21, 7, 25, 13, 22, 8]
+            name: 'Below normal',
+            data: dataFormatted.below
           }],
           options: {
             chart: {
@@ -54,10 +83,8 @@ function ColumnChart({data}) {
               },
             },
             xaxis: {
-              type: 'datetime',
-              categories: ['01/01/2011 GMT', '01/02/2011 GMT', '01/03/2011 GMT', '01/04/2011 GMT',
-                '01/05/2011 GMT', '01/06/2011 GMT'
-              ],
+              type: 'string',
+              categories: dataFormatted.metric_name,
             },
             legend: {
               position: 'right',
@@ -71,9 +98,64 @@ function ColumnChart({data}) {
         
         
         };
-    return (
+
+  }
+  else{
+    state = {
+          
+      series: [{
+        data: [dataFormatted.above[0], dataFormatted.normal[0], dataFormatted.below[0]]
+      }],
+      options: {
+        chart: {
+          height: 350,
+          type: 'bar',
+          events: {
+            click: function(chart, w, e) {
+              // console.log(chart, w, e)
+            }
+          }
+        },
+        colors: ['#0d6efd', '#20c997', '#ffc107'],
+        plotOptions: {
+          bar: {
+            columnWidth: '45%',
+            distributed: true,
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        legend: {
+          show: false
+        },
+        xaxis: {
+          categories: [
+            'Above normal', 'Inside normal', 'Below normal'
+          ],
+          labels: {
+            style: {
+              colors: null,
+              fontSize: '12px'
+            }
+          }
+        }
+      },
     
-      <Chart options={state.options} series={state.series} type="bar" height={400} width="400" />
+    
+    };
+
+  }
+
+}
+    return  (
+      <div>
+        {
+          dataFormatted &&
+            <Chart options={state.options} series={state.series} type="bar" height={350} width="400" />
+        }
+
+      </div>
         
         
 

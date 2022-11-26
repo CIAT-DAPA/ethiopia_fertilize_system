@@ -41,7 +41,9 @@ function Menu() {
                                 Advisory Components
                                 </a>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    
                                     <Link className="dropdown-item" to="/fertilizer_advisories">Fertilizer</Link>
+                                    <Link className="dropdown-item" to="/fertilizer_advisories_nps_urea">Fertilizer NPS Urea</Link>
                                     <Link className="dropdown-item" to="/csa">CSA</Link>
                                     <Link className="dropdown-item" to="/pest_disease">Pest and disease surveillance</Link>
                                     <Link className="dropdown-item" to="/mechanization">Mechanization</Link>

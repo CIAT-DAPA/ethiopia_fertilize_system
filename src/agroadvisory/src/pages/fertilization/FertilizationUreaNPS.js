@@ -9,7 +9,7 @@ import GeoFeatures from '../../services/GeoFeatures';
 import LineChart from '../../components/chart/LineChart';
 import Table from '../../components/table/Table';
 
-function Fertilization() {
+function FertilizationUreaNPS() {
     const [opt_forecast, setOptForecast] = React.useState([{ label: "2022-07", value: "2022-07" }]);
     const [opt_crops, setOptCrops] = React.useState([{ label: "Wheat", value: "wheat" }]);
     const [opt_scenarios, setOptScenarios] = React.useState([{ label: "Normal", value: "normal" }, { label: "Above", value: "above" }, { label: "Below", value: "below" }]);
@@ -37,16 +37,16 @@ function Fertilization() {
     return (
         <div>
 
-          
+           
                 <Sidebar opt_forecast={opt_forecast} opt_crops={opt_crops} opt_scenarios={opt_scenarios} OnChangeForecast={changeForecast} OnChangeCrop={changeCrop} OnChangeScenario={changeScenario}/>
-                <Map id="map_nutrients_yield" init={map_init} type={"nutrients_yield"} crop={crop} forecast={forecast} 
-                                        scenario={scenario} setTableData={setTableData} style={{height: '80vh'}}/>
+                <Map id="map_nps_urea" init={map_init} type={"nps_urea"} crop={crop} forecast={forecast} 
+                                        scenario={scenario} style={{height: '80vh'}}/>
+                        
 
-                                
-                              
+
         </div>
      
     );
 }
 
-export default Fertilization;
+export default FertilizationUreaNPS;
