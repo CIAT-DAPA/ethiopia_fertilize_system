@@ -23,9 +23,9 @@ function Report() {
     
     const [map_init, setMap_init] = React.useState({ center: [9.3988271, 39.9405962], zoom: 5 });
     const [opt_forecast, setOptForecast] = React.useState([{ label: "2022-07", value: "2022-07" }]);
+    const [forecast, setForecast] = React.useState(opt_forecast[0].value);
     const [opt_crops, setOptCrops] = React.useState([{ label: "Wheat", value: "wheat" }]);
     const [opt_scenarios, setOptScenarios] = React.useState([{ label: "Normal", value: "normal" }, { label: "Above", value: "above" }, { label: "Below", value: "below" }]);
-    const [forecast, setForecast] = React.useState(opt_forecast[0].value);
     const [crop, setCrop] = React.useState(opt_crops[0].value);
     const [scenario, setScenario] = React.useState(opt_scenarios[0].value);
     const [geoJson, setGeoJson] = React.useState();
@@ -38,7 +38,8 @@ function Report() {
             axios.get(Configuration.get_url_api_base()+"metrics/"+reportInput.kebele[0])
                     .then(response => {
                         
-                        setBarChartData(response.data)
+                        setBarChartData(response.data);
+                        console.log(response.data);
                         
                         
                     });
@@ -47,6 +48,11 @@ function Report() {
         }
         
     }, []);
+
+    const changeForecast = event => {
+        console.log(event.value);
+        setForecast(event.value);
+    };
 
     // Generate the pdf based on a component
     const createPDF = () => {
@@ -61,7 +67,7 @@ function Report() {
         <div className='d-flex justify-content-end font-link-body'>
             <h5 className='p-2 bd-highlight mt-2'>Forecast date</h5>
             <div className='p-2 bd-highlight col-2'>
-                <Select defaultValue={opt_forecast[0]} options={opt_forecast} />
+                <Select defaultValue={opt_forecast[0]} options={opt_forecast} onChange={changeForecast}/>
 
             </div>
 
@@ -98,7 +104,7 @@ function Report() {
         return(
             <div className='col ms-3 me-3' style={{backgroundColor: "white"}} key="dominantMap">
                     <h4 className='font-link'>Seasonal dominant</h4>
-                    <Map id="location_report" init={map_init} type={"seasonal_dominant"} style={{height: '40vh'}}/>
+                    <Map id="location_report" init={map_init} type={"seasonal_dominant"} style={{height: '40vh'}} checked={true}/>
             </div>
 
         )

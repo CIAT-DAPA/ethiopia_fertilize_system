@@ -63,33 +63,33 @@ function ISFM() {
     
    
     return (
-        // <main>
-        //     <section className='row'>
-        //     <Sidebar opt_forecast={opt_forecast} opt_crops={opt_crops} opt_scenarios={opt_scenarios} OnChangeForecast={changeForecast} OnChangeCrop={changeCrop} OnChangeScenario={changeScenario}/>
-        //         <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        //             <br />
-        //             <h2 className='font-link text-center'>ISFM advisories</h2>
-
-        //             <p className='font-link-body'>
-        //                 Inorganic fertilizer could be expensive and may not be affordable by smallholders or
-        //                 it may not be accessible due to different logistical reasons. In addition, inorganic
-        //                 fertilizer can be more productive and sustainable when integrated with other good agronomic practices.
-        //                 Thus, this component of the NextGen tool provides location- and context- specific organic and soil
-        //                 fertility management advisories.
-        //             </p>
-        //             <MapHeader title={"Organic fertilizers"} />
-        //             <p className='font-link-body'>
-        //                 Compost and vermi-compost (t/ha)
-        //             </p>
-        //             <Map id="map_organic_fertilizers" init={map_init} type={"compost"} crop={filters.crop} forecast={filters.forecast} scenario={filters.scenario} style={{height: '80vh'}}/>
-                    
-        //         </main>
-        //     </section>
-        // </main>
+        
         <div>
-    
+
+        <div className='mt-3'>
+
+            <h2 className="font-link text-center">ISFM advisories</h2>
+
+            <p className="font-link-body">
+            Inorganic fertilizer could be expensive and may not be affordable by smallholders or
+                        it may not be accessible due to different logistical reasons. In addition, inorganic
+                        fertilizer can be more productive and sustainable when integrated with other good agronomic practices.
+                        Thus, this component of the NextGen tool provides location- and context- specific organic and soil
+                        fertility management advisories.
+
+            </p>
+            
+            <p className="font-link-body">
+            Compost and vermi-compost (t/ha)
+            </p>
+        </div>
+
+        <div style={{'position': 'relative'}}>
+
             <Sidebar opt_forecast={opt_forecast} opt_crops={opt_crops} opt_scenarios={opt_scenarios} OnChangeForecast={changeForecast} OnChangeCrop={changeCrop} OnChangeScenario={changeScenario}/>
-            <Map id="map_organic_fertilizers" init={map_init} type={"compost"} crop={filters.crop} forecast={filters.forecast} scenario={filters.scenario} style={{height: '80vh'}}/>
+            <Map id="map_organic_fertilizers" init={map_init} type={"compost"} crop={filters.crop} forecast={filters.forecast} scenario={filters.scenario} style={{height: '80vh'}} cuttable={true} downloadable={true} legend={true}/>
+        </div>
+    
         </div>
     );
 }

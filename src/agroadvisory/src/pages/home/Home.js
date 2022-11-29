@@ -247,13 +247,8 @@ function Home() {
                         </div>
                     </form>
                     <div className='col-6'>
-                    {
+                        <Map id="location" init={map_init} type={"location"} geo={geoJson} style={{height: '300px'}} zoomOnGeojson={map_init} cuttable={false} downloadable={false} legend={false} checked={true}/>
                         
-                        geoJson 
-                        ? <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} style={{height: '300px'}} zoomOnGeojson={map_init}/>
-                        : <Map id="location_report" init={map_init} type={"location_report"} style={{height: '300px'}}/>
-                    }
-
                     </div>
 
                     

@@ -1,4 +1,4 @@
-const GEOSERVER_URL = "https://geo.aclimate.org/geoserver/fertilizer_et/";
+const GEOSERVER_URL = "https://geo.aclimate.org/geoserver/";
 const GEOSERVER_SERVICE = "wms";
 const GEOSERVER_FEATURE = "oms";
 

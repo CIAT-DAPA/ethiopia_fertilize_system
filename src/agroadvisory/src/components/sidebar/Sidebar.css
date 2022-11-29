@@ -3,9 +3,9 @@
  */
 #sidebarMenu{
   position: absolute;
-  top: 155px;
+  top: 110px;
   z-index: 1500;
-  left: 23px;
+  left: 12px;
   opacity: 0.7;
   font-family: 'Poppins', serif;
   color: rgb(0, 0, 99);

@@ -21,7 +21,7 @@ let popUpMessage = '';
 
 
 function Map(props) {
-    const [url_service, setUrlService] = React.useState(Configuration.get_geoserver_url() + Configuration.get_geoserver_service());
+    
     //const [types_yield, setTypesYield] = React.useState(["optimal", "attainable"]);
     const [nutrients_yield, setNutrients_yield] = React.useState(["n", "p", "optimal yield"]);
     const [types_yield, setTypesYield] = React.useState(["optimal"]);
@@ -56,21 +56,9 @@ function Map(props) {
     
     }, [polygonCoords]);
 
-    // React.useEffect(() => {
-        
-    //     if(polygonCoords && currentLayer){
-    //         let parameters = {minx: polygonCoords._southWest.lng, miny: polygonCoords._southWest.lat, maxx: polygonCoords._northEast.lng, maxy: polygonCoords._northEast.lat, layer: "et_"+props.crop+"_"+currentLayer+"_"+props.scenario}
-    //         let requestFormatted = request+"?"+"boundaries="+parameters["minx"]+","+parameters["miny"]+","+parameters["maxx"]+","+parameters["maxy"]+"&"+"layer="+parameters["layer"]
-    //         window.location.href = requestFormatted;
-    //         setWarning(false);
-            
-
-    //     }else if(polygonCoords && !currentLayer){
-    //         setWarning(true);
-    //     }
-
-    
-    // }, [polygonCoords]);
+    function getUrlService(workspace, service){
+        return Configuration.get_geoserver_url()+workspace+'/'+service
+    }
 
     //For changing Map legend and popup message according to each layer (each one uses differents colors and values)
     const onLayerChange = (currentLayerName) => {
@@ -94,15 +82,17 @@ function Map(props) {
     const handleEventsMap = (map) => {
 
         // Adding print/export button on the map
-        L.easyPrint({
-            title: 'Download map',
-            position: 'topright',
-            sizeModes: ['Current', 'A4Portrait', 'A4Landscape'],
-            exportOnly: true, //If false it will print
-            hideControlContainer: true
-            
-        }).addTo(map.target);
-       
+        if(props.downloadable){
+            L.easyPrint({
+                title: 'Download map',
+                position: 'topright',
+                sizeModes: ['Current', 'A4Portrait', 'A4Landscape'],
+                exportOnly: true, //If false it will print
+                hideControlContainer: true
+                
+            }).addTo(map.target);
+           
+        }
         map.target.on("click", function (e) {
             //props.onClick(e, map);
             const { lat, lng } = e.latlng;
@@ -202,7 +192,7 @@ function Map(props) {
                                     key={"fertilizer_et:et_" + props.crop + layerType  + item +"_"+ props.scenario}
                                     layers={"fertilizer_et:et_" + props.crop + layerType  + item +"_"+ props.scenario}
                                     attribution=''
-                                    url={url_service}
+                                    url={getUrlService('fertilizer_et', 'wms')}
                                     format={"image/png"}
                                     transparent={true}
                                     params={{'time': props.forecast}}
@@ -226,7 +216,7 @@ function Map(props) {
                                     <WMSTileLayer
                                         layers={"fertilizer_et:et_" + props.crop + "_"+ item + "_probabilistic_" +props.scenario}
                                         attribution=''
-                                        url={url_service}
+                                        url={getUrlService('fertilizer_et', 'wms')}
                                         format={"image/png"}
                                         transparent={true}
                                         params={{'time': props.forecast}}
@@ -244,7 +234,7 @@ function Map(props) {
                                     <WMSTileLayer
                                         layers={"fertilizer_et:et_" + props.crop + "_" + item + "_probabilistic_" +props.scenario}
                                         attribution=''
-                                        url={url_service}
+                                        url={getUrlService('fertilizer_et', 'wms')}
                                         format={"image/png"}
                                         transparent={true}
                                         params={{'time': props.forecast}}
@@ -259,7 +249,7 @@ function Map(props) {
                             })
                             : props.type === "location_report" ?
                             
-                                 <BaseLayer key={props.type} name={"location"}>
+                                 <BaseLayer key={props.type} name={"location_report"}>
                                     {/* <WMSTileLayer
                                         //layers={"fertilizer_et:Admin_fertilizerAdvisoryZone1"}
                                         attribution=''
@@ -276,14 +266,33 @@ function Map(props) {
                                     /> */}
                                     
                                 </BaseLayer>
+                            : props.type === "location" ?
                             
+                            <BaseLayer key={props.type} name={"location"} checked={props.checked}>
+                               <WMSTileLayer
+                                   layers={"administrative:admin_levels"}
+                                   attribution=''
+                                   url={getUrlService('administrative', 'wms')}
+                                   format={"image/png"}
+                                   transparent={true}
+                                   // params={{'time': props.forecast}}
+                                   // eventHandlers={{
+                                   //     add: (e) => {
+                                   //       onLayerChange(e.target.options.layers);
+                                         
+                                   //     }
+                                   //   }}
+                               />
+                               
+                           </BaseLayer>
+                       
                             : props.type === "seasonal_dominant" ?
                             
-                                 <BaseLayer key={props.type} name={"dominant"}>
+                                 <BaseLayer key={props.type} name={"dominant"} checked={props.checked}>
                                     <WMSTileLayer
                                         layers={"aclimate_et:seasonal_country_et_dominant"}
                                         attribution=''
-                                        url={'https://geo.aclimate.org/geoserver/aclimate_et/wms'}
+                                        url={getUrlService('aclimate_et', 'wms')}
                                         format={"image/png"}
                                         transparent={true}
                                         // params={{'time': props.forecast}}
@@ -301,7 +310,7 @@ function Map(props) {
                                     <WMSTileLayer
                                         layers={"fertilizer_et:et_wheat_fertilizer_recommendation_normal"}
                                         attribution=''
-                                        url={url_service}
+                                        url={getUrlService('fertilizer_et', 'wms')}
                                         format={"image/png"}
                                         transparent={true}
                                         //params={{'time': props.forecast}}
@@ -317,14 +326,20 @@ function Map(props) {
 
                     }
                 </LayersControl>
-                <MapLegend currentLayer={currentLayer} geoserverLayers={geoserverLayers}/>
+                {
+                    props.legend &&
+                        <MapLegend currentLayer={currentLayer} geoserverLayers={geoserverLayers}/>
+                }
                 <ScaleControl position="bottomleft" />
                 <div className="leaflet-top leaflet-left">
                     <ZoomControlWithReset bounds={ETHIOPIA_BOUNDS} />
                 </div>
-                <DrawControl
-                setPolygonCoords={setPolygonCoords}
-                />
+                {
+                    props.cuttable && 
+                        <DrawControl
+                        setPolygonCoords={setPolygonCoords}
+                        />
+                }
             
                 {
                 props.geo ? <GeoJSON attribution="" key={"advisory_geojson"} data={props.geo} /> : <GeoJSON attribution="" />

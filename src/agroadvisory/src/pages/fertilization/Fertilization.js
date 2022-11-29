@@ -36,11 +36,31 @@ function Fertilization() {
 
     return (
         <div>
+            <div className='mt-3'>
 
-          
+                <h2 className="font-link text-center">Fertilizer advisories</h2>
+                    
+                <p className="font-link-body">
+                The fertilizer recommendation component of NextGenAgroadvisory is location-, context-, and season- 
+                        intelligent system of advising fertilizer type, amount, and time of application in wheat growing 
+                        environments of Ethiopia. It is a data-driven approach based on systematic integration of large legacy 
+                        agronomic data collated throughout Ethiopia and corresponding co-variates (environmental variables) 
+                        using machine learning algorithms.
+                </p>
+                <p className="font-link-body">
+                Optimal nutrient amount (N & P) shows their interaction effect on optimal yield and the yield shows its maximum value based the optimal nutrient amount.
+                        
+                </p>
+            </div>
+
+            <div style={{'position': 'relative'}}>
+                
+        
                 <Sidebar opt_forecast={opt_forecast} opt_crops={opt_crops} opt_scenarios={opt_scenarios} OnChangeForecast={changeForecast} OnChangeCrop={changeCrop} OnChangeScenario={changeScenario}/>
                 <Map id="map_nutrients_yield" init={map_init} type={"nutrients_yield"} crop={crop} forecast={forecast} 
-                                        scenario={scenario} setTableData={setTableData} style={{height: '80vh'}}/>
+                                        scenario={scenario} setTableData={setTableData} style={{height: '80vh'}} cuttable={true} downloadable={true} legend={true}/>
+
+            </div>
 
                                 
                               

@@ -37,10 +37,32 @@ function FertilizationUreaNPS() {
     return (
         <div>
 
-           
+            <div className='mt-3'>
+
+                <h2 className="font-link text-center">Fertilizer advisories NPS Urea</h2>
+
+                <p className="font-link-body">
+                    The fertilizer recommendation component of NextGenAgroadvisory is location-, context-, and season- 
+                        intelligent system of advising fertilizer type, amount, and time of application in wheat growing 
+                        environments of Ethiopia. It is a data-driven approach based on systematic integration of large legacy 
+                        agronomic data collated throughout Ethiopia and corresponding co-variates (environmental variables) 
+                        using machine learning algorithms.
+
+                </p>
+                    
+                <p className="font-link-body">
+                The amount of NPS and Urea that should be recommended to get optimal yield.
+                </p>
+            </div>
+
+            <div style={{'position': 'relative'}}>
+
                 <Sidebar opt_forecast={opt_forecast} opt_crops={opt_crops} opt_scenarios={opt_scenarios} OnChangeForecast={changeForecast} OnChangeCrop={changeCrop} OnChangeScenario={changeScenario}/>
                 <Map id="map_nps_urea" init={map_init} type={"nps_urea"} crop={crop} forecast={forecast} 
-                                        scenario={scenario} style={{height: '80vh'}}/>
+                                        scenario={scenario} style={{height: '80vh'}} cuttable={true} downloadable={true} legend={true}/>
+            </div>
+
+           
                         
 
 
