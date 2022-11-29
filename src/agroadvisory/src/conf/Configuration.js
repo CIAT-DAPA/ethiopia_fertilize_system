@@ -3,6 +3,7 @@ const GEOSERVER_SERVICE = "wms";
 const GEOSERVER_FEATURE = "oms";
 
 const CROP_RASTER_URL = "https://webapi.nextgenagroadvisory.com/clip_raster";
+const FERTILIZER_WORSPACE = "fertilizer_et"
 //const NEXTGEN_API_BASE = "http://localhost:5000/"
 const NEXTGEN_API_BASE = "https://webapi.nextgenagroadvisory.com/"
 
@@ -22,6 +23,10 @@ class Configuration {
     get_url_api_base(){
       return NEXTGEN_API_BASE;
     }
+    get_fertilizer_worspace(){
+      return FERTILIZER_WORSPACE;
+    }
+
 }
 
 export default new Configuration();

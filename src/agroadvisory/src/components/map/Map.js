@@ -21,19 +21,18 @@ let popUpMessage = '';
 
 
 function Map(props) {
-    
-    //const [types_yield, setTypesYield] = React.useState(["optimal", "attainable"]);
-    const [nutrients_yield, setNutrients_yield] = React.useState(["n", "p", "optimal yield"]);
-    const [types_yield, setTypesYield] = React.useState(["optimal"]);
+
+    const [nutrients_yield, setNutrients_yield] = React.useState(["n", "p", "optimal"]);
     const [compost, setCompost] = React.useState(["compost", "vcompost"]);
-    //const [nutrients, setNutrients] = React.useState(["n", "p", "k"]);
     const [fertilizer, setNutrients] = React.useState(["nps", "urea"]);
     const [currentLayer, setCurrentLayer] = React.useState();
     const [warning, setWarning] = React.useState(false);
+    const [polygonCoords, setPolygonCoords] = React.useState();
+    //For changing the layer according to scenerario selected (Sidebar)
+    const [lastSelected, setLastSelected] = React.useState();
+
     const { BaseLayer } = LayersControl;
     const icon = L.icon({iconSize: [25, 41],iconAnchor: [10, 41],popupAnchor: [2, -40],iconUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-icon.png",shadowUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-shadow.png"});
-    const [polygonCoords, setPolygonCoords] = React.useState();
-    const [lastSelected, setLastSelected] = React.useState("optimal");
     const request = Configuration.get_raster_crop_url();
     let layerType;
 
@@ -179,12 +178,10 @@ function Map(props) {
                         nutrients_yield.map((item) => {
                            
                             
-                            return <BaseLayer key={"nutrients_yield_" + item} name={item} checked={item===lastSelected?true:false}> 
+                            return <BaseLayer key={"nutrients_yield_" + item} name={item==="optimal"?"optimal yield":item} checked={item===lastSelected?true:false}> 
+                    
                                 {
-                                    layerType = (item === "optimal yield")?"_yieldtypes_":"_optimal_nutrients_"
-                                }
-                                {
-                                    item = (item === "optimal yield")?"optimal": item
+                                    layerType = (item === "optimal")?"_yieldtypes_":"_optimal_nutrients_"
                                 }
                                 
                     
@@ -199,10 +196,8 @@ function Map(props) {
                                     eventHandlers={{
                                         add: (e) => {
                                           onLayerChange(e.target.options.layers);
-                                          console.log(item);
-                                          console.log(e);
                                           setLastSelected(item);
-                                          console.log(lastSelected);
+                                          
                                         }
                                       }}
                                     
@@ -211,9 +206,10 @@ function Map(props) {
                         })
                         : props.type === "nps_urea" ?
                             fertilizer.map((item) => {
-                                return <BaseLayer key={"nps_urea" + item} name={item}>
+                                return <BaseLayer key={"nps_urea" + item} name={item} checked={item===lastSelected?true:false}>
                                    
                                     <WMSTileLayer
+                                        key={"fertilizer_et:et_" + props.crop + "_"+ item + "_probabilistic_" +props.scenario}
                                         layers={"fertilizer_et:et_" + props.crop + "_"+ item + "_probabilistic_" +props.scenario}
                                         attribution=''
                                         url={getUrlService('fertilizer_et', 'wms')}
@@ -223,6 +219,7 @@ function Map(props) {
                                         eventHandlers={{
                                             add: (e) => {
                                               onLayerChange(e.target.options.layers);
+                                              setLastSelected(item);
                                             }
                                           }}
                                     />
@@ -230,8 +227,9 @@ function Map(props) {
                             })
                             : props.type === "compost" ?
                             compost.map((item) => {
-                                return <BaseLayer key={"compost_" + item} name={item}>
+                                return <BaseLayer key={"compost_" + item} name={item} checked={item===lastSelected?true:false}>
                                     <WMSTileLayer
+                                        key={"fertilizer_et:et_" + props.crop + "_" + item + "_probabilistic_" +props.scenario}
                                         layers={"fertilizer_et:et_" + props.crop + "_" + item + "_probabilistic_" +props.scenario}
                                         attribution=''
                                         url={getUrlService('fertilizer_et', 'wms')}
@@ -241,7 +239,7 @@ function Map(props) {
                                         eventHandlers={{
                                             add: (e) => {
                                               onLayerChange(e.target.options.layers);
-                                              
+                                              setLastSelected(item);
                                             }
                                           }}
                                     />
