@@ -49,49 +49,39 @@ if(dataFormatted){
             chart: {
               type: 'bar',
               height: 350,
-              stacked: true,
-              toolbar: {
-                show: true
-              },
-              zoom: {
-                enabled: true
-              }
             },
-            responsive: [{
-              breakpoint: 480,
-              options: {
-                legend: {
-                  position: 'bottom',
-                  offsetX: -10,
-                  offsetY: 0
-                }
-              }
-            }],
             plotOptions: {
               bar: {
                 horizontal: false,
-                borderRadius: 10,
-                dataLabels: {
-                  total: {
-                    enabled: true,
-                    style: {
-                      fontSize: '13px',
-                      fontWeight: 900
-                    }
-                  }
-                }
+                columnWidth: '55%',
+                endingShape: 'rounded'
               },
             },
+            dataLabels: {
+              enabled: false
+            },
+            stroke: {
+              show: true,
+              width: 2,
+              colors: ['transparent']
+            },
             xaxis: {
-              type: 'string',
               categories: dataFormatted.metric_name,
             },
-            legend: {
-              position: 'right',
-              offsetY: 40
+            yaxis: {
+              title: {
+                text: dataFormatted.metric_name.includes('nps') || dataFormatted.metric_name.includes('urea') ? 'kg/ha':'ton/ha'
+              }
             },
             fill: {
               opacity: 1
+            },
+            tooltip: {
+              y: {
+                formatter: function (val) {
+                  return val + (dataFormatted.metric_name.includes('nps') || dataFormatted.metric_name.includes('urea') ? ' kg/ha':' ton/ha')
+                }
+              }
             }
           },
         
@@ -104,22 +94,18 @@ if(dataFormatted){
     state = {
           
       series: [{
+        name:'optimal yield',
         data: [dataFormatted.above[0], dataFormatted.normal[0], dataFormatted.below[0]]
       }],
       options: {
         chart: {
           height: 350,
-          type: 'bar',
-          events: {
-            click: function(chart, w, e) {
-              // console.log(chart, w, e)
-            }
-          }
+          type: 'bar'
         },
         colors: ['#0d6efd', '#20c997', '#ffc107'],
         plotOptions: {
           bar: {
-            columnWidth: '45%',
+            columnWidth: '40%',
             distributed: true,
           }
         },
@@ -139,6 +125,18 @@ if(dataFormatted){
               fontSize: '12px'
             }
           }
+        },
+        yaxis: {
+          title: {
+            text: 'kg/ha'
+          }
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return val + " kg/ha"
+            }
+          }
         }
       },
     
@@ -152,7 +150,7 @@ if(dataFormatted){
       <div>
         {
           dataFormatted &&
-            <Chart options={state.options} series={state.series} type="bar" height={350} width="400" />
+            <Chart options={state.options} series={state.series} type="bar" height={300} width="400" />
         }
 
       </div>

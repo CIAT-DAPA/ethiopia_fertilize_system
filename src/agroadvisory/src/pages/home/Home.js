@@ -109,7 +109,7 @@ function Home() {
 
     const Alert =() =>{
         return(
-            <div className="alert alert-primary" role="alert">
+            <div className="alert alert-primary mt-4" role="alert">
                 You must select a Kebele
             </div>
         )
@@ -191,7 +191,7 @@ function Home() {
 
                             </div>
 
-                            <div className="row form-check mt-4">
+                            {/* <div className="row form-check mt-4">
                                 <div className='col 12'>
                                     <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" onChange={e => setFormValues({ ...formValues, ad_fertilizer: e.target.checked })}/>
                                     <label className="form-check-label" htmlFor="flexCheckDefault">
@@ -217,7 +217,7 @@ function Home() {
                                     </label>
 
                                 </div>
-                            </div>
+                            </div> */}
 
                         </div>
 

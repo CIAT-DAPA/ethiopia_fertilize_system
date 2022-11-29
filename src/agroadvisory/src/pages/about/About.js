@@ -8,7 +8,12 @@ function About() {
         <section className='d-flex h-100 text-center'>
             <div className='row mt-5 mb-5'>
                 <main className='px-3'>
+                    <br/>
+                    <br/>
+                    <br/>
+                    
                     <h1 className='font-link'>About us</h1>
+                    <br/>
                     <p className='font-link-body'>
                         NextGenAgroadvisry is a project designed to develop site, context, and climate specific
                         agricultural advisories particularly in fertilizer application,
@@ -20,7 +25,9 @@ function About() {
                         (GIZ-Ethiopia) (BMGF), EiA (oneCGIAR initiative), and AICCRA (World Bank).
                     </p>
                     
-                    
+                    <br/>
+                    <br/>
+                    <br/>
                 </main>
             </div>
         </section>
