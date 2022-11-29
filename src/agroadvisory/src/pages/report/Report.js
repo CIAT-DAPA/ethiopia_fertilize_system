@@ -14,6 +14,7 @@ import GeoFeatures from '../../services/GeoFeatures';
 import DonutChart from '../../components/chart/DonutCharts';
 import ColumnChart from '../../components/chart/ColumnChart';
 import Configuration from "../../conf/Configuration";
+const bbox = require('geojson-bbox');
 
 function Report() {
 
@@ -22,6 +23,7 @@ function Report() {
     console.log(reportInput);
     
     const [map_init, setMap_init] = React.useState({ center: [9.3988271, 39.9405962], zoom: 5 });
+    const [bounds, setBounds] = React.useState([ [10, 30],  [8.5, 50],])
     const [opt_forecast, setOptForecast] = React.useState([{ label: "2022-07", value: "2022-07" }]);
     const [forecast, setForecast] = React.useState(opt_forecast[0].value);
     const [opt_crops, setOptCrops] = React.useState([{ label: "Wheat", value: "wheat" }]);
@@ -34,7 +36,11 @@ function Report() {
     React.useEffect(() => {
 
         if(reportInput.kebele){
-            GeoFeatures.geojson("'"+reportInput.kebele[1]+"'").then((data_geo) => {setGeoJson(data_geo)});
+            GeoFeatures.geojson("'"+reportInput.kebele[1]+"'").then((data_geo) => {
+                const extent = bbox(data_geo); 
+                setBounds([[extent[1],extent[0]], [extent[3],extent[2]]])
+                setGeoJson(data_geo)});
+                
             axios.get(Configuration.get_url_api_base()+"metrics/"+reportInput.kebele[0])
                     .then(response => {
                         
@@ -80,7 +86,7 @@ function Report() {
             <div className='col' style={{backgroundColor: "white"}} key="locationMap">
                     <h4 className='font-link'>Location</h4>
                     {
-                        geoJson && <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} style={{height: '40vh'}}/>
+                        geoJson && <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} style={{height: '40vh'}} bounds={bounds}/>
                     }
             </div>
 

@@ -92,6 +92,11 @@ function Map(props) {
             }).addTo(map.target);
            
         }
+
+        if (props.bounds){
+            map.target.flyToBounds(props.bounds)
+        }
+        
         map.target.on("click", function (e) {
             //props.onClick(e, map);
             const { lat, lng } = e.latlng;
@@ -330,7 +335,7 @@ function Map(props) {
                 }
                 <ScaleControl position="bottomleft" />
                 <div className="leaflet-top leaflet-left">
-                    <ZoomControlWithReset bounds={ETHIOPIA_BOUNDS} />
+                    <ZoomControlWithReset bounds={props.bounds? props.bounds: ETHIOPIA_BOUNDS} />
                 </div>
                 {
                     props.cuttable && 
