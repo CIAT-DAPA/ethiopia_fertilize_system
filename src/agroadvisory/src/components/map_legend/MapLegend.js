@@ -26,7 +26,7 @@ function MapLegend(props) {
     const compostIntervals = ["12-16", "16-21", "≥ 21"];
 
     const [dominantGrades, setDominantGrades] = React.useState([0.0, 100.0, 200.0]);
-    const dominantIntervals = ["0-100 above", "100-200 normal", "≥ 200 below"];
+    const dominantIntervals = ["0-100 above", "0-100 normal", "0-100 below"];
 
 
     const Legend = () => {

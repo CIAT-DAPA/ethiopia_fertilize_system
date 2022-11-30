@@ -118,13 +118,13 @@ function Home() {
     return (
         <main>
             <br/>
-            <br/>
+            
             <div className='container'>
                 <div className='row'>
                     <div className='col'>
                         
                                     <h1 className='font-link text-center'><b>NextGen Agroadvisory</b></h1>
-                                    <p className='font-link-body text-center'>
+                                    <p className='font-link-body'>
                                         NextGenAgroadvisory is a project designed to develop location-, context-, and climate- specific agricultural
                                         advisories particularly related to optimal fertilizer application, integrated soil fertility management (ISFM),
                                         climate information service, climate smart agricultural activities (CSA), pest and disease surveillance, and other

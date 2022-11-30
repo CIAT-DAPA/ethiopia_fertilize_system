@@ -3,7 +3,7 @@ import React from 'react';
 import moaLogo from '../../assets/images/moa-logo.png';
 import eiarLogo from '../../assets/images/eiar-logo.webp';
 import dgLogo from '../../assets/images/Digital-green-logo.png';
-import allianceLogo from '../../assets/images/alliance-logo.png'
+import allianceLogo from '../../assets/images/alliance-logo.jpg'
 import aiccraLogo from '../../assets/images/aiccra-logo.png';
 import eiaLogo from '../../assets/images/eia-logo.png'
 import gizLogo from '../../assets/images/giz-logo.jpg'
@@ -24,12 +24,11 @@ function Footer() {
                     <div className="row">
 
                         <div className="col">
-                            <img className="figure-img rounded" alt="" src={allianceLogo} width="175" height="75" role="img" />
+                            <img className="figure-img rounded" alt="" src={allianceLogo} width="150" height="75" role="img" />
                         </div>
                         
                         <div className="col">
-                            <img className="figure-img rounded" alt="" src={moaLogo} width="140" height="75" role="img" />
-                        
+                            <img className="figure-img rounded" alt="" src={gizLogo} width="200" height="75" role="img" />
                         </div>
 
                         <div className="col">
@@ -37,7 +36,7 @@ function Footer() {
                         </div>
 
                         <div className="col">
-                            <img className="figure-img rounded" alt="" src={dgLogo} width="230" height="75" role="img" />
+                            <img className="figure-img rounded" alt="" src={moaLogo} width="140" height="75" role="img" />
                         </div>
 
                         <div className="col">
@@ -47,10 +46,13 @@ function Footer() {
                         <div className="col">
                             <img className="figure-img rounded" alt="" src={aiccraLogo} width="175" height="75" role="img" />
                         </div>
-
+                        
                         <div className="col">
-                            <img className="figure-img rounded" alt="" src={gizLogo} width="200" height="75" role="img" />
+                            <img className="figure-img rounded" alt="" src={dgLogo} width="230" height="75" role="img" />
                         </div>
+
+
+
 
                         
                         <div className="col mt-2">

@@ -23,7 +23,7 @@ function DonutChart({data}) {
                   }
                 }
               },
-          labels: ['Above normal', 'Inside normal', 'Below normal'],  
+          labels: ['Above normal', 'Normal', 'Below normal'],  
           chart: {
             type: 'donut',
           },

@@ -143,7 +143,7 @@ function Map(props) {
                     //Making a popup
                     GeoFeatures.get_value(layer_name,lat,lng)
                     .then((data)=>{ 
-                        if(data.features[0] && data.features[0].properties.GRAY_INDEX.toFixed(2) > 0) {
+                        if(data.features[0] && data.features[0].properties.GRAY_INDEX.toFixed(2) > 0 && popUpMessage != "") {
                             
                             marker = L.marker([lat, lng], { icon }).addTo(map.target)
                                 .bindPopup(popUpMessage + data.features[0].properties.GRAY_INDEX.toFixed(2) + unitPopupMessage)

@@ -40,7 +40,7 @@ if(dataFormatted){
             name: 'Above normal',
             data: dataFormatted.above
           }, {
-            name: 'Inside normal',
+            name: 'Normal',
             data: dataFormatted.normal
           }, {
             name: 'Below normal',
@@ -118,7 +118,7 @@ if(dataFormatted){
         },
         xaxis: {
           categories: [
-            'Above normal', 'Inside normal', 'Below normal'
+            'Above normal', 'Normal', 'Below normal'
           ],
           labels: {
             style: {
