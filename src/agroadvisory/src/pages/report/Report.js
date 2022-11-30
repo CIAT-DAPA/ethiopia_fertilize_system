@@ -62,8 +62,17 @@ function Report() {
 
     // Generate the pdf based on a component
     const createPDF = async () => {
+        let orientacion
+        if (window.screen.width < 1400){
+            console.log("Pequeña")
+            orientacion = 'p' 
+        }else {
+            console.log("Grande")
+            orientacion = 'l'
+        }
+
         let html = document.querySelector('#report')
-        let report = new JsPDF('l','px',[html.offsetWidth+40,html.offsetHeight+40]);
+        let report = new JsPDF(orientacion,'px',[html.offsetWidth+40,html.offsetHeight+40]);
         const canvas = await html2canvas(html,{
             useCORS: true,
             scale: 1,
