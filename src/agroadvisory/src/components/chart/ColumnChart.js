@@ -5,11 +5,11 @@ function ColumnChart({data, type}) {
 
   const [dataFormatted, setDataFormatted] = React.useState();
   const typeToTypeName = new Map();
-    typeToTypeName.set('637e459f6b22dee825f5b84e','compost');
-    typeToTypeName.set('637e45e66b22dee825f5b84f','nps');
-    typeToTypeName.set('637e462c6b22dee825f5b850','optimal yield');
-    typeToTypeName.set('637e466f6b22dee825f5b851','urea');
-    typeToTypeName.set('637e46b46b22dee825f5b852','vermi compost')
+    typeToTypeName.set('63865d9f68c981103580abf0','compost');
+    typeToTypeName.set('63865ef468c981103580e666','nps');
+    typeToTypeName.set('638660ad68c98110358120dc','optimal yield');
+    typeToTypeName.set('638662c668c9811035815b52','urea');
+    typeToTypeName.set('6386653e68c98110358195c8','vermi compost')
 
   React.useEffect(() => {
     
@@ -32,6 +32,7 @@ function ColumnChart({data, type}) {
 
 let state;
 if(dataFormatted){
+  //console.log(dataFormatted);
   
   if(type === 'fertilizer_rate'){
     state = {

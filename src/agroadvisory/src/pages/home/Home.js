@@ -18,7 +18,7 @@ import { useState } from 'react';
 
 //redux
 import {useDispatch} from 'react-redux';
-import { current } from '@reduxjs/toolkit';
+
 
 function Home() {
     const [map_init, setMap_init] = React.useState({ center: [9.3988271, 39.9405962], zoom: 5 });
