@@ -61,12 +61,15 @@ function Report() {
     };
 
     // Generate the pdf based on a component
-    const createPDF = () => {
-        const report = new JsPDF('portrait','pt','a4');
-        report.html(document.querySelector('#report')).then(() => {
+    const createPDF = async () => {
+        let html = document.querySelector('#report')
+        let report = new JsPDF('p','px',"a3");
+        const canvas = await html2canvas(html,{
+            useCORS: true,
+        })
+        const img = canvas.toDataURL("image/png");
+        report.addImage(img,'JPEG',10,10);
         report.save('report.pdf');
-    });
-        
       };
     
     const ForecastSelect = () => (
@@ -188,7 +191,7 @@ function Report() {
             <section className='container'>
                 <div className="d-flex justify-content-between font-link">
                     <h3><b>{reportInput.kebele[1]}</b> kebele report</h3>
-                    {/* <button onClick={createPDF} type="button" className="btn btn-primary">Export</button> */}
+                    <button onClick={createPDF} type="button" className="btn btn-primary">Export</button> 
                 </div>
                 <ForecastSelect/>
 
