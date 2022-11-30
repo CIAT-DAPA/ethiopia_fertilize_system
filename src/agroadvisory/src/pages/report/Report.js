@@ -63,12 +63,14 @@ function Report() {
     // Generate the pdf based on a component
     const createPDF = async () => {
         let html = document.querySelector('#report')
-        let report = new JsPDF('p','px',"a3");
+        let report = new JsPDF('l','px',[html.offsetWidth+40,html.offsetHeight+40]);
         const canvas = await html2canvas(html,{
             useCORS: true,
+            scale: 1,
+            allowTaint: true,
         })
         const img = canvas.toDataURL("image/png");
-        report.addImage(img,'JPEG',10,10);
+        report.addImage(img,'JPEG',10,10, html.offsetWidth, html.offsetHeight);
         report.save('report.pdf');
       };
     
