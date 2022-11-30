@@ -94,6 +94,15 @@ class Color {
                          ? "#c2c2a3" : "#ffffff";
 
     }
+    get_dominant_color(d){
+        return d >= 200.0
+                 ? "#fc9f67" 
+                 : d >= 100.0 && d < 200.0
+                     ? "#60ba6c" 
+                     : d >= 0.0 && d < 100.0
+                         ? "#5ba3d0" : "#ffffff";
+
+    }
     
     get_layer_color (d, layer, geoserverLayers){
         if (layer === geoserverLayers[0]){
@@ -116,6 +125,9 @@ class Color {
         }
         else if (layer === geoserverLayers[6]){
             return this.get_compost_color(d);
+        }
+        else if (layer === geoserverLayers[7]){
+            return this.get_dominant_color(d);
         }
         else {
             return "#ffffff";

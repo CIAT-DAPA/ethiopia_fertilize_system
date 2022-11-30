@@ -25,6 +25,9 @@ function MapLegend(props) {
     const [compostGrades, setCompostGrades] = React.useState([12.0, 16.0, 21.0]);
     const compostIntervals = ["12-16", "16-21", "≥ 21"];
 
+    const [dominantGrades, setDominantGrades] = React.useState([0.0, 100.0, 200.0]);
+    const dominantIntervals = ["0-100 above", "100-200 normal", "≥ 200 below"];
+
 
     const Legend = () => {
       
@@ -38,7 +41,8 @@ function MapLegend(props) {
                 : (props.currentLayer === props.geoserverLayers[3]) ? (ureaGrades)
                 : (props.currentLayer === props.geoserverLayers[4]) ? (npsGrades) 
                 : (props.currentLayer === props.geoserverLayers[5]) ? (vcompostGrades) 
-                : (props.currentLayer === props.geoserverLayers[6]) ? (compostGrades) : undefined
+                : (props.currentLayer === props.geoserverLayers[6]) ? (compostGrades)
+                : (props.currentLayer === props.geoserverLayers[7]) ? (dominantGrades) : undefined
 
         }
         
@@ -53,7 +57,8 @@ function MapLegend(props) {
                                     : (props.currentLayer.includes(props.geoserverLayers[3])) ? ureaIntervals[idx]
                                     : (props.currentLayer.includes(props.geoserverLayers[4])) ? npsIntervals[idx] 
                                     : (props.currentLayer.includes(props.geoserverLayers[5])) ? vcompostIntervals[idx]
-                                    : (props.currentLayer.includes(props.geoserverLayers[6])) ? compostIntervals[idx] 
+                                    : (props.currentLayer.includes(props.geoserverLayers[6])) ? compostIntervals[idx]
+                                    : (props.currentLayer.includes(props.geoserverLayers[7])) ? dominantIntervals[idx]  
                                     : item === 0.0 ? "NA"
                                     : item
                                 }
@@ -78,7 +83,7 @@ function MapLegend(props) {
             <div className="leaflet-control leaflet-bar">
                 <div className='info legend'>
                     {
-                        props.currentLayer ? <h6>amounts (kg/ha)</h6> : <h6>select a layer</h6>
+                        (props?.currentLayer && props?.currentLayer.includes(props.geoserverLayers[7])) ? <h6>scenaries</h6> : <h6>amounts (kg/ha)</h6>
                     }
                     <Legend/>
                     

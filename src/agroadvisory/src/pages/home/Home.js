@@ -22,7 +22,7 @@ import {useDispatch} from 'react-redux';
 
 function Home() {
     const [map_init, setMap_init] = React.useState({ center: [9.3988271, 39.9405962], zoom: 5 });
-    const [selectsValues, setSelectsValues] = React.useState();
+    const [selectsValues, setSelectsValues] = React.useState(null);
     const [disabledSelect, setDisabledSelect] = React.useState({z:true, w:true, k:true, b:true});
     const [geoJson, setGeoJson] = React.useState();
 
@@ -145,7 +145,7 @@ function Home() {
                         <div className='row form-group'>
                             <div className='col-6'>
                                 <b>Region</b>
-                                <select className="form-select" aria-label="Disabled select example" onChange={e =>{setDisabledSelect({...disabledSelect, z:false}); setFormValues({ ...formValues, region: e.target.value.split(",") })} }>
+                                <select className="form-select" aria-label="Disabled select example" onChange={e =>{setDisabledSelect({...disabledSelect, z:false, w:true, k:true}); setFormValues({ ...formValues, region: e.target.value.split(","), zone:null, woreda:null, kebele:null })} }>
                                     <option key={"region default"} value={null}>Select a region</option>
                                
                                     {
@@ -156,8 +156,9 @@ function Home() {
                             </div>
                             <div className='col-6'>
                                 <b>Zone</b>
-                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.z} onChange={e => {setDisabledSelect({...disabledSelect, w:false}); setFormValues({ ...formValues, zone: e.target.value.split(",") })}}>
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.z} onChange={e => {setDisabledSelect({...disabledSelect, w:false, k:true}); setFormValues({ ...formValues, zone: e.target.value.split(","), woreda:null, kebele:null })}}>
                                    
+                                    
                                     <option key={"zone default"} value={null}>Select a zone</option>
                                
                                     {
@@ -168,9 +169,9 @@ function Home() {
                             </div>
                             <div className='col-6 mt-4'>
                                 <b>Woreda</b>
-                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.w} onChange={e => {setDisabledSelect({...disabledSelect, k:false}); setFormValues({ ...formValues, woreda: e.target.value.split(",") })}}>
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.w} onChange={e => {setDisabledSelect({...disabledSelect, k:false}); setFormValues({ ...formValues, woreda: e.target.value.split(","), kebele:null  })}}>
                                    
-                                    <option key={"woreda default"} value={null}>Select a zone</option>
+                                    <option key={"woreda default"} value={null}>Select a woreda</option>
                                
                                     {
                                         selectsValues?.woredas && selectsValues?.woredas.map((currentWoreda) => <option key={currentWoreda.id} value={[currentWoreda.id, currentWoreda.name]}>{currentWoreda.name}</option>)
@@ -180,9 +181,9 @@ function Home() {
                             </div>
                             <div className='col-6 mt-4'>
                                 <b>Kebele</b>
-                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.k} onChange={e => {setFormValues({ ...formValues, kebele: e.target.value.split(",") }); setDisabledSelect({...disabledSelect, b:false}); GeoFeatures.geojson("'"+e.target.value.split(",")[1]+"'").then((data_geo) => {setGeoJson(data_geo)});}}>
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.k} onChange={e => {setFormValues({ ...formValues, kebele: e.target.value.split(",") }); setDisabledSelect({...disabledSelect, b:false}); /*GeoFeatures.geojson("'"+e.target.value.split(",")[1]+"'").then((data_geo) => {setGeoJson(data_geo)});*/}}>
                                    
-                                    <option key={"zone default"} value={null}>Select a zone</option>
+                                    <option key={"kebele default"} value={null}>Select a kebele</option>
                                
                                     {
                                         selectsValues?.kebeles && selectsValues?.kebeles.map((currentKebele) => <option key={currentKebele.id} value={[currentKebele.id, currentKebele.name]}>{currentKebele.name}</option>)
@@ -247,7 +248,7 @@ function Home() {
                         </div>
                     </form>
                     <div className='col-6'>
-                        <Map id="location" init={map_init} type={"location"} geo={geoJson} style={{height: '300px'}} zoomOnGeojson={map_init} cuttable={false} downloadable={false} legend={false} checked={true}/>
+                        <Map id="location" init={map_init} type={"location"} style={{height: '300px'}} zoomOnGeojson={map_init} cuttable={false} downloadable={false} legend={false} checked={true}/>
                         
                     </div>
 

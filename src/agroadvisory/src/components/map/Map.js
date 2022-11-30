@@ -15,8 +15,9 @@ const auxTableData = [];
 const geoserverLayers = ["optimal_nutrients_n", 
         "optimal_nutrients_p", "yieldtypes_optimal", 
         "urea_probabilistic", "nps_probabilistic", 
-        "vcompost_probabilistic", "compost_probabilistic"];
+        "vcompost_probabilistic", "compost_probabilistic", "dominant"];
 let popUpMessage = '';
+let unitPopupMessage='';
 
 
 
@@ -75,6 +76,8 @@ function Map(props) {
             (currentLayerName.includes(geoserverLayers[3]) || currentLayerName.includes(geoserverLayers[4])) ? "fertilizer amount: " : 
             (currentLayerName.includes(geoserverLayers[5])) ? "vermi-compost: " : 
             (currentLayerName.includes(geoserverLayers[6])) ? "compost: " : "" 
+        
+        unitPopupMessage = popUpMessage===""?"":" kg/ha";
 
     }
     
@@ -143,7 +146,7 @@ function Map(props) {
                         if(data.features[0] && data.features[0].properties.GRAY_INDEX.toFixed(2) > 0) {
                             
                             marker = L.marker([lat, lng], { icon }).addTo(map.target)
-                                .bindPopup(popUpMessage + data.features[0].properties.GRAY_INDEX.toFixed(2) + " kg/ha")
+                                .bindPopup(popUpMessage + data.features[0].properties.GRAY_INDEX.toFixed(2) + unitPopupMessage)
                                 .openPopup();
                                 auxTableData[2] = data.features[0].properties.GRAY_INDEX.toFixed(2);
                                 if(layer_name.includes(geoserverLayers[2])){
@@ -251,27 +254,28 @@ function Map(props) {
                                 </BaseLayer>
                             })
                             : props.type === "location_report" ?
+                            <></>
                             
-                                 <BaseLayer key={props.type} name={"location_report"}>
-                                    {/* <WMSTileLayer
-                                        //layers={"fertilizer_et:Admin_fertilizerAdvisoryZone1"}
-                                        attribution=''
-                                        url={url_service}
-                                        format={"image/png"}
-                                        transparent={true}
-                                        // params={{'time': props.forecast}}
-                                        // eventHandlers={{
-                                        //     add: (e) => {
-                                        //       onLayerChange(e.target.options.layers);
+                            //      <BaseLayer key={props.type} name={"location_report"}>
+                            //         <WMSTileLayer
+                            //             //layers={"fertilizer_et:Admin_fertilizerAdvisoryZone1"}
+                            //             attribution=''
+                            //             url={url_service}
+                            //             format={"image/png"}
+                            //             transparent={true}
+                            //             // params={{'time': props.forecast}}
+                            //             // eventHandlers={{
+                            //             //     add: (e) => {
+                            //             //       onLayerChange(e.target.options.layers);
                                               
-                                        //     }
-                                        //   }}
-                                    /> */}
+                            //             //     }
+                            //             //   }}
+                            //         />
                                     
-                                </BaseLayer>
+                            //     </BaseLayer>
                             : props.type === "location" ?
                             
-                            <BaseLayer key={props.type} name={"location"} checked={props.checked}>
+                            <BaseLayer key={props.type} name={"administrative levels"} checked={props.checked}>
                                <WMSTileLayer
                                    layers={"administrative:admin_levels"}
                                    attribution=''
@@ -299,31 +303,17 @@ function Map(props) {
                                         format={"image/png"}
                                         transparent={true}
                                         // params={{'time': props.forecast}}
-                                        // eventHandlers={{
-                                        //     add: (e) => {
-                                        //       onLayerChange(e.target.options.layers);
+                                        eventHandlers={{
+                                            add: (e) => {
+                                              onLayerChange(e.target.options.layers);
                                               
-                                        //     }
-                                        //   }}
+                                            }
+                                          }}
                                     />
                                 </BaseLayer>
                             
                             :// props.type === "recommendation" ?
-                                <BaseLayer key={"recommendation_"} name={"recommendation"}>
-                                    <WMSTileLayer
-                                        layers={"fertilizer_et:et_wheat_fertilizer_recommendation_normal"}
-                                        attribution=''
-                                        url={getUrlService('fertilizer_et', 'wms')}
-                                        format={"image/png"}
-                                        transparent={true}
-                                        //params={{'time': props.forecast}}
-                                        // eventHandlers={{
-                                        //     add: (e) => {
-                                        //       onLayerChange(e.target.options.layers);
-                                        //     }
-                                        //   }}
-                                    />
-                                </BaseLayer>
+                                <></>
                                 
                             
 
