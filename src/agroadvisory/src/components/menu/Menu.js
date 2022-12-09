@@ -57,15 +57,16 @@ function Menu() {
                                 </a>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                     
-                                    <Link className="dropdown-item" to="/fertilizer_advisories">Fertilizer</Link>
-                                    <Link className="dropdown-item" to="/fertilizer_advisories_nps_urea">Fertilizer NPS Urea</Link>
+                                    <Link className="dropdown-item" to="/fertilizer_advisories">Fertilizer N, P & Optimal yield</Link>
+                                    <Link className="dropdown-item" to="/fertilizer_advisories_nps_urea">Fertilizer NPS & Urea</Link>
                                     <Link className="dropdown-item" to="/isfm">ISFM</Link>
-                                    {/* <Link className="dropdown-item" to="/csa">CSA</Link>
-                                    <Link className="dropdown-item" to="/pest_disease">Pest and disease surveillance</Link>
-                                    <Link className="dropdown-item" to="/mechanization">Mechanization</Link>
-                                    <Link className="dropdown-item" to="/bundled_aas">Bundled AAS</Link>
+                                    <Link className="dropdown-item" to="/csa">CSA</Link>
                                     <Link className="dropdown-item" to="/irrigation">Irrigation scheduling</Link>
-                                    <Link className="dropdown-item" to="/agroclimate">Agroclimate</Link> */}
+                                    <Link className="dropdown-item" to="/agroclimate">Lime Agroclimate</Link>
+                                    <Link className="dropdown-item" to="/wheat_rust">Wheat rust</Link>
+                                    {/* <Link className="dropdown-item" to="/pest_disease">Pest and disease surveillance</Link>
+                                    <Link className="dropdown-item" to="/mechanization">Mechanization</Link>
+                                    <Link className="dropdown-item" to="/bundled_aas">Bundled AAS</Link> */}
                                 </div>
                             </li>
                             {/* <li className="nav-item">

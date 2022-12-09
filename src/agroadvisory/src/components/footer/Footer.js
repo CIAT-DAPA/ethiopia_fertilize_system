@@ -2,11 +2,12 @@ import React from 'react';
 
 import moaLogo from '../../assets/images/moa-logo.png';
 import eiarLogo from '../../assets/images/eiar-logo.webp';
-import dgLogo from '../../assets/images/Digital-green-logo.png';
-import allianceLogo from '../../assets/images/alliance-logo.jpg'
+import atiLogo from '../../assets/images/ati-logo.png';
+import allianceLogo from '../../assets/images/alliance-logo.png'
 import aiccraLogo from '../../assets/images/aiccra-logo.png';
 import eiaLogo from '../../assets/images/eia-logo.png'
 import gizLogo from '../../assets/images/giz-logo.jpg'
+import cowLogo from '../../assets/images/cow-logo.png'
 
 import './Footer.css'
 
@@ -24,7 +25,7 @@ function Footer() {
                     <div className="row">
 
                         <div className="col">
-                            <img className="figure-img rounded" alt="" src={allianceLogo} width="150" height="75" role="img" />
+                            <img className="figure-img rounded" alt="" src={allianceLogo} width="130" height="75" role="img" />
                         </div>
                         
                         <div className="col">
@@ -40,7 +41,7 @@ function Footer() {
                         </div>
 
                         <div className="col">
-                            <img className="figure-img rounded" alt="" src={eiaLogo} width="125" height="75" role="img" />
+                            <img className="figure-img rounded" alt="" src={eiaLogo} width="105" height="75" role="img" />
                         </div>
 
                         <div className="col">
@@ -48,16 +49,13 @@ function Footer() {
                         </div>
                         
                         <div className="col">
-                            <img className="figure-img rounded" alt="" src={dgLogo} width="230" height="75" role="img" />
+                            <img className="figure-img rounded" alt="" src={atiLogo} width="175" height="75" role="img" />
                         </div>
 
-
-
-
-                        
-                        <div className="col mt-2">
-                            <h1 className="card-title">CoW</h1>
+                        <div className="col">
+                            <img className="figure-img rounded" alt="" src={cowLogo} width="175" height="75" role="img" />
                         </div>
+
                     </div>
                 </div>
             </div>

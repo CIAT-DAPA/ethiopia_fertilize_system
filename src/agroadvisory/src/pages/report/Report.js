@@ -97,12 +97,21 @@ function Report() {
     const Location = () => {
         
         return(
-            <div className='col' style={{backgroundColor: "white"}} key="locationMap">
-                    <h4 className='font-link'>Location</h4>
-                    {
-                        geoJson && <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} style={{height: '40vh'}} bounds={bounds}/>
-                    }
+            <div className="card col">
+                <div className="card-body">
+                    <h5 className="card-title">Location</h5>
+                    
+            
+                        {
+                            geoJson && <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} style={{height: '40vh'}} bounds={bounds}/>
+                        }
+                    
+                    
+                    
+                   
+                </div>
             </div>
+            
 
         )
 
@@ -133,22 +142,26 @@ function Report() {
 
     const SeasonalChartCarousel = () => {
         return(
-            <div className='col mt-3 me-3' style={{backgroundColor: "white"}} key="donutCarousel">
-                <h4 className='font-link'>Seasonal</h4>
-                <Carousel variant="dark">
-                            
-                    {
-                
-                            donutChartData.climate[0].data.map((value, i) => (
-                                <Carousel.Item key={i}>
-                                    <DonutChart data={value}/>
-                                </Carousel.Item>
+            <div className="card col mt-3 me-3" key="donutCarousel">
+                <div className="card-body">
+                <h5 className="card-title">Seasonal</h5>
 
-                            
-                            ))
-                    }
+                   
+                    <Carousel variant="dark">
+                                
+                        {
+                    
+                                donutChartData.climate[0].data.map((value, i) => (
+                                    <Carousel.Item key={i}>
+                                        <DonutChart data={value}/>
+                                    </Carousel.Item>
 
-                </Carousel>
+                                
+                                ))
+                        }
+
+                    </Carousel>
+                </div>
                        
 
                         
@@ -159,9 +172,12 @@ function Report() {
 
     const BarChartFert = ({name,data}) => {
         return(
-                <div className='col mt-3' style={{backgroundColor: "white"}} key={"bar_chart_organic"}>
-                    <h4 className='font-link'>{name}</h4>
-                    <ColumnChart data={data} type={'fertilizer_rate'}/>
+                <div className='card col ms-2' key={"bar_chart_"+name}>
+                    <div className="card-body">
+                        <h5 className="card-title">{name}</h5>
+                        <ColumnChart data={data} type={'fertilizer_rate'}/>
+
+                    </div>
                             
                 </div>
 
@@ -170,9 +186,12 @@ function Report() {
 
     const BarChartYield = ({name,data}) => {
         return(
-                <div className='col' style={{backgroundColor: "white"}} key={"bar_chart_yield"}>
-                    <h4 className='font-link'>{name}</h4>
-                    <ColumnChart data={data} type={'optimal_yield'}/>
+                <div className='card col mt-3' key={"bar_chart_yield"}>
+                    <div className="card-body">
+                    <h5 className="card-title">{name}</h5>
+                        <ColumnChart data={data} type={'optimal_yield'}/>
+
+                    </div>
                             
                 </div>
 
@@ -222,15 +241,16 @@ function Report() {
 
                     <div className='row mt-2'>
                        <Location/>
-                       <SeasonalDominant/>
-                       <BarChartYield name={"Optimal yield"} data={[barChartData[2]]}/>
+                       <BarChartFert name={"Fertilizer rate"} data={[barChartData[1], barChartData[3]]}/>
+                       <BarChartFert name={"Fertilizer rate (ISFM)"} data={[barChartData[0], barChartData[4]]}/>
+                       
                                 
                     </div>
 
                     <div className='row'>
                         <SeasonalChartCarousel/>
-                        <BarChartFert name={"Fertilizer rate (organic)"} data={[barChartData[0], barChartData[4]]}/>
-                        <BarChartFert name={"Fertilizer rate"} data={[barChartData[1], barChartData[3]]}/>
+                        <BarChartYield name={"Optimal yield"} data={[barChartData[2]]}/>
+                        
                     </div>
                         
                     </div>

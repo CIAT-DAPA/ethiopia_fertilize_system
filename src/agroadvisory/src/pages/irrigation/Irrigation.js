@@ -12,6 +12,10 @@ function Irrigation() {
                         This component provides advisories on irrigation scheduling for optimal water 
                         application based on remote sensing and moisture balance approach.
                     </p>
+                    <br/>
+                    <br/>
+                    <br/>
+                     <br/>
                 </div>
             </section>
         </main>

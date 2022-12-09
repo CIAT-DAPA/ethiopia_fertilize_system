@@ -16,6 +16,9 @@ function Agroclimate() {
                         In addition to enhancing production, this intervention also helps reduce agricultural production
                         risk due to climate variabilities and change.
                     </p>
+                    <br/>
+                    <br/>
+                    <br/>
                 </div>
             </section>
         </main>
