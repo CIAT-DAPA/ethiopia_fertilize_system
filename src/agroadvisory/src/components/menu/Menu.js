@@ -49,7 +49,9 @@ function Menu() {
                             <li className="nav-item">
                                 <a className="nav-link" href="/mechanization">Mechanization</a>
                             </li>*/}
-                          
+                            <li className="navbar-item">
+                                <a className="nav-link" href="https://webapi.nextgenagroadvisory.com/apidocs/" target="_blank">API NextGen</a>
+                            </li>
                            
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

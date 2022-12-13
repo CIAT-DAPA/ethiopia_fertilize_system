@@ -335,7 +335,7 @@ function Map(props) {
                 }
             
                 {
-                props.geo ? <GeoJSON attribution="" key={"advisory_geojson"} data={props.geo} /> : <GeoJSON attribution="" />
+                props.geo ? <GeoJSON attribution="" key={"advisory_geojson"+props.geo.timeStamp} data={props.geo} /> : <GeoJSON attribution="" />
                 }
             </MapContainer>
            

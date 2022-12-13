@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from "axios";
 import center from "@turf/center";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import './Home.css';
 import landscape from '../../assets/images/landscape.jpg';
@@ -17,14 +17,15 @@ import { setReportInput } from '../../slices/reportSlice';
 import { useState } from 'react';
 
 //redux
-import {useDispatch} from 'react-redux';
-
+import { useDispatch } from 'react-redux';
+const bbox = require('geojson-bbox');
 
 function Home() {
     const [map_init, setMap_init] = React.useState({ center: [9.3988271, 39.9405962], zoom: 5 });
     const [selectsValues, setSelectsValues] = React.useState(null);
-    const [disabledSelect, setDisabledSelect] = React.useState({z:true, w:true, k:true, b:true});
-    const [geoJson, setGeoJson] = React.useState();
+    const [disabledSelect, setDisabledSelect] = React.useState({ z: true, w: true, k: true, b: true });
+    const [geoJson, setGeoJson] = React.useState(null);
+    const [bounds, setBounds] = React.useState([ [10, 30],  [8.5, 50],])
 
     const [formValues, setFormValues] = useState({
         type: null,
@@ -35,54 +36,54 @@ function Home() {
         ad_fertilizer: null,
         ad_aclimate: null,
         ad_isfm: null
-  
-      });
+
+    });
 
     const dispatch = useDispatch();
 
     React.useEffect(() => {
         //Regions
-        if(!selectsValues){
-            axios.get(Configuration.get_url_api_base()+"adm1")
+        if (!selectsValues) {
+            axios.get(Configuration.get_url_api_base() + "adm1")
                 .then(response => {
-                    setSelectsValues({... selectsValues, regions: response.data})
-                    
-                    
-                });
+                    setSelectsValues({ ...selectsValues, regions: response.data })
 
+
+                });
+            
         }
-        if(formValues.region){
+        if (formValues.region) {
             //Zones
-            axios.get(Configuration.get_url_api_base()+"adm2/"+formValues.region[0])
+            axios.get(Configuration.get_url_api_base() + "adm2/" + formValues.region[0])
                 .then(response => {
-                    
-                    setSelectsValues({... selectsValues, zones: response.data})
-                    
-                    
-                });
 
+                    setSelectsValues({ ...selectsValues, zones: response.data })
+
+
+                });
+            
         }
-        
-        if(formValues.zone){
+
+        if (formValues.zone) {
             //Woredas
-            axios.get(Configuration.get_url_api_base()+"adm3/"+formValues.zone[0])
+            axios.get(Configuration.get_url_api_base() + "adm3/" + formValues.zone[0])
                 .then(response => {
-                    
-                    setSelectsValues({... selectsValues, woredas: response.data})
-                    
-                    
+
+                    setSelectsValues({ ...selectsValues, woredas: response.data })
+
+
                 });
 
         }
 
-        if(formValues.woreda){
+        if (formValues.woreda) {
             //Kebeles
-            axios.get(Configuration.get_url_api_base()+"adm4/"+formValues.woreda[0])
+            axios.get(Configuration.get_url_api_base() + "adm4/" + formValues.woreda[0])
                 .then(response => {
-                    
-                    setSelectsValues({... selectsValues, kebeles: response.data})
-                    
-                    
+
+                    setSelectsValues({ ...selectsValues, kebeles: response.data })
+
+
                 });
 
         }
@@ -92,7 +93,7 @@ function Home() {
         //     var features = ([
         //         [ 39.74409621, 13.35065102 ]
         //       ]);
-              
+
         //     var center = center(geoJson);
         //     console.log(center)
 
@@ -101,14 +102,45 @@ function Home() {
 
     }, [formValues]);
 
-    const onFormSubmit = (e) =>{
+    const onFormSubmit = (e) => {
         e.preventDefault();
         //dispatch(setReportInput({formValues}));
 
     }
 
-    const Alert =() =>{
-        return(
+    const onChangeRegion = (e) => {
+        GeoFeatures.geojsonRegion("'" + e[1] + "'").then((data_geo) => {
+            // const extent = bbox(data_geo);
+            // setBounds([[extent[1], extent[0]], [extent[3], extent[2]]])
+            setGeoJson(data_geo);
+            // console.log("bounds")
+            // console.log(bounds)
+            // setMap_init({ center: [extent[1], extent[0]], zoom: 5 })
+            // console.log("map init")
+            // console.log(map_init)
+        });
+    }
+
+    const onChangeZone = (e) => {
+        GeoFeatures.geojsonZone("'" + e[1] + "'").then((data_geo) => {
+            setGeoJson(data_geo);
+        });
+    }
+
+    const onChangeWoreda = (e) => {
+        GeoFeatures.geojsonWoreda("'" + e[1] + "'").then((data_geo) => {
+            setGeoJson(data_geo);
+        });
+    }
+
+    const onChangeKebele = (e) => {
+        GeoFeatures.geojson("'" + e[1] + "'").then((data_geo) => {
+            setGeoJson(data_geo);
+        });
+    }
+
+    const Alert = () => {
+        return (
             <div className="alert alert-primary mt-4" role="alert">
                 You must select a Kebele
             </div>
@@ -117,37 +149,37 @@ function Home() {
 
     return (
         <main>
-            <br/>
-            
+            <br />
+
             <div className='container'>
                 <div className='row'>
                     <div className='col'>
-                        
-                                    <h1 className='font-link text-center'><b>NextGen Agroadvisory</b></h1>
-                                    <p className='font-link-body'>
-                                        NextGenAgroadvisory is a project designed to develop location-, context-, and climate- specific agricultural
-                                        advisories particularly related to optimal fertilizer application, integrated soil fertility management (ISFM),
-                                        climate information service, climate smart agricultural activities (CSA), pest and disease surveillance, and other
-                                        agricultural investments in Ethiopia. It is a project by the Alliance of Bioversity International and the International
-                                        Center for Tropical Agriculture (CIAT) in partnership with support of SSHI (BMGF), EiA (oneCGIAR initiative),
-                                        AICCRA (World Bank), and SI-MFS (oneCGIAR initiative).
-                                    </p>
 
-                        
-                                
+                        <h1 className='font-link text-center'><b>NextGen Agroadvisory</b></h1>
+                        <p className='font-link-body'>
+                            NextGenAgroadvisory is a project designed to develop location-, context-, and climate- specific agricultural
+                            advisories particularly related to optimal fertilizer application, integrated soil fertility management (ISFM),
+                            climate information service, climate smart agricultural activities (CSA), pest and disease surveillance, and other
+                            agricultural investments in Ethiopia. It is a project by the Alliance of Bioversity International and the International
+                            Center for Tropical Agriculture (CIAT) in partnership with support of SSHI (BMGF), EiA (oneCGIAR initiative),
+                            AICCRA (World Bank), and SI-MFS (oneCGIAR initiative).
+                        </p>
+
+
+
                     </div>
 
                 </div>
-                
+
                 <div className='row row-content mt-5 font-link-body'>
                     <form className='col-6' onSubmit={onFormSubmit}>
                         <p>Choose a location</p>
                         <div className='row form-group'>
                             <div className='col-6'>
                                 <b>Region</b>
-                                <select className="form-select" aria-label="Disabled select example" onChange={e =>{setDisabledSelect({...disabledSelect, z:false, w:true, k:true}); setFormValues({ ...formValues, region: e.target.value.split(","), zone:null, woreda:null, kebele:null })} }>
+                                <select className="form-select" aria-label="Disabled select example" onChange={e => { setDisabledSelect({ ...disabledSelect, z: false, w: true, k: true }); setFormValues({ ...formValues, region: e.target.value.split(","), zone: null, woreda: null, kebele: null }); onChangeRegion(e.target.value.split(",")) }}>
                                     <option key={"region default"} value={null}>Select a region</option>
-                               
+
                                     {
                                         selectsValues?.regions && selectsValues?.regions.map((currentRegion) => <option key={currentRegion.id} value={[currentRegion.id, currentRegion.name]}>{currentRegion.name}</option>)
                                     }
@@ -156,11 +188,11 @@ function Home() {
                             </div>
                             <div className='col-6'>
                                 <b>Zone</b>
-                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.z} onChange={e => {setDisabledSelect({...disabledSelect, w:false, k:true}); setFormValues({ ...formValues, zone: e.target.value.split(","), woreda:null, kebele:null })}}>
-                                   
-                                    
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.z} onChange={e => { setDisabledSelect({ ...disabledSelect, w: false, k: true }); setFormValues({ ...formValues, zone: e.target.value.split(","), woreda: null, kebele: null }); onChangeZone(e.target.value.split(",")) }}>
+
+
                                     <option key={"zone default"} value={null}>Select a zone</option>
-                               
+
                                     {
                                         selectsValues?.zones && selectsValues?.zones.map((currentZone) => <option key={currentZone.id} value={[currentZone.id, currentZone.name]}>{currentZone.name}</option>)
                                     }
@@ -169,10 +201,10 @@ function Home() {
                             </div>
                             <div className='col-6 mt-4'>
                                 <b>Woreda</b>
-                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.w} onChange={e => {setDisabledSelect({...disabledSelect, k:false}); setFormValues({ ...formValues, woreda: e.target.value.split(","), kebele:null  })}}>
-                                   
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.w} onChange={e => { setDisabledSelect({ ...disabledSelect, k: false }); setFormValues({ ...formValues, woreda: e.target.value.split(","), kebele: null }); onChangeWoreda(e.target.value.split(",")) }}>
+
                                     <option key={"woreda default"} value={null}>Select a woreda</option>
-                               
+
                                     {
                                         selectsValues?.woredas && selectsValues?.woredas.map((currentWoreda) => <option key={currentWoreda.id} value={[currentWoreda.id, currentWoreda.name]}>{currentWoreda.name}</option>)
                                     }
@@ -181,10 +213,10 @@ function Home() {
                             </div>
                             <div className='col-6 mt-4'>
                                 <b>Kebele</b>
-                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.k} onChange={e => {setFormValues({ ...formValues, kebele: e.target.value.split(",") }); setDisabledSelect({...disabledSelect, b:false}); /*GeoFeatures.geojson("'"+e.target.value.split(",")[1]+"'").then((data_geo) => {setGeoJson(data_geo)});*/}}>
-                                   
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.k} onChange={e => { setFormValues({ ...formValues, kebele: e.target.value.split(",") }); setDisabledSelect({ ...disabledSelect, b: false });; onChangeKebele(e.target.value.split(",")) /*GeoFeatures.geojson("'"+e.target.value.split(",")[1]+"'").then((data_geo) => {setGeoJson(data_geo)});*/ }}>
+
                                     <option key={"kebele default"} value={null}>Select a kebele</option>
-                               
+
                                     {
                                         selectsValues?.kebeles && selectsValues?.kebeles.map((currentKebele) => <option key={currentKebele.id} value={[currentKebele.id, currentKebele.name]}>{currentKebele.name}</option>)
                                     }
@@ -226,39 +258,42 @@ function Home() {
 
                         <div className='row'>
                             {
-                                !disabledSelect.b 
-                                ?   <Link className='col d-flex justify-content-center mt-4 mb-4' to="/report">
-                                        <button type="submit" className="btn btn-primary" disabled={disabledSelect.b} onClick={e =>{dispatch(setReportInput({formValues}));}}>Advisory</button>
+                                !disabledSelect.b
+                                    ? <Link className='col d-flex justify-content-center mt-4 mb-4' to="/report">
+                                        <button type="submit" className="btn btn-primary" disabled={disabledSelect.b} onClick={e => { dispatch(setReportInput({ formValues })); }}>Advisory</button>
                                     </Link>
-                                : 
-                                <div>
-                                    <Alert/>
-                                    <div className='d-flex justify-content-center mt-4 mb-4'>
-                                        
-                                        <button type="submit" className="btn btn-primary" disabled={disabledSelect.b}>Advisory</button>
+                                    :
+                                    <div>
+                                        <Alert />
+                                        <div className='d-flex justify-content-center mt-4 mb-4'>
+
+                                            <button type="submit" className="btn btn-primary" disabled={disabledSelect.b}>Advisory</button>
+
+                                        </div>
 
                                     </div>
 
-                                </div>
-                                
                             }
-                            
-                                
+
+
 
                         </div>
                     </form>
                     <div className='col-6'>
-                        <Map id="location" init={map_init} type={"location"} style={{height: '300px'}} zoomOnGeojson={map_init} cuttable={false} downloadable={false} legend={false} checked={true}/>
-                        
+                        {geoJson ?
+                            <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} zoomOnGeojson={map_init} style={{ height: '300px' }} /> :
+                            <Map id="location_report" init={map_init} type={"location_report"} style={{ height: '300px' }} zoomOnGeojson={map_init} cuttable={false} />
+                        }
+
                     </div>
 
-                    
+
 
 
                 </div>
 
             </div>
-            
+
             {
                 /* 
                 <div id="myCarousel" className="carousel slide" data-bs-ride="carousel">
@@ -290,9 +325,9 @@ function Home() {
             </div>
                 */
             }
-           
-        
-           
+
+
+
         </main>
     );
 }
