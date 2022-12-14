@@ -178,7 +178,7 @@ function Map(props) {
             <MapContainer center={props.init.center} zoom={props.init.zoom} zoomControl={false} style={props.style} scrollWheelZoom={true} whenReady={handleEventsMap}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    url="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}"
                     
                 />
                 <LayersControl position="topright" collapsed={false}>
