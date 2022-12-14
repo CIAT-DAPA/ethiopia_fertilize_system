@@ -109,32 +109,25 @@ function Home() {
     }
 
     const onChangeRegion = (e) => {
-        GeoFeatures.geojsonRegion("'" + e[1] + "'").then((data_geo) => {
-            // const extent = bbox(data_geo);
-            // setBounds([[extent[1], extent[0]], [extent[3], extent[2]]])
+        GeoFeatures.geojsonRegion("'" + e[2] + "'").then((data_geo) => {
             setGeoJson(data_geo);
-            // console.log("bounds")
-            // console.log(bounds)
-            // setMap_init({ center: [extent[1], extent[0]], zoom: 5 })
-            // console.log("map init")
-            // console.log(map_init)
         });
     }
 
     const onChangeZone = (e) => {
-        GeoFeatures.geojsonZone("'" + e[1] + "'").then((data_geo) => {
+        GeoFeatures.geojsonZone("'" + e[2] + "'").then((data_geo) => {
             setGeoJson(data_geo);
         });
     }
 
     const onChangeWoreda = (e) => {
-        GeoFeatures.geojsonWoreda("'" + e[1] + "'").then((data_geo) => {
+        GeoFeatures.geojsonWoreda("'" + e[2] + "'").then((data_geo) => {
             setGeoJson(data_geo);
         });
     }
 
     const onChangeKebele = (e) => {
-        GeoFeatures.geojson("'" + e[1] + "'").then((data_geo) => {
+        GeoFeatures.geojsonKebele("'" + e[2] + "'").then((data_geo) => {
             setGeoJson(data_geo);
         });
     }
@@ -181,7 +174,7 @@ function Home() {
                                     <option key={"region default"} value={null}>Select a region</option>
 
                                     {
-                                        selectsValues?.regions && selectsValues?.regions.map((currentRegion) => <option key={currentRegion.id} value={[currentRegion.id, currentRegion.name]}>{currentRegion.name}</option>)
+                                        selectsValues?.regions && selectsValues?.regions.map((currentRegion) => <option key={currentRegion.id} value={[currentRegion.id, currentRegion.name, currentRegion.ext_id]}>{currentRegion.name}</option>)
                                     }
                                 </select>
 
@@ -194,7 +187,7 @@ function Home() {
                                     <option key={"zone default"} value={null}>Select a zone</option>
 
                                     {
-                                        selectsValues?.zones && selectsValues?.zones.map((currentZone) => <option key={currentZone.id} value={[currentZone.id, currentZone.name]}>{currentZone.name}</option>)
+                                        selectsValues?.zones && selectsValues?.zones.map((currentZone) => <option key={currentZone.id} value={[currentZone.id, currentZone.name, currentZone.ext_id]}>{currentZone.name}</option>)
                                     }
                                 </select>
 
@@ -206,7 +199,7 @@ function Home() {
                                     <option key={"woreda default"} value={null}>Select a woreda</option>
 
                                     {
-                                        selectsValues?.woredas && selectsValues?.woredas.map((currentWoreda) => <option key={currentWoreda.id} value={[currentWoreda.id, currentWoreda.name]}>{currentWoreda.name}</option>)
+                                        selectsValues?.woredas && selectsValues?.woredas.map((currentWoreda) => <option key={currentWoreda.id} value={[currentWoreda.id, currentWoreda.name, currentWoreda.ext_id]}>{currentWoreda.name}</option>)
                                     }
                                 </select>
 
@@ -218,7 +211,7 @@ function Home() {
                                     <option key={"kebele default"} value={null}>Select a kebele</option>
 
                                     {
-                                        selectsValues?.kebeles && selectsValues?.kebeles.map((currentKebele) => <option key={currentKebele.id} value={[currentKebele.id, currentKebele.name]}>{currentKebele.name}</option>)
+                                        selectsValues?.kebeles && selectsValues?.kebeles.map((currentKebele) => <option key={currentKebele.id} value={[currentKebele.id, currentKebele.name, currentKebele.ext_id]}>{currentKebele.name}</option>)
                                     }
                                 </select>
 
@@ -281,7 +274,7 @@ function Home() {
                     </form>
                     <div className='col-6'>
                         {geoJson ?
-                            <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} zoomOnGeojson={map_init} style={{ height: '300px' }} /> :
+                            <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson}/> :
                             <Map id="location_report" init={map_init} type={"location_report"} style={{ height: '300px' }} zoomOnGeojson={map_init} cuttable={false} />
                         }
 
