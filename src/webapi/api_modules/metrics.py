@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from flask_restful import Resource
 from orm.database import Metric
 import json
+from bson import ObjectId
 
 class Metrics(Resource):
 
@@ -43,6 +44,6 @@ class Metrics(Resource):
             q_set = Metric.objects()
         else:
             ids = adm4.split(',')
-            q_set = Metric.objects(adm4__in=adm4)
+            q_set = Metric.objects(adm4__in=ids)
         json_data = [{"id":str(x.id),"adm4":str(x.adm4.id),"forecast":str(x.forecast.id),"type":str(x.type.id),"values":x.values} for x in q_set]
         return json_data
