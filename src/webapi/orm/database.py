@@ -40,3 +40,10 @@ class Metric(Document):
     forecast = ReferenceField(Forecast)
     type = ReferenceField(MetricType)
     values = ListField(required= True)
+    
+class Risk(Document):
+    # kebele
+    adm4 = ReferenceField(Adm4)
+    forecast = ReferenceField(Forecast)
+    type = ReferenceField(MetricType)
+    values = ListField(required= True)
