@@ -151,7 +151,7 @@ if(dataFormatted){
       <div>
         {
           dataFormatted &&
-            <Chart options={state.options} series={state.series} type="bar" height={300} width="400" />
+            <Chart options={state.options} series={state.series} type="bar" height={300}  />
         }
 
       </div>
