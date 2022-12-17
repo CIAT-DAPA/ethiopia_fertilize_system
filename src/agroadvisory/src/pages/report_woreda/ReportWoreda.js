@@ -11,7 +11,7 @@ import ColumnChart from "../../components/chart/ColumnChart";
 import Configuration from "../../conf/Configuration";
 const bbox = require("geojson-bbox");
 
-function Report() {
+function ReportWoreda() {
     const reportInput = useSelector((state) => state.report);
 
     const [map_init, setMap_init] = React.useState({
@@ -27,7 +27,7 @@ function Report() {
     const [load, setLoad] = React.useState(false);
     const [kebeles, setKebeles] = React.useState();
 
-    React.useEffect(async () => {
+    React.useEffect(() => {
         setLoad(false);
         if (reportInput.woreda) {
             GeoFeatures.geojsonWoreda("'" + reportInput.woreda[1] + "'").then(
@@ -45,41 +45,48 @@ function Report() {
                 ids = "";
             const values = [],
                 suma = [];
-            await axios
+            axios
                 .get(Configuration.get_url_api_base() + "adm4/" + reportInput.woreda[0])
                 .then((response) => {
                     kebeles = response.data;
                     setKebeles(response.data);
-                });
-            if (kebeles.length > 0) {
-                await kebeles.map(async (dato, index) => {
-                    //console.log(`este es el id de ${dato.name}`,dato.id)
-                    ids += `${dato.id},`;
-                    await axios
-                        .get(Configuration.get_url_api_base() + "metrics/" + dato.id)
-                        .then((response) => {
-                            values.push(response.data);
-                            response.data.map((datito, i) => {
-                                if (suma[i]) {
-                                    suma[i].values[0].values[0] +=
-                                        datito.values[0].values[0] / kebeles.length;
-                                    suma[i].values[1][0].values[0] +=
-                                        datito.values[1][0].values[0] / kebeles.length;
-                                    suma[i].values[2][0].values[0] +=
-                                        datito.values[2][0].values[0] / kebeles.length;
-                                } else {
-                                    suma[i] = JSON.parse(JSON.stringify(datito));
-                                    suma[i].values[0].values[0] /= kebeles.length;
-                                    suma[i].values[1][0].values[0] /= kebeles.length;
-                                    suma[i].values[2][0].values[0] /= kebeles.length;
-                                }
-                                if (i == suma.length - 1 && index == kebeles.length - 1)
-                                    setLoad(true);
-                            });
+                    if (kebeles.length > 0) {
+                        kebeles.map((dato, i) => {
+                            if (i == kebeles.length-1)
+                                ids += dato.id;
+                            else
+                                ids += `${dato.id},`;
+                        })
+                        kebeles.map(async (dato, index) => {
+                            //console.log(`este es el id de ${dato.name}`,dato.id)
+                            
+                            await axios
+                                .get(Configuration.get_url_api_base() + "metrics/" + dato.id)
+                                .then((response) => {
+                                    values.push(response.data);
+                                    response.data.map((datito, i) => {
+                                        if (suma[i]) {
+                                            suma[i].values[0].values[0] +=
+                                                datito.values[0].values[0] / kebeles.length;
+                                            suma[i].values[1][0].values[0] +=
+                                                datito.values[1][0].values[0] / kebeles.length;
+                                            suma[i].values[2][0].values[0] +=
+                                                datito.values[2][0].values[0] / kebeles.length;
+                                        } else {
+                                            suma[i] = JSON.parse(JSON.stringify(datito));
+                                            suma[i].values[0].values[0] /= kebeles.length;
+                                            suma[i].values[1][0].values[0] /= kebeles.length;
+                                            suma[i].values[2][0].values[0] /= kebeles.length;
+                                        }
+                                        if (i == suma.length - 1 && index == kebeles.length - 1)
+                                            setLoad(true);
+                                    });
+                                });
                         });
+                    } else setLoad(true);
                 });
-            } else setLoad(true);
-            console.log(ids)
+
+            console.log(ids);
             console.log(values);
 
             setBarChartData(suma);
@@ -243,4 +250,4 @@ function Report() {
     );
 }
 
-export default Report;
+export default ReportWoreda;
