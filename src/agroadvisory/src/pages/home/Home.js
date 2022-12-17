@@ -25,6 +25,7 @@ function Home() {
     const [selectsValues, setSelectsValues] = React.useState(null);
     const [disabledSelect, setDisabledSelect] = React.useState({z:true, w:true, k:true, b:true});
     const [geoJson, setGeoJson] = React.useState();
+    const [forWoreda, setForWoreda] = React.useState(false);
 
     const [formValues, setFormValues] = useState({
         type: null,
@@ -79,7 +80,7 @@ function Home() {
             //Kebeles
             axios.get(Configuration.get_url_api_base()+"adm4/"+formValues.woreda[0])
                 .then(response => {
-                    
+                    console.log(response)
                     setSelectsValues({... selectsValues, kebeles: response.data})
                     
                     
@@ -110,7 +111,7 @@ function Home() {
     const Alert =() =>{
         return(
             <div className="alert alert-primary mt-4" role="alert">
-                You must select a Kebele
+                You must select a {forWoreda ? 'Woreda' : 'Kebele'}
             </div>
         )
     }
@@ -138,6 +139,14 @@ function Home() {
                     </div>
 
                 </div>
+                <div>
+                    <label className="switch">
+                        <input type="checkbox" checked={forWoreda} onChange={e => setForWoreda(e.target.checked)}/>
+                        <span className="slider round"></span>
+                    </label>
+                    Report for Woreda
+                </div>
+                
                 
                 <div className='row row-content mt-5 font-link-body'>
                     <form className='col-6' onSubmit={onFormSubmit}>
@@ -181,7 +190,7 @@ function Home() {
                             </div>
                             <div className='col-6 mt-4'>
                                 <b>Kebele</b>
-                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.k} onChange={e => {setFormValues({ ...formValues, kebele: e.target.value.split(",") }); setDisabledSelect({...disabledSelect, b:false}); /*GeoFeatures.geojson("'"+e.target.value.split(",")[1]+"'").then((data_geo) => {setGeoJson(data_geo)});*/}}>
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.k || forWoreda} onChange={e => {setFormValues({ ...formValues, kebele: e.target.value.split(",") }); setDisabledSelect({...disabledSelect, b:false}); /*GeoFeatures.geojson("'"+e.target.value.split(",")[1]+"'").then((data_geo) => {setGeoJson(data_geo)});*/}}>
                                    
                                     <option key={"kebele default"} value={null}>Select a kebele</option>
                                
@@ -226,17 +235,15 @@ function Home() {
 
                         <div className='row'>
                             {
-                                !disabledSelect.b 
-                                ?   <Link className='col d-flex justify-content-center mt-4 mb-4' to="/report">
-                                        <button type="submit" className="btn btn-primary" disabled={disabledSelect.b} onClick={e =>{dispatch(setReportInput({formValues}));}}>Advisory</button>
+                                !disabledSelect.b || ( forWoreda && !disabledSelect.k )
+                                ?   <Link className='col d-flex justify-content-center mt-4 mb-4' to={forWoreda? "/report_woreda":"/report"}>
+                                        <button type="submit" className="btn btn-primary" disabled={forWoreda ? disabledSelect.k : disabledSelect.b} onClick={e =>{dispatch(setReportInput({formValues}));}}>Advisory</button>
                                     </Link>
                                 : 
                                 <div>
                                     <Alert/>
                                     <div className='d-flex justify-content-center mt-4 mb-4'>
-                                        
-                                        <button type="submit" className="btn btn-primary" disabled={disabledSelect.b}>Advisory</button>
-
+                                        <button type="submit" className={"btn btn-primary"} disabled={disabledSelect.b}>Advisory</button>
                                     </div>
 
                                 </div>
