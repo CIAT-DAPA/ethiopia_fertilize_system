@@ -19,6 +19,7 @@ import Irrigation from './pages/irrigation/Irrigation';
 import Mechanization from './pages/mechanization/Mechanization';
 import BundledAAS from './pages/bundled_aas/BundledAAS';
 import Report from './pages/report/Report';
+import ReportWoreda from './pages/report_woreda/ReportWoreda';
 import WheatRust from './pages/wheat_rust/WheatRust';
 
 import store from './redux/store/store';
@@ -44,6 +45,7 @@ class App extends Component {
               <Route path='/bundled_aas' element={<BundledAAS />} />
               <Route path='/wheat_rust' element={<WheatRust />} />
               <Route path='/report' element={<Report />} />
+              <Route path='/report_woreda' element={<ReportWoreda />} />
               <Route path='/about' element={<About />} />
             </Routes>
           </div>
