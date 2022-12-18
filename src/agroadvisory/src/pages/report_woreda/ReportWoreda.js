@@ -131,7 +131,7 @@ function ReportWoreda() {
                             init={map_init}
                             type={"location_report"}
                             geo={geoJson}
-                            style={{ height: "40vh" }}
+                            style={{ height: "50vh" }}
                             bounds={bounds}
                         />
                     )}
