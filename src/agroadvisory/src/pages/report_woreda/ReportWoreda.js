@@ -30,7 +30,7 @@ function ReportWoreda() {
     React.useEffect(() => {
         setLoad(false);
         if (reportInput.woreda) {
-            GeoFeatures.geojsonWoreda("'" + reportInput.woreda[1] + "'").then(
+            GeoFeatures.geojsonWoreda("'" + reportInput.woreda[2] + "'").then(
                 (data_geo) => {
                     const extent = bbox(data_geo);
                     setBounds([
