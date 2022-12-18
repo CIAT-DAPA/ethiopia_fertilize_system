@@ -11,12 +11,8 @@ function Menu() {
         //Regions
         if (reportInput?.kebele) {
             setReportButtonDisabled("false");
-
         }
-
-
     }, [reportInput]);
-
 
     return (
         <header>
@@ -49,8 +45,15 @@ function Menu() {
                             <li className="nav-item">
                                 <a className="nav-link" href="/mechanization">Mechanization</a>
                             </li>*/}
-                            <li className="navbar-item">
-                                <a className="nav-link" href="https://webapi.nextgenagroadvisory.com/apidocs/" target="_blank">API NextGen</a>
+                            <li className="navbar-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="#" id="navbar_api" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    APIs
+                                </a>
+                                <div className="dropdown-menu" aria-labelledby="navbar_api">
+                                    <a className="dropdown-item" href="https://webapi.nextgenagroadvisory.com/" target="_blank">API NextGen</a>
+                                    <a className="dropdown-item" href="https://webapi.aclimate.org/" target="_blank">API Aclimate</a>
+                                </div>
+                                
                             </li>
 
                             <li className="nav-item dropdown">
@@ -58,7 +61,7 @@ function Menu() {
                                     Advisory Components
                                 </a>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a className="dropdown-item dropdown-toggle"  href="#" id="navbar2Dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a className="dropdown-item dropdown-toggle" href="#" id="navbar2Dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Fertilizer
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="navbar2Dropdown">
