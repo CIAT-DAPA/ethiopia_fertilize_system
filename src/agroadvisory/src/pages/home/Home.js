@@ -217,7 +217,7 @@ function Home() {
                             <div className='col-6 mt-4'>
                                 <b>Kebele</b>
                                 <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.k || forWoreda} onChange={e => { setFormValues({ ...formValues, kebele: e.target.value.split(",") }); setDisabledSelect({ ...disabledSelect, b: false }); onChangeKebele(e.target.value.split(","))/*GeoFeatures.geojson("'"+e.target.value.split(",")[1]+"'").then((data_geo) => {setGeoJson(data_geo)});*/ }}>
-                                    {/*<select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.k} onChange={e => { setFormValues({ ...formValues, kebele: e.target.value.split(",") }); setDisabledSelect({ ...disabledSelect, b: false });; onChangeKebele(e.target.value.split(",")) /*GeoFeatures.geojson("'"+e.target.value.split(",")[1]+"'").then((data_geo) => {setGeoJson(data_geo)}); }}> */}
+                                {/*<select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.k} onChange={e => { setFormValues({ ...formValues, kebele: e.target.value.split(",") }); setDisabledSelect({ ...disabledSelect, b: false });; onChangeKebele(e.target.value.split(",")) /*GeoFeatures.geojson("'"+e.target.value.split(",")[1]+"'").then((data_geo) => {setGeoJson(data_geo)}); }}> */}
                                     <option key={"kebele default"} value={null}>Select a kebele</option>
 
                                     {
