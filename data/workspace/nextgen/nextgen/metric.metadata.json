@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"nextgen.metric"}],"uuid":"045931a146e349d9b47fe1cf39f35918"}

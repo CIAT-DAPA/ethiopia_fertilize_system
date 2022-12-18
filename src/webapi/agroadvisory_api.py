@@ -20,6 +20,9 @@ from api_modules.crops import Crops
 from api_modules.forecasts import Forecasts
 from api_modules.metrics import Metrics
 from api_modules.metric_type import MetricType
+from api_modules.risks import Risks
+#from api_modules.layers import Layers
+
 
 app = Flask(__name__)
 CORS(app)
@@ -45,6 +48,8 @@ api.add_resource(AdministrativeLevel4, '/adm4/<adm3>')
 api.add_resource(Crops, '/crops')
 api.add_resource(Forecasts, '/forecast/<crop>')
 api.add_resource(Metrics, '/metrics/<adm4>')
+api.add_resource(Risks, '/risk/<adm4>')
+#api.add_resource(Layers, '/layers')
 #api.add_resource(MetricType, '/metric_types')
 
 
