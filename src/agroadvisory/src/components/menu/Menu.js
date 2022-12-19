@@ -45,17 +45,17 @@ function Menu() {
                             <li className="nav-item">
                                 <a className="nav-link" href="/mechanization">Mechanization</a>
                             </li>*/}
-                            <li className="navbar-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="navbar_api" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    APIs
-                                </a>
-                                <div className="dropdown-menu" aria-labelledby="navbar_api">
-                                    <a className="dropdown-item" href="https://webapi.nextgenagroadvisory.com/" target="_blank">API NextGen</a>
-                                    <a className="dropdown-item" href="https://webapi.aclimate.org/" target="_blank">API Aclimate</a>
-                                </div>
-                                
-                            </li>
+                            {
+                                reportInput?.kebele ?
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/report" >Report</Link>
+                                    </li>
+                                    :
+                                    <li className="nav-item">
+                                        <Link className="nav-link disabled" to="/report" aria-disabled="true">Report</Link>
+                                    </li>
 
+                            }
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Advisory Components
@@ -83,19 +83,18 @@ function Menu() {
                             {/* <li className="nav-item">
                                 <Link className="nav-link" to="/bundled_aas">Bundled AAS</Link>
                             </li> */}
-                            {
-                                reportInput?.kebele ?
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="/report" >Report</Link>
-                                    </li>
-                                    :
-                                    <li className="nav-item">
-                                        <Link className="nav-link disabled" to="/report" aria-disabled="true">Report</Link>
-                                    </li>
+                            
 
-                            }
-
-
+                            <li className="navbar-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="#" id="navbar_api" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    APIs
+                                </a>
+                                <div className="dropdown-menu" aria-labelledby="navbar_api">
+                                    <a className="dropdown-item" href="https://webapi.nextgenagroadvisory.com/" target="_blank">API NextGen</a>
+                                    <a className="dropdown-item" href="https://webapi.aclimate.org/" target="_blank">API Aclimate</a>
+                                </div>
+                                
+                            </li>
                             <li className="navbar-item">
                                 <Link className="nav-link" to="/about">About us</Link>
                             </li>
