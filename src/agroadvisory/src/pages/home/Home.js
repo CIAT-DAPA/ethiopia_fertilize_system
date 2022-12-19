@@ -28,7 +28,7 @@ function Home() {
     const [forWoreda, setForWoreda] = React.useState(false);
     //const [disabledSelect, setDisabledSelect] = React.useState({ z: true, w: true, k: true, b: true });
     //const [geoJson, setGeoJson] = React.useState(null);
-    //const [bounds, setBounds] = React.useState([ [10, 30],  [8.5, 50],])
+    const [bounds, setBounds] = React.useState([[10, 30], [8.5, 50],])
 
 
     const [formValues, setFormValues] = useState({
@@ -113,25 +113,37 @@ function Home() {
     const onChangeRegion = (e) => {
         GeoFeatures.geojsonRegion("'" + e[2] + "'").then((data_geo) => {
             setGeoJson(data_geo);
+            onChangeBounds(data_geo);
         });
     }
 
     const onChangeZone = (e) => {
         GeoFeatures.geojsonZone("'" + e[2] + "'").then((data_geo) => {
             setGeoJson(data_geo);
+            onChangeBounds(data_geo);
         });
     }
 
     const onChangeWoreda = (e) => {
         GeoFeatures.geojsonWoreda("'" + e[2] + "'").then((data_geo) => {
             setGeoJson(data_geo);
+            onChangeBounds(data_geo);
         });
     }
 
     const onChangeKebele = (e) => {
         GeoFeatures.geojsonKebele("'" + e[2] + "'").then((data_geo) => {
             setGeoJson(data_geo);
+            onChangeBounds(data_geo);
         });
+    }
+
+    const onChangeBounds = data_geo => {
+        const extent = bbox(data_geo);
+        setBounds([
+            [extent[1], extent[0]],
+            [extent[3], extent[2]],
+        ]);
     }
 
     const Alert = () => {
@@ -283,7 +295,7 @@ function Home() {
                     </form>
                     <div className='col-6'>
                         {geoJson ?
-                            <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} /> :
+                            <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} bounds={bounds}/> :
                             <Map id="location_report" init={map_init} type={"location_report"} style={{ height: '300px' }} zoomOnGeojson={map_init} cuttable={false} />
                         }
 

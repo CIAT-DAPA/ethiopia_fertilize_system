@@ -29,6 +29,7 @@ function Map(props) {
     const [currentLayer, setCurrentLayer] = React.useState();
     const [warning, setWarning] = React.useState(false);
     const [polygonCoords, setPolygonCoords] = React.useState();
+    const [mapRef, setRefMap] = React.useState();
     //For changing the layer according to scenerario selected (Sidebar)
     const [lastSelected, setLastSelected] = React.useState();
 
@@ -81,6 +82,11 @@ function Map(props) {
 
     }
     
+    React.useEffect(() => {
+        if (mapRef)
+        mapRef.target.flyToBounds(props.bounds)
+    },[props.bounds])
+
     const handleEventsMap = (map) => {
 
         // Adding print/export button on the map
@@ -99,6 +105,8 @@ function Map(props) {
         if (props.bounds){
             map.target.flyToBounds(props.bounds)
         }
+
+        setRefMap(map);
         
         map.target.on("click", function (e) {
             //props.onClick(e, map);
