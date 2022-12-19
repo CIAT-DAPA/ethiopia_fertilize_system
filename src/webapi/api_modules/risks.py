@@ -42,7 +42,8 @@ class Risks(Resource):
         if adm4 is None:
             q_set = Risk.objects()
         else:
-            q_set = Risk.objects(adm4=adm4)
+            ids = adm4.split(',')
+            q_set = Risk.objects(adm4__in=ids)
         json_data = [{"id":str(x.id),"adm4":str(x.adm4.id),"forecast":str(x.forecast.id),"type":str(x.type.id),"risk":x.values[0]} for x in q_set]
         return json_data
         

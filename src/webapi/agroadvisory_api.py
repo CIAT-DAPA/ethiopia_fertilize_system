@@ -21,7 +21,11 @@ from api_modules.forecasts import Forecasts
 from api_modules.metrics import Metrics
 from api_modules.metric_type import MetricType
 from api_modules.risks import Risks
+<<<<<<< HEAD
 from api_modules.coordinates import Coordinates
+=======
+#from api_modules.layers import Layers
+>>>>>>> e34eb18d74cd2518c2b2dacc88078a6743ae1e79
 
 
 app = Flask(__name__)
@@ -50,6 +54,7 @@ api.add_resource(Crops, '/crops')
 api.add_resource(Forecasts, '/forecast/<crop>')
 api.add_resource(Metrics, '/metrics/<adm4>')
 api.add_resource(Risks, '/risk/<adm4>')
+#api.add_resource(Layers, '/layers')
 #api.add_resource(MetricType, '/metric_types')
 
 

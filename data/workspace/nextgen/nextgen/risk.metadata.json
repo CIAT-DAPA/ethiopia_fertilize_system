@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"nextgen.risk"}],"uuid":"49b8109ad1aa4cf49b222c70acf7b2ea"}

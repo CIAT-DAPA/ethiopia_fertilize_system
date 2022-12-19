@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"nextgen.adm1"}],"uuid":"4af9760717aa4211920479a33933707c"}
