@@ -21,7 +21,7 @@ class GeoFeatures {
             bbox: (lon - 0.1) + ',' + (lat - 0.1) + ',' + (lon + 0.1) + ',' + (lat + 0.1)
         }
         const url = Configuration.get_geoserver_url()+ layer.split(':')[0] + '/' + Configuration.get_geoserver_service() + "?" + new URLSearchParams(parameters).toString();
-
+        //new URLSearchParamss(parameters)
         return axios
             .get(url)
             .then(response => {
