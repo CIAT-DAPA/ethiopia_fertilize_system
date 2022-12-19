@@ -21,11 +21,8 @@ from api_modules.forecasts import Forecasts
 from api_modules.metrics import Metrics
 from api_modules.metric_type import MetricType
 from api_modules.risks import Risks
-<<<<<<< HEAD
 from api_modules.coordinates import Coordinates
-=======
 #from api_modules.layers import Layers
->>>>>>> e34eb18d74cd2518c2b2dacc88078a6743ae1e79
 
 
 app = Flask(__name__)
@@ -43,7 +40,7 @@ api.add_resource(Woreda, '/woredas', endpoint="woredas")
 api.add_resource(Woreda, '/woredas/<woreda_name>', endpoint="woreda")
 api.add_resource(Kebele, '/kebele/<kebele_name>')
 api.add_resource(ClippingRaster, '/clip_raster')
-api.add_resource(Coordinates, '/coordinates', endpoint="coordinates")
+api.add_resource(Coordinates, '/coordinates/<layer>')
 
 # New methods
 api.add_resource(AdministrativeLevel1, '/adm1')
