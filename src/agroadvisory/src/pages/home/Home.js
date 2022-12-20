@@ -111,32 +111,45 @@ function Home() {
     }
 
     const onChangeRegion = (e) => {
-        GeoFeatures.geojsonRegion("'" + e[2] + "'").then((data_geo) => {
-            setGeoJson(data_geo);
-            onChangeBounds(data_geo);
-        });
+        setGeoJson(e[2]);
     }
-
     const onChangeZone = (e) => {
-        GeoFeatures.geojsonZone("'" + e[2] + "'").then((data_geo) => {
-            setGeoJson(data_geo);
-            onChangeBounds(data_geo);
-        });
+        setGeoJson(e[2]);
     }
-
     const onChangeWoreda = (e) => {
-        GeoFeatures.geojsonWoreda("'" + e[2] + "'").then((data_geo) => {
-            setGeoJson(data_geo);
-            onChangeBounds(data_geo);
-        });
+        setGeoJson(e[2]);
+    }
+    const onChangeKebele = (e) => {
+        setGeoJson(e[2]);
     }
 
-    const onChangeKebele = (e) => {
-        GeoFeatures.geojsonKebele("'" + e[2] + "'").then((data_geo) => {
-            setGeoJson(data_geo);
-            onChangeBounds(data_geo);
-        });
-    }
+    // const onChangeRegion = (e) => {
+    //     GeoFeatures.geojsonRegion("'" + e[2] + "'").then((data_geo) => {
+    //         setGeoJson(data_geo);
+    //         onChangeBounds(data_geo);
+    //     });
+    // }
+
+    // const onChangeZone = (e) => {
+    //     GeoFeatures.geojsonZone("'" + e[2] + "'").then((data_geo) => {
+    //         setGeoJson(data_geo);
+    //         onChangeBounds(data_geo);
+    //     });
+    // }
+
+    // const onChangeWoreda = (e) => {
+    //     GeoFeatures.geojsonWoreda("'" + e[2] + "'").then((data_geo) => {
+    //         setGeoJson(data_geo);
+    //         onChangeBounds(data_geo);
+    //     });
+    // }
+
+    // const onChangeKebele = (e) => {
+    //     GeoFeatures.geojsonKebele("'" + e[2] + "'").then((data_geo) => {
+    //         setGeoJson(data_geo);
+    //         onChangeBounds(data_geo);
+    //     });
+    // }
 
     const onChangeBounds = data_geo => {
         const extent = bbox(data_geo);
@@ -294,10 +307,10 @@ function Home() {
                             </div>
                     </form>
                     <div className='col-6'>
-                        {geoJson ?
-                            <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} bounds={bounds}/> :
-                            <Map id="location_report" init={map_init} type={"location_report"} style={{ height: '300px' }} zoomOnGeojson={map_init} cuttable={false} />
-                        }
+                        {/* {geoJson ?
+                            <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} bounds={bounds}/> : */}
+                            <Map id="location" init={map_init} type={"location"} style={{ height: '300px' }} zoomOnGeojson={map_init} cuttable={false} checked={true} param={geoJson} region={formValues.region} zone={formValues.zone} kebele={formValues.kebele} woreda={formValues.woreda} />
+                        {/* } */}
 
                     </div>
 

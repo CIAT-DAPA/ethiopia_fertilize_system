@@ -41,6 +41,8 @@ function Map(props) {
     //Current marker
     var marker = null;
 
+    var paramIdFilter;
+
     React.useEffect(() => {
         
         if(polygonCoords && currentLayer){
@@ -281,25 +283,63 @@ function Map(props) {
                             //         />
                                     
                             //     </BaseLayer>
-                            : props.type === "location" ?
-                            
-                            <BaseLayer key={props.type} name={"administrative levels"} checked={props.checked}>
-                               <WMSTileLayer
-                                   layers={"administrative:admin_levels"}
-                                   attribution=''
-                                   url={getUrlService('administrative', 'wms')}
-                                   format={"image/png"}
-                                   transparent={true}
-                                   // params={{'time': props.forecast}}
-                                   // eventHandlers={{
-                                   //     add: (e) => {
-                                   //       onLayerChange(e.target.options.layers);
-                                         
-                                   //     }
-                                   //   }}
-                               />
-                               
-                           </BaseLayer>
+                            : props.type === "location" ? (
+                                props.kebele ?
+                                    <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
+                                        <WMSTileLayer
+                                            layers={"administrative:admin_levels"}
+                                            attribution=''
+                                            url={getUrlService('administrative', 'wms')}
+                                            format={"image/png"}
+                                            transparent={true}
+                                            cql_filter= {`id_adm4=${props.param}`}
+                                        />
+                                    </BaseLayer>
+                                : props.woreda ?
+                                    <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
+                                        <WMSTileLayer
+                                            layers={"administrative:admin_levels"}
+                                            attribution=''
+                                            url={getUrlService('administrative', 'wms')}
+                                            format={"image/png"}
+                                            transparent={true}
+                                            cql_filter= {`id_adm3=${props.param}`}
+                                        />
+                                    </BaseLayer>
+                                : props.zone ? 
+                                    <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
+                                        <WMSTileLayer
+                                            layers={"administrative:admin_levels"}
+                                            attribution=''
+                                            url={getUrlService('administrative', 'wms')}
+                                            format={"image/png"}
+                                            transparent={true}
+                                            cql_filter= {`id_adm2=${props.param}`}
+                                        />
+                                    </BaseLayer>
+                                : props.region ?
+                                    <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
+                                        <WMSTileLayer
+                                            layers={"administrative:admin_levels"}
+                                            attribution=''
+                                            url={getUrlService('administrative', 'wms')}
+                                            format={"image/png"}
+                                            transparent={true}
+                                            cql_filter= {`id_adm1=${props.param}`}
+                                        />
+                                    </BaseLayer>
+                                
+                                :
+                                    <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
+                                    <WMSTileLayer
+                                        layers={"administrative:admin_levels"}
+                                        attribution=''
+                                        url={getUrlService('administrative', 'wms')}
+                                        format={"image/png"}
+                                        transparent={true}
+                                    />
+                                    </BaseLayer>
+                            )
                        
                             : props.type === "seasonal_dominant" ?
                             
