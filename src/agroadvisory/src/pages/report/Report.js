@@ -32,27 +32,32 @@ function Report() {
     const [scenario, setScenario] = React.useState(opt_scenarios[0].value);
     const [geoJson, setGeoJson] = React.useState();
     const [barChartData, setBarChartData] = React.useState();
+    const [risk, setRisk] = React.useState()
 
     React.useEffect(() => {
 
-        if(reportInput.kebele){
-            GeoFeatures.geojson("'"+reportInput.kebele[1]+"'").then((data_geo) => {
-                const extent = bbox(data_geo); 
-                setBounds([[extent[1],extent[0]], [extent[3],extent[2]]])
-                setGeoJson(data_geo)});
-                
-            axios.get(Configuration.get_url_api_base()+"metrics/"+reportInput.kebele[0])
-                    .then(response => {
-                        
-                        setBarChartData(response.data);
-                        //console.log(response.data);
-                        
-                        
-                    });
-            
+        if (reportInput.kebele) {
+            GeoFeatures.geojson("'" + reportInput.kebele[1] + "'").then((data_geo) => {
+                const extent = bbox(data_geo);
+                setBounds([[extent[1], extent[0]], [extent[3], extent[2]]])
+                setGeoJson(data_geo)
+            });
+
+            axios.get(Configuration.get_url_api_base() + "metrics/" + reportInput.kebele[0])
+                .then(response => {
+
+                    setBarChartData(response.data);
+
+                });
+
+            axios.get(Configuration.get_url_api_base() + "risk/" + reportInput.kebele[0])
+                .then(response => {
+                    console.log("risk", response.data)
+                    setRisk(response?.data[0]?.risk?.values[0])
+                });
 
         }
-        
+
     }, []);
 
     const changeForecast = event => {
@@ -220,7 +225,7 @@ function Report() {
             <br />
             <section className='container'>
                 <div className="d-flex justify-content-between font-link">
-                    <h3><b>{reportInput.kebele[1]}</b> kebele report</h3>
+                    <h3>kebele report: <b>{reportInput.kebele[1]}</b></h3>
                 </div>
                 <div className='row'>
                     <div className='col mt-2'>
@@ -252,7 +257,9 @@ function Report() {
                         <BarChartYield name={"Optimal yield"} data={[barChartData[2]]}/>
                         
                     </div>
-                        
+                            {risk && <div className={`alert alert-${risk === "High risk"? "danger" : "warning"} mt-4 text-center`} role="alert">
+                                {`Risk: ${risk}`}
+                            </div>}
                     </div>
                     
 
