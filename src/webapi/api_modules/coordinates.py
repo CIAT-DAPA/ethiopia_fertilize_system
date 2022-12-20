@@ -6,20 +6,13 @@ import requests
 
 GEOSERVER_URL="https://geo.aclimate.org/geoserver/fertilizer_et/";
 SERVICEE="wms";
-#layer= 'fertilizer_et:et_wheat_compost_probabilistic_below'
-coordinates=[38.16367,7.17712]
-#lon= 38.16367;
-#lat= 7.17712;
-#lon=coordinates[0];
-#lat=coordinates[1];
-
 class Coordinates(Resource):
 
 
     def __init__(self):
         super().__init__()
 
-    def post(self,layer=None,coor=None):
+    def get(self,layer=None,coor=None):
         """
         Get Features
 
@@ -33,10 +26,7 @@ class Coordinates(Resource):
             name: coor
             type: string
             required: false
-          
-          
          
-        
         responses:
           200:
             description: Latitude, longitude and value
@@ -53,9 +43,6 @@ class Coordinates(Resource):
                   default: 0.00
                 
         """
-        
-        
-        print(layer)
         cor=coor.split(',')
         lon=float(cor[0]);
         lat=float(cor[1]);
