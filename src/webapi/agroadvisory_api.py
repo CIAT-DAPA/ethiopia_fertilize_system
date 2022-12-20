@@ -40,7 +40,7 @@ api.add_resource(Woreda, '/woredas', endpoint="woredas")
 api.add_resource(Woreda, '/woredas/<woreda_name>', endpoint="woreda")
 api.add_resource(Kebele, '/kebele/<kebele_name>')
 api.add_resource(ClippingRaster, '/clip_raster')
-api.add_resource(Coordinates, '/coordinates/<layer>')
+api.add_resource(Coordinates, '/coordinates/<layer>/<coor>')
 
 # New methods
 api.add_resource(AdministrativeLevel1, '/adm1')
