@@ -42,12 +42,51 @@ function ReportWoreda() {
                     setGeoJson(data_geo);
                 }
             );
-
-            let kebeles,
-                ids = "";
-            const values = [],
-                suma = [],
-                risks = {};
+            let kebeles;
+            let ids = "";
+            const suma = [
+                    {
+                        type: "63865d9f68c981103580abf0",
+                        values: [
+                            { s: 1, values: [0] },
+                            [{ s: 2, values: [0] }],
+                            [{ s: 3, values: [0] }],
+                        ],
+                    },
+                    {
+                        type: "63865ef468c981103580e666",
+                        values: [
+                            { s: 1, values: [0] },
+                            [{ s: 2, values: [0] }],
+                            [{ s: 3, values: [0] }],
+                        ],
+                    },
+                    {
+                        type: "638660ad68c98110358120dc",
+                        values: [
+                            { s: 1, values: [0] },
+                            [{ s: 2, values: [0] }],
+                            [{ s: 3, values: [0] }],
+                        ],
+                    },
+                    {
+                        type: "638662c668c9811035815b52",
+                        values: [
+                            { s: 1, values: [0] },
+                            [{ s: 2, values: [0] }],
+                            [{ s: 3, values: [0] }],
+                        ],
+                    },
+                    {
+                        type: "6386653e68c98110358195c8",
+                        values: [
+                            { s: 1, values: [0] },
+                            [{ s: 2, values: [0] }],
+                            [{ s: 3, values: [0] }],
+                        ],
+                    },
+                ];
+            const risks = {};
             axios
                 .get(Configuration.get_url_api_base() + "adm4/" + reportInput.woreda[0])
                 .then(async (response) => {
@@ -60,29 +99,19 @@ function ReportWoreda() {
                             else
                                 ids += `${dato.id},`;
                         });
-                        await kebeles.map(async (dato, index) => {
-                            await axios
-                                .get(Configuration.get_url_api_base() + "metrics/" + dato.id)
-                                .then((response) => {
-                                    values.push(response.data);
-                                    response.data.map((datito, i) => {
-                                        if (suma[i]) {
-                                            suma[i].values[0].values[0] +=
-                                                datito.values[0].values[0] / kebeles.length;
-                                            suma[i].values[1][0].values[0] +=
-                                                datito.values[1][0].values[0] / kebeles.length;
-                                            suma[i].values[2][0].values[0] +=
-                                                datito.values[2][0].values[0] / kebeles.length;
-                                        } else {
-                                            suma[i] = JSON.parse(JSON.stringify(datito));
-                                            suma[i].values[0].values[0] /= kebeles.length;
-                                            suma[i].values[1][0].values[0] /= kebeles.length;
-                                            suma[i].values[2][0].values[0] /= kebeles.length;
-                                        }
-                                    });
-                                });
-                        });
-                        console.log("id dentro",ids)
+                        await axios
+                          .get(Configuration.get_url_api_base() + "metrics/" + ids)
+                          .then((response) => {
+                            response.data.map((kebele) => {
+                              const aux = suma.filter(ar => ar.type === kebele.type);
+                              aux[0].values[0].values[0] +=
+                                kebele.values[0].values[0] / kebeles.length;
+                              aux[0].values[1][0].values[0] +=
+                                kebele.values[1][0].values[0] / kebeles.length;
+                              aux[0].values[2][0].values[0] +=
+                                kebele.values[2][0].values[0] / kebeles.length;
+                            });
+                          });
                         await axios
                             .get(Configuration.get_url_api_base() + "risk/" + ids)
                             .then((response) => {
@@ -95,7 +124,6 @@ function ReportWoreda() {
                                             risks[dato.risk.values[0]] = 1;
                                     })
                                     const chart = {
-
                                         series: [{
                                             name: 'Kebeles count',
                                             data: Object.values(risks)
@@ -107,7 +135,7 @@ function ReportWoreda() {
                                             },
                                             colors: Object.keys(risks).map(name => {
                                                 return name == "High risk" ? "#dc3545" : "#fd7e14"
-                                            }),//['#dc3545', '#20c997', '#ffc107'],
+                                            }),
                                             plotOptions: {
                                                 bar: {
                                                     columnWidth: '40%',
@@ -131,7 +159,7 @@ function ReportWoreda() {
                                             },
                                             yaxis: {
                                                 title: {
-                                                    text: 'Kebeles count'
+                                                    text: 'Kebeles'
                                                 }
                                             },
                                         },
@@ -140,15 +168,9 @@ function ReportWoreda() {
                                 }
                                 setLoad(true);
                             });
-                        //console.log(risks)
                     } else setLoad(true);
                 });
-
-            //console.log("ids final",ids);
-            //console.log(values);
-
             setBarChartData(suma);
-            //console.log("suma", suma);
         }
     }, []);
 
@@ -156,10 +178,8 @@ function ReportWoreda() {
     const createPDF = async () => {
         let orientacion;
         if (window.screen.width < 1200) {
-            //console.log("Pequeña")
             orientacion = "p";
         } else {
-            //console.log("Grande")
             orientacion = "l";
         }
 
