@@ -257,9 +257,17 @@ function Report() {
                         <BarChartYield name={"Optimal yield"} data={[barChartData[2]]}/>
                         
                     </div>
-                            {risk && <div className={`alert alert-${risk === "High risk"? "danger" : "warning"} mt-4 text-center`} role="alert">
+                            {risk && <div className={`alert alert-${risk === "High risk" ? "danger" : "warning"} mt-4 text-center`} role="alert">
                                 {`Risk: ${risk}`}
                             </div>}
+
+                            <div className="alert alert-light my-3 border" role="alert">
+                                <h5>Notes: </h5>
+                                <ol>
+                                    <li>This advisory is for agricultural land allotted to wheat in 2022 main crop season only.</li>
+                                    <li>If there is no sufficient inorganic fertilizer supply, use half inorganic with half organic rates.</li>
+                                </ol>
+                            </div>
                     </div>
                     
 
