@@ -9,6 +9,7 @@ import Map from "../../components/map/Map";
 import GeoFeatures from "../../services/GeoFeatures";
 import ColumnChart from "../../components/chart/ColumnChart";
 import Configuration from "../../conf/Configuration";
+import Chart from "react-apexcharts";
 const bbox = require("geojson-bbox");
 
 function ReportWoreda() {
@@ -26,6 +27,7 @@ function ReportWoreda() {
     const [barChartData, setBarChartData] = React.useState();
     const [load, setLoad] = React.useState(false);
     const [kebeles, setKebeles] = React.useState();
+    const [chart, setChart] = React.useState();
 
     React.useEffect(() => {
         setLoad(false);
@@ -44,22 +46,21 @@ function ReportWoreda() {
             let kebeles,
                 ids = "";
             const values = [],
-                suma = [];
+                suma = [],
+                risks = {};
             axios
                 .get(Configuration.get_url_api_base() + "adm4/" + reportInput.woreda[0])
-                .then((response) => {
+                .then(async (response) => {
                     kebeles = response.data;
                     setKebeles(response.data);
                     if (kebeles.length > 0) {
                         kebeles.map((dato, i) => {
-                            if (i == kebeles.length-1)
+                            if (i == kebeles.length - 1)
                                 ids += dato.id;
                             else
                                 ids += `${dato.id},`;
-                        })
-                        kebeles.map(async (dato, index) => {
-                            //console.log(`este es el id de ${dato.name}`,dato.id)
-                            
+                        });
+                        await kebeles.map(async (dato, index) => {
                             await axios
                                 .get(Configuration.get_url_api_base() + "metrics/" + dato.id)
                                 .then((response) => {
@@ -78,19 +79,76 @@ function ReportWoreda() {
                                             suma[i].values[1][0].values[0] /= kebeles.length;
                                             suma[i].values[2][0].values[0] /= kebeles.length;
                                         }
-                                        if (i == suma.length - 1 && index == kebeles.length - 1)
-                                            setLoad(true);
                                     });
                                 });
                         });
+                        console.log("id dentro",ids)
+                        await axios
+                            .get(Configuration.get_url_api_base() + "risk/" + ids)
+                            .then((response) => {
+                                //console.log("risk", response.data)
+                                if(response.data.length > 0){
+                                    response.data.map((dato) => {
+                                        if (risks[dato.risk.values[0]])
+                                            risks[dato.risk.values[0]] += 1;
+                                        else
+                                            risks[dato.risk.values[0]] = 1;
+                                    })
+                                    const chart = {
+
+                                        series: [{
+                                            name: 'Kebeles count',
+                                            data: Object.values(risks)
+                                        }],
+                                        options: {
+                                            chart: {
+                                                height: 350,
+                                                type: 'bar'
+                                            },
+                                            colors: Object.keys(risks).map(name => {
+                                                return name == "High risk" ? "#dc3545" : "#fd7e14"
+                                            }),//['#dc3545', '#20c997', '#ffc107'],
+                                            plotOptions: {
+                                                bar: {
+                                                    columnWidth: '40%',
+                                                    distributed: true,
+                                                }
+                                            },
+                                            dataLabels: {
+                                                enabled: false
+                                            },
+                                            legend: {
+                                                show: false
+                                            },
+                                            xaxis: {
+                                                categories: Object.keys(risks),
+                                                labels: {
+                                                    style: {
+                                                        colors: null,
+                                                        fontSize: '12px'
+                                                    }
+                                                }
+                                            },
+                                            yaxis: {
+                                                title: {
+                                                    text: 'Kebeles count'
+                                                }
+                                            },
+                                        },
+                                    };
+                                    setChart(chart)
+                                }
+                                setLoad(true);
+                            });
+                        //console.log(risks)
                     } else setLoad(true);
                 });
 
-            console.log(ids);
-            console.log(values);
+            //console.log("ids final",ids);
+            //console.log(values);
 
             setBarChartData(suma);
-            console.log("suma", suma);
+            //console.log("suma", suma);
         }
     }, []);
 
@@ -227,7 +285,21 @@ function ReportWoreda() {
                                     <BarChartFert
                                         name={"Fertilizer rate (ISFM)"}
                                         data={[barChartData[0], barChartData[4]]}
-                                    />
+                                    />{
+                                            chart &&
+                                            <div
+                                                className="card col-12 col-md-5 my-1"
+                                                key="bar_chart_risk"
+                                                style={{ minWidth: "49%" }}
+                                            >
+                                                <div className="card-body">
+                                                    <h5 className="card-title">Risk</h5>
+                                                    <Chart options={chart.options} series={chart.series} type="bar" height={300} />
+                                                </div>
+                                            </div>
+
+                                    }
+                                    
                                 </div>
                             </div>
                         ) : (
