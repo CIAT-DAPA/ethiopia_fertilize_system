@@ -6,6 +6,8 @@ import json
 import ast
 GEOSERVER_URL="https://geo.aclimate.org/geoserver/fertilizer_et/";
 SERVICEE="wms";
+#Example of layer:fertilizer_et:et_wheat_compost_probabilistic_bellow
+#example of array of coordinates
 lista=[]
 class Coordinates(Resource):
 
@@ -22,24 +24,31 @@ class Coordinates(Resource):
             name: layer
             type: string
             required: false
+            description: layer name at https://geo.aclimate.org/geoserver/web/wicket/bookmarkable/org.geoserver.web.demo.MapPreviewPage?8&filter=false example= et_wheat_compost_probabilistic_below
           - in: path
             name: coor
             type: array
             items:
                 type: object
             required: false
+            description: array of objects with coordinates lat and lon, example= [{"lat":7.17712,"lon":38.16367},{"lat":8.35343,"lon":36.51521},{"lat":8.35343,"lon":36.51521}]
+            
         responses:
           200:
             description: Latitude, longitude and value
             schema:
               id: Features
               properties:
-                coordinates:
-                  type: integer
-                  description: coordinates
-                  default: 0.00
+                lat:
+                  type: float
+                  description: lat
+                  default: 8.5583
+                lon:
+                  type: float
+                  description: lat
+                  default: 8.5583
                 value:
-                  type: integer
+                  type: float
                   description: values
                   default: 0.00
                 
@@ -75,7 +84,7 @@ class Coordinates(Resource):
             data= response.json()
             json= data
             
-            respuesta={'lat':lat,'lon':lon,'value':json['features'][0]['properties']['GRAY_INDEX']}
+            respuesta={'layer':layer,'lat':lat,'lon':lon,'value':json['features'][0]['properties']['GRAY_INDEX']}
             if not lista.__contains__(respuesta):
                 lista.append(respuesta)
             
