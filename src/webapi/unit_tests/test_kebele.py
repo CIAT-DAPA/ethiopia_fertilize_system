@@ -10,7 +10,7 @@ class TestAgroadisory(unittest.TestCase):
 
     def test_single_kebele(self):
 
-        response = self.app.get('http://127.0.0.1:5000/kebele/kebele1',
+        response = self.app.get('http://127.0.0.1:5000/kebele/Abaya',
                                 headers={"Content-Type": "application/json"})
         print(response)
         #self.assertEqual(str, type(response.json['Kebele']))
