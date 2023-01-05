@@ -6,15 +6,17 @@ pipeline {
         stage('Build') {
           steps {
             sh 'echo "building the repo"'
+
+            sh "virtualenv venv && . venv/bin/activate && pip install -r ${env.WORKSPACE}/src/webapi/requirements.txt"
           }
         }
       }
     }
 
     stage('Test') {
-        steps {
-          sh "python -m unittest discover -s ${env.WORKSPACE}/src/webapi/unit_tests/ -p 'test_*.py'"
-        }
+      steps {
+        sh "python -m unittest discover -s ${env.WORKSPACE}/src/webapi/unit_tests/ -p 'test_*.py'"
+      }
     
     }
   
@@ -26,6 +28,19 @@ pipeline {
       }
     }
   }
-  
-  
+
+  post {
+    always {
+        echo 'The pipeline completed'
+        junit allowEmptyResults: true, testResults:'**/test_reports/*.xml'
+    }
+    success {                   
+        echo "Flask Application Up and running!!"
+    }
+    failure {
+        echo 'Build stage failed'
+        error('Stopping early…')
+    }
+  }
+    
 }
