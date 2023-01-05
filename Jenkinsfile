@@ -14,6 +14,7 @@ pipeline {
     stage('Test') {
         steps {
           script {
+            echo "${env.WORKSPACE}"
             try{
               sh 'python -m unittest discover -s ./src/webapi/test/ -p "test_*.py"'
             }catch(Exception e){
