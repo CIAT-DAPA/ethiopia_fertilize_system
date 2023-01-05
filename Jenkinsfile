@@ -12,7 +12,7 @@ pipeline {
     }
 
     script {
-    boolean testPassed = true
+      boolean testPassed = true
       stage('Test') {
           try{
               sh 'python -m unittest discover -s ./src/webapi/test/ -p "test_*.py"'
