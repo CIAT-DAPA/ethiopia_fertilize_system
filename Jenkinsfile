@@ -10,16 +10,18 @@ pipeline {
         }
       }
     }
-    
-    boolean testPassed = true
-    stage('Test') {
-        try{
-            sh 'python -m unittest discover -s ./src/webapi/test/ -p "test_*.py"'
-        }catch (Exception e){
-            testPassed = false
-        }
-    }
 
+    stage('Test') {
+        steps {
+          script {
+            def testResult = 'python -m unittest discover -s ./src/webapi/test/ -p "test_*.py"'
+            if (testResult == 'Failed') {
+                error "test failed"
+            }
+          }
+        }
+    
+    }
   
     stage('Deploy')
     {
