@@ -7,7 +7,7 @@ pipeline {
           steps {
             sh 'echo "building the repo"'
 
-            sh "virtualenv venv && . venv/bin/activate && pip install -r ${env.WORKSPACE}/src/webapi/requirements.txt"
+            sh "pip install -r ${env.WORKSPACE}/src/webapi/requirements.txt"
           }
         }
       }
