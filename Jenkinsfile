@@ -18,6 +18,7 @@ pipeline {
             if (testResult == 'Failed') {
                 error "test failed"
             }
+            echo testResult
           }
         }
     
