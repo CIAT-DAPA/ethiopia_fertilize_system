@@ -13,15 +13,7 @@ pipeline {
 
     stage('Test') {
         steps {
-          script {
-            try{
-              sh "python -m unittest discover -s ${env.WORKSPACE}/src/webapi/unit_tests/ -p 'test_*.py'"
-            }catch(Exception e){
-              echo e
-              echo "Test Failed"
-                throw err
-            }
-          }
+          sh "python -m unittest discover -s ${env.WORKSPACE}/src/webapi/unit_tests/ -p 'test_*.py'"
         }
     
     }
