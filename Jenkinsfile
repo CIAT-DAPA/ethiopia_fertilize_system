@@ -15,7 +15,7 @@ pipeline {
         steps {
           script {
             try{
-              sh "python -m unittest discover -s ${env.WORKSPACE}/src/webapi/test/ -p 'test_*.py'"
+              sh "python -m unittest discover -s ${env.WORKSPACE}/src/webapi/unit_tests/ -p 'test_*.py'"
             }catch(Exception e){
               echo e
               echo "Test Failed"
