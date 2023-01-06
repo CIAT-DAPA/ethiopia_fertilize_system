@@ -8,7 +8,7 @@ pipeline {
             
             sh 'echo "building the repo"'
 
-            sh "/usr/local/bin/pip install -r ${env.WORKSPACE}/src/webapi/requirements.txt"
+            sh "pip install -r ${env.WORKSPACE}/src/webapi/requirements.txt"
           }
         }
       }
