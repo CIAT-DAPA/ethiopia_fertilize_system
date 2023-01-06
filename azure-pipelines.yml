@@ -17,7 +17,7 @@ stages:
       - job: pre_build_setup
         displayName: Pre Build Setup
         pool:
-          vmImage: 'ubuntu-18.04'
+          vmImage: ubuntu-latest
         steps:
           - bash: echo "##vso[task.prependpath]$CONDA/bin"
             displayName: Add conda to PATH
@@ -26,7 +26,7 @@ stages:
         displayName: Build Environment
         dependsOn: pre_build_setup
         steps:
-        - script: conda env create --file environment.yml --name build_env
+        - script: conda create -n fertalizer python=3.9
           displayName: Create Anaconda environment
         - script: conda env list
           displayName:  environment installation verification
@@ -35,7 +35,7 @@ stages:
             targetType: 'inline'
             script: |
               eval "$(conda shell.bash hook)"
-              conda activate build_env
+              conda activate fertalizer
           displayName: Active
 
       - job: run_test
