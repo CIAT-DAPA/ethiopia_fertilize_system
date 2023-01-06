@@ -1,4 +1,6 @@
 import unittest
+import sys
+sys.path.append("./src/webapi/")
 from agroadvisory_api import app
 import requests
 

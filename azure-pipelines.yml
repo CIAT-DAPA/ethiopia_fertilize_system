@@ -53,7 +53,7 @@ stages:
         displayName: Deploy python
 
         steps:
-        - script: python ./src/webapi/agroadvisory_api.py > log.txt 2>&1 &
+        - script: nohup python3 ./src/webapi/agroadvisory_api.py > log.txt 2>&1 &
 
 
 
