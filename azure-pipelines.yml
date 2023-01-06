@@ -27,17 +27,14 @@ stages:
         displayName: Build Environment
         dependsOn: pre_build_setup
         steps:
-        - script: conda create -n fertalizer python=3.9
+        - script: conda update -n base -c defaults conda
+        - script: conda env create --quiet -n fertalizer python=3.9
           displayName: Create Anaconda environment
         - script: conda env list
           displayName:  environment installation verification
-        - task: Bash@3
-          inputs:
-            targetType: 'inline'
-            script: |
-              eval "$(conda shell.bash hook)"
-              conda activate fertalizer
-          displayName: Active
+        - bash: |
+            source activate fertalizer
+          displayName: Install Anaconda packages
 
       - job: run_test
         displayName: Run Test
