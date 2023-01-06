@@ -44,7 +44,7 @@ stages:
         dependsOn: build_environment
         steps:
 
-        - script: conda install -c conda-forge gdal
+        - script: conda install -c conda-forge gdal --yes
           displayName: 'Install dependencies'
 
         - script: pip install -r ./src/webapi/requirements.txt
