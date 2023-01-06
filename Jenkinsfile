@@ -1,15 +1,14 @@
 pipeline {
-  agent {
-    docker { image 'python:3' }
-  }
+  agent any
   stages {
     stage('Build') {
       parallel {
         stage('Build') {
           steps {
+            
             sh 'echo "building the repo"'
 
-            sh "pip install -r ${env.WORKSPACE}/src/webapi/requirements.txt"
+            sh "/usr/local/bin/pip install -r ${env.WORKSPACE}/src/webapi/requirements.txt"
           }
         }
       }
