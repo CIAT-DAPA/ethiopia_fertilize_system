@@ -50,6 +50,7 @@ stages:
 
 
   - stage: Deploy
+    dependsOn: Test
     displayName: 'Deploy Proyect'
     jobs:
       - job: Deploy
