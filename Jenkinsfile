@@ -26,7 +26,7 @@ pipeline {
     {
       steps {
         echo "deploying the application"
-        sh "sudo nohup python3 /src/webapi/agroadvisory_api.py > log.txt 2>&1 &"
+        sh "nohup python ${env.WORKSPACE}/src/webapi/agroadvisory_api.py > log.txt 2>&1 &"
       }
     }
   }
