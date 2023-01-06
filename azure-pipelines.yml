@@ -31,8 +31,7 @@ stages:
           displayName: Create Anaconda environment
         - script: conda env list
           displayName:  environment installation verification
-        - bash: |
-            conda activate fertalizer
+        - bash: source activate fertalizer
           displayName: Install Anaconda packages
 
       - job: run_test
