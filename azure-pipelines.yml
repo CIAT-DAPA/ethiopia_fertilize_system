@@ -44,12 +44,6 @@ stages:
         dependsOn: build_environment
         steps:
 
-        - script: |
-            - apt-get install libgdal-dev
-            - export CPLUS_INCLUDE_PATH=/usr/include/gdal
-            - export C_INCLUDE_PATH=/usr/include/gdal
-          displayName: 'Install dependencies'
-
         - script: conda install -c conda-forge gdal
           displayName: 'Install dependencies'
 
