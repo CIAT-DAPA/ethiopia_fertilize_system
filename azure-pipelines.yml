@@ -10,8 +10,8 @@ trigger:
 
 stages:
 
-  - stage: InstallBuild
-    displayName: Install python and build
+  - stage: BuildTest
+    displayName: Build python and Test
 
     jobs:
       - job: install
@@ -33,17 +33,9 @@ stages:
             python -m pip install --upgrade pip
             pip install -r ./src/webapi/requirements.txt
           displayName: 'Install dependencies'
-
-
-  - stage: Test
-    displayName: 'Test Fertalizer'
-    jobs:
-      - job: RunTest
-        displayName: "Run all test"
-
-        steps:
+          
         - script: python -m unittest discover -s ./src/webapi/unit_tests/ -p 'test_*.py'
-
+          displayName: 'Run Tests'
 
   - stage: Deploy
     dependsOn: Test
