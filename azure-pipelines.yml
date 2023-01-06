@@ -38,7 +38,7 @@ stages:
           displayName: 'Run Tests'
 
   - stage: Deploy
-    dependsOn: Test
+    dependsOn: BuildTest
     displayName: 'Deploy Proyect'
     jobs:
       - job: Deploy
