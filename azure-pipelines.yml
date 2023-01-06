@@ -48,7 +48,7 @@ stages:
   - stage: Test
     displayName: 'Test Fertalizer'
     jobs:
-      - job: Run_Test
+      - job: RunTest
         displayName: "Run all test"
 
         steps:
