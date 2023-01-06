@@ -22,8 +22,6 @@ stages:
           matrix:
             Python39:
               python.version: '3.9'
-            Python27:
-              python.version: '2.7'
 
         steps:
         - task: UsePythonVersion@0
@@ -52,6 +50,7 @@ stages:
 
 
   - stage: Deploy
+    dependsOn: Test
     displayName: 'Deploy Proyect'
     jobs:
       - job: Deploy
