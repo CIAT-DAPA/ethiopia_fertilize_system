@@ -14,24 +14,35 @@ stages:
     displayName: Build python and Test
 
     jobs:
-      - job: install
-        displayName: 'Install python'
+      - job: pre_build_setup
+        displayName: Pre Build Setup
         pool:
-          vmImage: ubuntu-latest
-        strategy:
-          matrix:
-            Python39:
-              python.version: '3.9'
-
+          vmImage: 'ubuntu-18.04'
         steps:
-        - task: UsePythonVersion@0
-          inputs:
-            versionSpec: '$(python.version)'
-          displayName: 'Use Python $(python.version)'
+          - bash: echo "##vso[task.prependpath]$CONDA/bin"
+            displayName: Add conda to PATH
 
-        - script: |
-            python -m pip install --upgrade pip
-            pip install -r ./src/webapi/requirements.txt
+      - job: build_environment
+        displayName: Build Environment
+        dependsOn: pre_build_setup
+        steps:
+        - script: conda env create --file environment.yml --name build_env
+          displayName: Create Anaconda environment
+        - script: conda env list
+          displayName:  environment installation verification
+        - task: Bash@3
+          inputs:
+            targetType: 'inline'
+            script: |
+              eval "$(conda shell.bash hook)"
+              conda activate build_env
+          displayName: Active
+
+      - job: run_test
+        displayName: Run Test
+        dependsOn: build_environment
+        steps:
+        - script: pip install -r ./src/webapi/requirements.txt
           displayName: 'Install dependencies'
           
         - script: python -m unittest discover -s ./src/webapi/unit_tests/ -p 'test_*.py'
