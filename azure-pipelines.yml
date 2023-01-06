@@ -27,7 +27,7 @@ stages:
         displayName: Build Environment
         dependsOn: pre_build_setup
         steps:
-        - script: conda env create --quiet -n fertalizer python=3.9
+        - bash: conda create --yes --quiet --name fertalizer python=3.9
           displayName: Create Anaconda environment
         - script: conda env list
           displayName:  environment installation verification
