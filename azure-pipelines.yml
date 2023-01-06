@@ -10,7 +10,7 @@ trigger:
 
 stages:
 
-  - stage: install and build
+  - stage: InstallBuild
     displayName: Install python and build
 
     jobs:
