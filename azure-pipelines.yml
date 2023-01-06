@@ -56,7 +56,7 @@ stages:
         displayName: Deploy python
 
         steps:
-        - script: python ${env.WORKSPACE}/src/webapi/agroadvisory_api.py > log.txt 2>&1 &
+        - script: python ./src/webapi/agroadvisory_api.py > log.txt 2>&1 &
 
 
 
