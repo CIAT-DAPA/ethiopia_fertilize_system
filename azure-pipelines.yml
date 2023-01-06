@@ -1,3 +1,4 @@
+
 # Python package
 # Create and test a Python package on multiple Python versions.
 # Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
@@ -14,24 +15,35 @@ stages:
     displayName: Build python and Test
 
     jobs:
-      - job: install
-        displayName: 'Install python'
+      - job: pre_build_setup
+        displayName: Pre Build Setup
         pool:
           vmImage: ubuntu-latest
-        strategy:
-          matrix:
-            Python39:
-              python.version: '3.9'
-
         steps:
-        - task: UsePythonVersion@0
-          inputs:
-            versionSpec: '$(python.version)'
-          displayName: 'Use Python $(python.version)'
+          - bash: echo "##vso[task.prependpath]$CONDA/bin"
+            displayName: Add conda to PATH
 
-        - script: |
-            python -m pip install --upgrade pip
-            pip install -r ./src/webapi/requirements.txt
+      - job: build_environment
+        displayName: Build Environment
+        dependsOn: pre_build_setup
+        steps:
+        - script: conda create -n fertalizer python=3.9
+          displayName: Create Anaconda environment
+        - script: conda env list
+          displayName:  environment installation verification
+        - task: Bash@3
+          inputs:
+            targetType: 'inline'
+            script: |
+              eval "$(conda shell.bash hook)"
+              conda activate fertalizer
+          displayName: Active
+
+      - job: run_test
+        displayName: Run Test
+        dependsOn: build_environment
+        steps:
+        - script: conda install -r ./src/webapi/requirements.txt
           displayName: 'Install dependencies'
           
         - script: python -m unittest discover -s ./src/webapi/unit_tests/ -p 'test_*.py'
@@ -46,6 +58,9 @@ stages:
 
         steps:
         - script: nohup python3 ./src/webapi/agroadvisory_api.py > log.txt 2>&1 &
+
+
+
 
 
 
