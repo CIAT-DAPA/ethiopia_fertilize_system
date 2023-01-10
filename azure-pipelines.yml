@@ -65,10 +65,12 @@ stages:
               pip install -r ./src/webapi/requirements.txt
             displayName: 'Install dependencies'
 
-          - script: mongod --version
-            displayName: 'Mongo version'
-          - script: sudo systemctl start mongod
-            displayName: 'Mongo Start'
+          - task: DockerCompose@0
+            inputs:
+              containerregistrytype: 'Container Registry'
+              dockerComposeFile: './docker-compose.yml'
+              action: 'Run a Docker Compose command'
+              dockerComposeCommand: 'up'
 
           - script: python -m unittest discover -s ./src/webapi/unit_tests/ -p 'test_*.py'
             displayName: 'Run Tests'
