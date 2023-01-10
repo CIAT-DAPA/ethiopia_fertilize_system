@@ -51,25 +51,10 @@ stages:
         services:
           mongodb:
             image: mongo:5.0.6
-            command: ["mongod", "--dbpath=/dbdata"]
-            environment:
-              - MONGO_INITDB_ROOT_USERNAME=root
-              - MONGO_INITDB_ROOT_PASSWORD=test
             ports:
               - 5000
             volumes:
               - dbdata:/dbdata
-
-        
-          steps:
-
-          - volumes:
-            dbdata:
-              driver: azure_file
-              driver_opts:
-                share_name: mongodb-data
-                storage_account_name: kpncoqyuxumoetuftz
-
         
 
   - stage: InstallDependencies
