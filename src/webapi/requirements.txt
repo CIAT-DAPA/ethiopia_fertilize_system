@@ -50,7 +50,6 @@ pytz-deprecation-shim==0.1.0.post0
 PyYAML==6.0
 repoze.lru==0.7
 requests==2.27.1
-rasterio==1.2.10
 Rtree==1.0.0
 Shapely==1.8.2
 six==1.16.0
