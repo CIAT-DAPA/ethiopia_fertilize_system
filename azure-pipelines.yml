@@ -49,6 +49,7 @@ stages:
 
         - script: |
             sudo apt-get update
+            pip install pyproject-toml
             sudo apt-get install libgdal-dev
           displayName: "Install Libgdal"
 
