@@ -13,42 +13,12 @@ trigger:
 
 stages:
 
-  - stage: BuildCondaEnv
-    displayName: Build Conda Env
+  - stage: Test
+    displayName: Run Test
 
     jobs:
-      - job: pre_build_setup
-        displayName: Pre Build Setup
-        pool:
-          vmImage: ubuntu-latest
-        steps:
-          - bash: echo "##vso[task.prependpath]$CONDA/bin"
-            displayName: Add conda to PATH
-
-      - job: build_environment
-        displayName: Build Environment
-        dependsOn: pre_build_setup
-        steps:
-        - bash: conda create --yes --quiet --name fertalizer python=3.9
-          displayName: Create Anaconda environment
-        - script: conda env list
-          displayName:  environment installation verification
-        - task: Bash@3
-          inputs:
-            targetType: 'inline'
-            script: |
-              eval "$(conda shell.bash hook)"
-              conda activate fertalizer
-          displayName: Active
-        
-  - stage: InstallAndTest
-    displayName: Install Dependencies and Run Test
-    dependsOn: BuildCondaEnv
-
-    jobs:
-
-      - job: install_test
-        displayName: Install Requirements and Test
+      - job: prepare_test
+        displayName: Prepare Test
         services:
           mongodb:
             image: mongo:5.0.6
@@ -56,37 +26,55 @@ stages:
               - 5000
             volumes:
               - dbdata:/dbdata
+        pool:
+          vmImage: ubuntu-latest
+
         steps:
+          - bash: echo "##vso[task.prependpath]$CONDA/bin"
+            displayName: Add conda to PATH
 
-        - script: conda env list
-          displayName:  environment installation verification
+          - bash: conda create --yes --quiet --name fertalizer python=3.9
+            displayName: Create Anaconda environment
+          - script: conda env list
+            displayName:  environment installation verification
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                eval "$(conda shell.bash hook)"
+                conda activate fertalizer
+            displayName: Active
 
-        - script: |
-            conda install -c conda-forge gdal=3.4.3 --yes
-#            conda install -c conda-forge rasterio=1.2.10 --yes
-          displayName: 'Install Gdal'
+          - script: conda env list
+            displayName:  environment installation verification
 
-        - script: |
-            sudo apt-get update
-            sudo apt-get install libgdal-dev
-          displayName: "Install Libgdal"
+          - script: |
+              conda install -c conda-forge gdal=3.4.3 --yes
+  #            conda install -c conda-forge rasterio=1.2.10 --yes
+            displayName: 'Install Gdal'
 
-        - script: |
-            sudo add-apt-repository ppa:ubuntugis/ppa
-            pip install -U pip
-            pip install pyproject-toml
-            pip install rasterio
-          displayName: "Install Rasterio"
+          - script: |
+              sudo apt-get update
+              sudo apt-get install libgdal-dev
+            displayName: "Install Libgdal"
 
-        - script: |
-            pip install -r ./src/webapi/requirements.txt
-          displayName: 'Install dependencies'
+          - script: |
+              sudo add-apt-repository ppa:ubuntugis/ppa
+              pip install -U pip
+              pip install pyproject-toml
+              pip install rasterio
+            displayName: "Install Rasterio"
 
-        - script: python -m unittest discover -s ./src/webapi/unit_tests/ -p 'test_*.py'
-          displayName: 'Run Tests'     
+          - script: |
+              pip install -r ./src/webapi/requirements.txt
+            displayName: 'Install dependencies'
+
+          - script: python -m unittest discover -s ./src/webapi/unit_tests/ -p 'test_*.py'
+            displayName: 'Run Tests'
+        
 
   - stage: Deploy
-    dependsOn: InstallAndTest
+    dependsOn: Test
     displayName: 'Deploy Proyect'
     jobs:
       - job: Deploy
