@@ -9,10 +9,12 @@ trigger:
    include:
     - devops
 
+
+
 stages:
 
-  - stage: BuildTest
-    displayName: Build python and Test
+  - stage: BuildCondaEnv
+    displayName: Build Conda Env
 
     jobs:
       - job: pre_build_setup
@@ -39,9 +41,45 @@ stages:
               conda activate fertalizer
           displayName: Active
 
-      - job: run_test
-        displayName: Run Test
-        dependsOn: build_environment
+  - stage: mongodb
+    displayName: Install MongoDb
+    dependsOn: BuildCondaEnv
+
+    jobs:
+      - job: init_mongodb
+        displayName: Init MongoDb
+        services:
+          mongodb:
+            image: mongo:5.0.6
+            command: ["mongod", "--dbpath=/dbdata"]
+            environment:
+              - MONGO_INITDB_ROOT_USERNAME=root
+              - MONGO_INITDB_ROOT_PASSWORD=test
+            ports:
+              - 5000
+            volumes:
+              - dbdata:/dbdata
+
+        
+          steps:
+
+          - volumes:
+            dbdata:
+              driver: azure_file
+              driver_opts:
+                share_name: mongodb-data
+                storage_account_name: kpncoqyuxumoetuftz
+
+        
+
+  - stage: InstallDependencies
+    displayName: Install dependencies
+    dependsOn: BuildCondaEnv
+
+    jobs:
+
+      - job: install_dependencies
+        displayName: Install Requirements
         steps:
 
         - script: |
@@ -64,12 +102,20 @@ stages:
         - script: |
             pip install -r ./src/webapi/requirements.txt
           displayName: 'Install dependencies'
-          
+
+  - stage: RunTest
+    displayName: Run Test
+    dependsOn: InstallDependencies
+    jobs:
+      - job: run_test
+        displayName: Run Test
+        steps:
+
         - script: python -m unittest discover -s ./src/webapi/unit_tests/ -p 'test_*.py'
           displayName: 'Run Tests'
 
   - stage: Deploy
-    dependsOn: BuildTest
+    dependsOn: RunTest
     displayName: 'Deploy Proyect'
     jobs:
       - job: Deploy
