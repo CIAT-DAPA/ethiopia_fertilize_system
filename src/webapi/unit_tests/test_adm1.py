@@ -11,7 +11,7 @@ class TestAgroadisory(unittest.TestCase):
 
     def test_single_adm1(self):
         #this endpoint has no parameteres (Region)
-        response =requests.get('http://127.0.0.1:5000/adm1',headers={"Content-Type": "application/json"})
+        response =requests.get('https://webapi.nextgenagroadvisory.com/adm1',headers={"Content-Type": "application/json"})
         print(response)
         self.assertEqual(200, response.status_code)
 

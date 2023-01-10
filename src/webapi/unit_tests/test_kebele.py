@@ -1,5 +1,5 @@
 import unittest
-#import requests
+import requests
 from agroadvisory_api import app
 
 
@@ -10,7 +10,7 @@ class TestAgroadisory(unittest.TestCase):
 
     def test_single_kebele(self):
 
-        response = self.app.get('http://127.0.0.1:5000/kebele/Abaya',
+        response = requests.get('https://webapi.nextgenagroadvisory.com/kebele/Abaya',
                                 headers={"Content-Type": "application/json"})
         print(response)
         #self.assertEqual(str, type(response.json['Kebele']))

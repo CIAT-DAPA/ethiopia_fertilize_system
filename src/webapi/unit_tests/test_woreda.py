@@ -1,5 +1,5 @@
 import unittest
-#import requests
+import requests
 #from agroadvisory_api import app
 from agroadvisory_api import app
 
@@ -10,14 +10,14 @@ class TestAgroadisory(unittest.TestCase):
 
     def test_woredas(self):
 
-        response = self.app.get(
-            'http://127.0.0.1:5000/woredas', headers={"Content-Type": "application/json"})
+        response = requests.get(
+            'https://webapi.nextgenagroadvisory.com/woredas', headers={"Content-Type": "application/json"})
         #self.assertEqual(str, type(response.json['Woreda']))
         self.assertEqual(200, response.status_code)
 
     def test_single_woreda(self):
 
-        response = self.app.get('http://127.0.0.1:5000/woredas/Mareqo',
+        response = requests.get('https://webapi.nextgenagroadvisory.com/woredas/Mareqo',
                                 headers={"Content-Type": "application/json"})
         # print(response)
         #self.assertEqual(str, type(response.json['Woreda']))
