@@ -51,7 +51,6 @@ stages:
             sudo apt-get update
             pip install pyproject-toml
             sudo apt-get install libgdal-dev
-            sudo apt-get install libgdal1i
           displayName: "Install Libgdal"
 
         - script: pip install -r ./src/webapi/requirements.txt
