@@ -40,14 +40,15 @@ stages:
               eval "$(conda shell.bash hook)"
               conda activate fertalizer
           displayName: Active
-
-  - stage: mongodb
-    displayName: Install MongoDb
+        
+  - stage: InstallAndTest
+    displayName: Install Dependencies and Run Test
     dependsOn: BuildCondaEnv
 
     jobs:
-      - job: init_mongodb
-        displayName: Init MongoDb
+
+      - job: install_test
+        displayName: Install Requirements and Test
         services:
           mongodb:
             image: mongo:5.0.6
@@ -55,17 +56,10 @@ stages:
               - 5000
             volumes:
               - dbdata:/dbdata
-        
-
-  - stage: InstallDependencies
-    displayName: Install dependencies
-    dependsOn: BuildCondaEnv
-
-    jobs:
-
-      - job: install_dependencies
-        displayName: Install Requirements
         steps:
+
+        - script: conda env list
+          displayName:  environment installation verification
 
         - script: |
             conda install -c conda-forge gdal=3.4.3 --yes
@@ -88,19 +82,11 @@ stages:
             pip install -r ./src/webapi/requirements.txt
           displayName: 'Install dependencies'
 
-  - stage: RunTest
-    displayName: Run Test
-    dependsOn: InstallDependencies
-    jobs:
-      - job: run_test
-        displayName: Run Test
-        steps:
-
         - script: python -m unittest discover -s ./src/webapi/unit_tests/ -p 'test_*.py'
-          displayName: 'Run Tests'
+          displayName: 'Run Tests'     
 
   - stage: Deploy
-    dependsOn: RunTest
+    dependsOn: InstallAndTest
     displayName: 'Deploy Proyect'
     jobs:
       - job: Deploy
