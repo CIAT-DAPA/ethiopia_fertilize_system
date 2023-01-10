@@ -45,7 +45,10 @@ stages:
         steps:
 
         - script: conda install -c conda-forge gdal --yes
-          displayName: 'Install dependencies'
+          displayName: 'Install Gdal'
+
+        - script: apt-get install libgdal-dev
+          displayName: "Install Libgdal"
 
         - script: pip install -r ./src/webapi/requirements.txt
           displayName: 'Install dependencies'
