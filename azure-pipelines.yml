@@ -55,7 +55,7 @@ stages:
 
         - script: |
             pip install pyproject-toml
-            pip install rasterio=1.2.10
+            pip install rasterio==1.2.10
             pip install -r ./src/webapi/requirements.txt
           displayName: 'Install dependencies'
           
