@@ -50,7 +50,7 @@ stages:
 
         - script: |
             sudo apt-get update
-            sudo apt-get install libgdal-dev
+            sudo apt-get install python-numpy gdal-bin libgdal-dev
           displayName: "Install Libgdal"
 
         - script: |
