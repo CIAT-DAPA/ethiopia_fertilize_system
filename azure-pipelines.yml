@@ -52,10 +52,14 @@ stages:
         - script: |
             sudo apt-get update
             sudo apt-get install libgdal-dev
-            pip install wheel
-            pip install pyproject-toml
-            pip install ./src/webapi/rasterio-1.2.10-cp39-cp39-win_amd64.whl
           displayName: "Install Libgdal"
+
+        - script: |
+            sudo add-apt-repository ppa:ubuntugis/ppa
+            pip install -U pip
+            pip install pyproject-toml
+            pip install rasterio
+          displayName: "Install Rasterio"
 
         - script: |
             pip install -r ./src/webapi/requirements.txt
