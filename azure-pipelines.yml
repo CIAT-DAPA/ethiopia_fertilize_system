@@ -51,7 +51,7 @@ stages:
 
         - script: |
             sudo apt-get update
-            sudo apt-get install gdal-bin libgdal-dev
+            sudo apt-get install libgdal-dev
           displayName: "Install Libgdal"
 
         - script: |
