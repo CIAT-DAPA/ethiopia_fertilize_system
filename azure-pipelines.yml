@@ -44,7 +44,7 @@ stages:
         dependsOn: build_environment
         steps:
 
-        - script: conda install -c conda-forge gdal --yes
+        - script: conda install -c conda-forge gdal=3.4.3 --yes
           displayName: 'Install Gdal'
 
         - script: |
