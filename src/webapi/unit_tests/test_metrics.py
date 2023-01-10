@@ -11,7 +11,7 @@ class TestAgroadisory(unittest.TestCase):
     def test_single_metric(self):
         #this endpoint receives one paremeter after metrics/(metics) that correspond to the admistrative level 4 (Kebele)
         #examples: 63850d9a9d578e523c7e9bcb, 63850d9a9d578e523c7e9bcd,63850d9a9d578e523c7e9bd4
-        response = requests.get('https://webapi.nextgenagroadvisory.com/metrics/adm4',headers={"Content-Type": "application/json"})
+        response = requests.get('https://webapi.nextgenagroadvisory.com/metrics/63850d9a9d578e523c7e9bcd',headers={"Content-Type": "application/json"})
         print(response)
         self.assertEqual(200, response.status_code)
 

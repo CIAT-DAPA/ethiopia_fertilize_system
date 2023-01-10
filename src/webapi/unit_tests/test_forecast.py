@@ -11,7 +11,7 @@ class TestAgroadisory(unittest.TestCase):
     def test_forecast(self):
         #this endpoint receives one paremeter after forecaste/ (forecast) that correspond to the crop
         #only exist one crop for now , the id is 63865d9f68c981103580abee
-        response = requests.get('https://webapi.nextgenagroadvisory.com/forecast/crop',
+        response = requests.get('https://webapi.nextgenagroadvisory.com/forecast/63865d9f68c981103580abee',
                                 headers={"Content-Type": "application/json"})
         print(response)
         
