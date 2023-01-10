@@ -46,12 +46,13 @@ stages:
 
         - script: |
             conda install -c conda-forge gdal=3.4.3 --yes
-            conda install -c conda-forge rasterio=1.2.10 --yes
+#            conda install -c conda-forge rasterio=1.2.10 --yes
           displayName: 'Install Gdal'
 
         - script: |
             sudo apt-get update
             sudo apt-get install libgdal-dev
+            pip install rasterio==1.2.10
           displayName: "Install Libgdal"
 
         - script: |
