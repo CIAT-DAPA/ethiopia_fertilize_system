@@ -3,6 +3,7 @@ import sys
 sys.path.append("./src/webapi/")
 from agroadvisory_api import app
 import requests
+from mongoengine import connect, disconnect
 
 class TestAgroadisory(unittest.TestCase):
 
