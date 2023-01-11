@@ -19,13 +19,7 @@ stages:
     jobs:
       - job: prepare_test
         displayName: Prepare Test
-        services:
-          mongodb:
-            image: mongo:5.0.6
-            ports:
-              - 5000
-            volumes:
-              - dbdata:/dbdata
+        
         pool:
           vmImage: ubuntu-latest
 
@@ -64,13 +58,6 @@ stages:
           - script: |
               pip install -r ./src/webapi/requirements.txt
             displayName: 'Install dependencies'
-
-          - task: DockerCompose@0
-            inputs:
-              containerregistrytype: 'Container Registry'
-              dockerComposeFile: './docker-compose.yml'
-              action: 'Run a Docker Compose command'
-              dockerComposeCommand: 'up -d'
 
           - script: python -m unittest discover -s ./src/webapi/unit_tests/ -p 'test_*.py'
             displayName: 'Run Tests'
