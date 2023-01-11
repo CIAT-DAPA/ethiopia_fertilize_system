@@ -10,14 +10,14 @@ class TestAgroadisory(unittest.TestCase):
 
     def test_woredas(self):
 
-        response = requests.get(
+        response = self.app.get(
             'http://127.0.0.1:5000/woredas', headers={"Content-Type": "application/json"})
         #self.assertEqual(str, type(response.json['Woreda']))
         self.assertEqual(200, response.status_code)
 
     def test_single_woreda(self):
 
-        response = requests.get('http://127.0.0.1:5000/woredas/Mareqo',
+        response = self.app.get('http://127.0.0.1:5000/woredas/Mareqo',
                                 headers={"Content-Type": "application/json"})
         # print(response)
         #self.assertEqual(str, type(response.json['Woreda']))

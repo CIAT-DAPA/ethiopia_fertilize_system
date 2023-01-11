@@ -10,7 +10,7 @@ class TestAgroadisory(unittest.TestCase):
 
     def test_crops(self):
         #this endpoint has no parameteres (crop)
-        response = requests.get('http://127.0.0.1:5000/crops',
+        response = self.app.get('http://127.0.0.1:5000/crops',
                                 headers={"Content-Type": "application/json"})
         print(response)
         
