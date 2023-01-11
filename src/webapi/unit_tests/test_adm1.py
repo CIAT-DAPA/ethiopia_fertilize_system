@@ -7,6 +7,7 @@ import requests
 class TestAgroadisory(unittest.TestCase):
 
     def setUp(self):
+        connect('mongoenginetest', host='mongomock://localhost')
         self.app = app.test_client()
 
     def test_single_adm1(self):
