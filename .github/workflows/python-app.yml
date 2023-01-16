@@ -5,9 +5,9 @@ name: Python application
 
 on:
   push:
-    branches: [ "devops" ]
+    branches: [ "pre_deploy" ]
   pull_request:
-    branches: [ "devops" ]
+    branches: [ "pre_deploy" ]
 
 permissions:
   contents: read
@@ -57,18 +57,18 @@ jobs:
         python -m unittest discover -s ./src/webapi/unit_tests/ -p 'test_*.py'
 
 
-#  MergeMaster:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@master
-#
-#      - name: Merge predeploy -> master
-#        uses: devmasx/merge-branch@master
-#        with:
-#          type: now
-#          from_branch: devops
-#          target_branch: master
-#          github_token: ${{ github.token }}
+  MergeMaster:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Merge pre_deploy -> master
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: pre_deploy
+          target_branch: devops
+          github_token: ${{ github.token }}
 
   Release:
     needs: Test
