@@ -60,6 +60,7 @@ jobs:
   MergeMaster:
     needs: Test
     name: Merge Pre deploy with Maste
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
