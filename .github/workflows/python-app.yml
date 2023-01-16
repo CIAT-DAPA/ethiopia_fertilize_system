@@ -58,6 +58,7 @@ jobs:
 
 
   MergeMaster:
+    needs: Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -71,7 +72,7 @@ jobs:
           github_token: ${{ github.token }}
 
   Release:
-    needs: Test
+    needs: MergeMaster
     name: Create Release
     runs-on: ubuntu-latest
     permissions:
