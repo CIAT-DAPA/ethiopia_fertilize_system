@@ -57,6 +57,9 @@ jobs:
     - name: Run Tests
       run: |
         python -m unittest discover -s ./src/webapi/unit_tests/ -p 'test_*.py'
+    - name: Generate Coverage
+      run: |
+       coverage html --source='./src/webapi/unit_tests/' --include 'test_*.py'
 
 
   MergeMaster:
@@ -97,11 +100,12 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
       with:
-        tag_name: v0.0.1
-        release_name: Release v0.0.1
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
         body_path: ./body.md
         draft: false
         prerelease: false
+        owner: ${github.event.commits[0].author.name}
     - name: ls
       run: ls
     - name: Upload Release Asset
