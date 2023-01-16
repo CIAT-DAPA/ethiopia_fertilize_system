@@ -1,0 +1,75 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Python application
+
+on:
+  push:
+    branches: [ "devops" ]
+  pull_request:
+    branches: [ "devops" ]
+
+permissions:
+  contents: read
+
+jobs:
+  Test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.9"
+    - name: Add conda to PATH
+      run: |
+        echo "##vso[task.prependpath]$CONDA/bin"
+    - name: Create Anaconda environment
+      run: |
+        conda create --yes --quiet --name fertalizer python=3.9
+    - name: Active Anaconda environment
+      run: |
+        eval "$(conda shell.bash hook)"
+        conda activate fertalizer
+    - name: Install GDAL
+      run: |
+        conda install -c conda-forge gdal=3.4.3 --yes
+    - name: Install Libgdal
+      run: |
+        sudo apt-get update
+        sudo apt-get install libgdal-dev
+    - name: Install Rasterio
+      run: |
+        sudo add-apt-repository ppa:ubuntugis/ppa
+        pip install -U pip
+        pip install pyproject-toml
+        pip install rasterio
+    - name: Install dependencies
+      run: |
+        pip install -r ./src/webapi/requirements.txt
+    - name: Run Tests
+      run: |
+        python -m unittest discover -s ./src/webapi/unit_tests/ -p 'test_*.py'
+
+  Release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
