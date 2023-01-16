@@ -91,6 +91,13 @@ jobs:
         name: WebApi
         path: release.zip
 
+    - name: Download artifact
+      uses: actions/download-artifact@v3
+
+      with:
+        name: Download WebApi
+        path: ./release.zip
+
   PostRelease:
     needs: PrepareZipFile
     name: Create Release
