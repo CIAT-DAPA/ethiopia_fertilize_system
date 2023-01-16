@@ -80,7 +80,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Zip artifact for deployment
-      run: zip release.zip ./src/webapi/ -r
+      run: zip release.zip ./src/webapi/* -r
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
