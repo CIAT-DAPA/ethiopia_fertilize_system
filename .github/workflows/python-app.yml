@@ -95,7 +95,7 @@ jobs:
       uses: actions/download-artifact@v3
 
       with:
-        name: Download WebApi
+        name: WebApi
         path: ./release.zip
 
   PostRelease:
@@ -112,7 +112,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
       with:
-        tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
         body_path: ./body.md
         draft: false
