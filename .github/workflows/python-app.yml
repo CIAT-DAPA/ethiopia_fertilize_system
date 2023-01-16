@@ -77,7 +77,7 @@ jobs:
 
 
   PostRelease:
-    needs: PrepareZipFile
+    needs: MergeMaster
     name: Create Release
     runs-on: ubuntu-latest
     permissions: write-all
