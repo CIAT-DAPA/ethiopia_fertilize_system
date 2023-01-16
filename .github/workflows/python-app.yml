@@ -111,6 +111,8 @@ jobs:
         draft: false
         prerelease: false
     - name: ls
+      run: cd ${{ github.workspace }}
+    - name: ls
       run: ls
     - name: Upload Release Asset
       id: upload-release-asset 
@@ -119,7 +121,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: ${{ github.workspace }}/release.zip
+        asset_path: ${{ github.workspace }}
         asset_name: release.zip
         asset_content_type: application/zip
         
