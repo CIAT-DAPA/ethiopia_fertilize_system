@@ -80,7 +80,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Zip artifact for deployment
-      run: zip release.zip ./src/webapi/ -r
+      run: zip release.zip ./src/webapi/* -r
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
@@ -89,7 +89,7 @@ jobs:
         path: release.zip
 
   Release:
-    needs: MergeMaster
+    needs: PrepareZipFile
     name: Create Release
     runs-on: ubuntu-latest
     permissions:
