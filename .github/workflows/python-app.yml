@@ -89,7 +89,7 @@ jobs:
         path: release.zip
 
   Release:
-    needs: MergeMaster
+    needs: PrepareZipFile
     name: Create Release
     runs-on: ubuntu-latest
     permissions:
