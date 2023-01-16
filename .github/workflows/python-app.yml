@@ -33,16 +33,19 @@ jobs:
       run: |
         eval "$(conda shell.bash hook)"
         conda activate fertalizer
-    - name: Install GDAL
-      run: |
-        conda install -c conda-forge gdal=3.4.3 --yes
     - name: Install Libgdal
       run: |
+        sudo add-apt-repository ppa:ubuntugis/ppa
         sudo apt-get update
         sudo apt-get install libgdal-dev
+    - name: Install Gdal
+      run: |
+        sudo apt-get install gdal-bin
+        export CPLUS_INCLUDE_PATH=/usr/include/gdal
+        export C_INCLUDE_PATH=/usr/include/gdal
+        pip install GDAL==3.4.3
     - name: Install Rasterio
       run: |
-        sudo add-apt-repository ppa:ubuntugis/ppa
         pip install -U pip
         pip install pyproject-toml
         pip install rasterio
@@ -54,6 +57,7 @@ jobs:
         python -m unittest discover -s ./src/webapi/unit_tests/ -p 'test_*.py'
 
   Release:
+    needs: Test
     name: Create Release
     runs-on: ubuntu-latest
     steps:
@@ -61,7 +65,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: ncipollo/release-action@v1.12.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
@@ -73,3 +77,4 @@ jobs:
             - Second Change
           draft: false
           prerelease: false
+
