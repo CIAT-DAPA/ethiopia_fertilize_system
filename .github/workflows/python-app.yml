@@ -59,6 +59,7 @@ jobs:
 
   MergeMaster:
     needs: Test
+    name: Merge Pre deploy with Maste
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -67,7 +68,7 @@ jobs:
         uses: devmasx/merge-branch@master
         with:
           type: now
-          from_branch: pre_deploy
+          head_to_merge: ${{ github.ref }}
           target_branch: devops
           github_token: ${{ github.token }}
 
