@@ -59,7 +59,7 @@ jobs:
 
   MergeMaster:
     needs: Test
-    name: Merge Pre deploy with Maste
+    name: Merge Pre deploy with Master
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
@@ -72,6 +72,21 @@ jobs:
           head_to_merge: ${{ github.ref }}
           target_branch: devops
           github_token: ${{ github.token }}
+
+  PrepareZipFile:
+    needs: MergeMaster
+    name: Zip files to deploy
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+    - name: Zip artifact for deployment
+      run: zip release.zip ./src/webapi/ -r
+
+    - name: Upload artifact for deployment job
+      uses: actions/upload-artifact@v2
+      with:
+        name: WebApi
+        path: release.zip
 
   Release:
     needs: MergeMaster
