@@ -101,8 +101,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
       with:
-        tag_name: $VERSION_NAME
-        release_name: Release $VERSION_NAME
+        tag_name: ${{env.VERSION_NAME}}
+        release_name: Release ${{env.VERSION_NAME}}
         body_path: ./body.md
         draft: false
         prerelease: false
