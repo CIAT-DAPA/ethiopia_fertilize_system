@@ -80,12 +80,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Cd folder
-        run: cd ./src/agroadvisory/
       - name: Install packages
-        run: npm install
+        run: npm --prefix ./src/agroadvisory install
       - name: Run tests
-        run: npm test
+        run: npm --prefix ./src/agroadvisory test
 
 # ------- END FRONT PROCCESS -------- #
 
