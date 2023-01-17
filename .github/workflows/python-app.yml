@@ -83,7 +83,7 @@ jobs:
       - name: Cd folder
         run: cd ./src/agroadvisory/
       - name: Install packages
-        run: npm ci
+        run: npm install
       - name: Run tests
         run: npm test
 
