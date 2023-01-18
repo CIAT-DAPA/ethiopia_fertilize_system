@@ -159,7 +159,8 @@ jobs:
       with:
         tag_name: ${{ steps.taggerDryRun.outputs.new_tag }}
         release_name: Release ${{ steps.taggerDryRun.outputs.new_tag }}
-        body_path: ./body.md
+        #body_path: ./body.md
+        body: ${{ github.event.head_commit.message }}
         draft: false
         prerelease: false
     # Upload Assets to release
