@@ -127,6 +127,10 @@ jobs:
       run: npm --prefix ./src/agroadvisory install
     - name: Run build
       run: npm --prefix ./src/agroadvisory run build
+    - name: ls
+      run: ls
+    - name: cd
+      run: cd ./src/agroadvisory && ls
     - name: Zip artifact front for deployment
       run: zip releaseFront.zip ./src/agroadvisory/dist/* -r
     # Upload Artifacts
