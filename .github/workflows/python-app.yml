@@ -81,7 +81,7 @@ jobs:
         with:
           node-version: 18
       - name: Install packages
-        run: npm --prefix ./src/agroadvisory install
+        run: npm --prefix ./src/agroadvisory ci
       - name: Run tests
         run: npm --prefix ./src/agroadvisory test
 
