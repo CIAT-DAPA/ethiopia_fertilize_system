@@ -142,13 +142,14 @@ jobs:
     # Generate Tagname
     - name: Generate Tagname for release
       id: taggerDryRun
-      uses: anothrNick/github-tag-action@1.55.0
+      uses: anothrNick/github-tag-action@1.61.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         WITH_V: true
         DRY_RUN: true
         DEFAULT_BUMP: patch
         RELEASE_BRANCHES : pre_deploy,devops
+        BRANCH_HISTORY: last
     # Create release
     - name: Create Release
       id: create_release
