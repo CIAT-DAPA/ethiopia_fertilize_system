@@ -6,4 +6,6 @@ git add
 git commit
 ```
 
-major
+#patch
+#minor
+#major
