@@ -139,7 +139,8 @@ jobs:
       with:
         name: Frontend
         path: releaseFront.zip
-    - name: Minor version for each merge
+    # Generate Tagname
+    - name: Generate Tagname for release
       id: taggerDryRun
       uses: anothrNick/github-tag-action@1.55.0
       env:
@@ -147,7 +148,7 @@ jobs:
         WITH_V: true
         DRY_RUN: true
         DEFAULT_BUMP: patch
-        DEFAULT_BRANCH: $GITHUB_BASE_REF
+        RELEASE_BRANCHES : master,main, $GITHUB_BASE_REF
     # Create release
     - name: Create Release
       id: create_release
