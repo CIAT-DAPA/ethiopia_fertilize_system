@@ -148,7 +148,7 @@ jobs:
         WITH_V: true
         DRY_RUN: true
         DEFAULT_BUMP: patch
-        RELEASE_BRANCHES : master,main, $GITHUB_BASE_REF
+        RELEASE_BRANCHES : master,main, ${{ github.ref }}
     # Create release
     - name: Create Release
       id: create_release
