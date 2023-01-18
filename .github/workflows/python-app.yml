@@ -12,9 +12,6 @@ on:
     branches: [ "pre_deploy" ]
 
 
-env:
-  VERSION_NAME: v1.0.0
-
 permissions:
   contents: read
 
@@ -149,8 +146,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         WITH_V: true
         DRY_RUN: true
+        DEFAULT_BUMP: patch
     - name: tag
-      run: echo "${{ steps.taggerDryRun.outputs.new_tag }}"
+      run: echo ""
     # Create release
     - name: Create Release
       id: create_release
@@ -158,8 +156,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
       with:
-        tag_name: ${{env.VERSION_NAME}}
-        release_name: Release ${{env.VERSION_NAME}}
+        tag_name: ${{ steps.taggerDryRun.outputs.new_tag }}
+        release_name: Release ${{ steps.taggerDryRun.outputs.new_tag }}
         body_path: ./body.md
         draft: false
         prerelease: false
