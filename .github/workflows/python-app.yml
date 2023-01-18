@@ -147,6 +147,7 @@ jobs:
         WITH_V: true
         DRY_RUN: true
         DEFAULT_BUMP: patch
+        DEFAULT_BRANCH: $GITHUB_BASE_REF
     # Create release
     - name: Create Release
       id: create_release
