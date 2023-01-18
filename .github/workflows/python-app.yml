@@ -147,8 +147,6 @@ jobs:
         WITH_V: true
         DRY_RUN: true
         DEFAULT_BUMP: patch
-    - name: tag
-      run: echo ""
     # Create release
     - name: Create Release
       id: create_release
