@@ -1,6 +1,6 @@
 pipeline {
 
-    agent { label ' Linux01'}
+    agent any
 
     stages {
 
