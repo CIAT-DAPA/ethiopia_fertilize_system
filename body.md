@@ -6,4 +6,4 @@ git add
 git commit
 ```
 
-test
+major
