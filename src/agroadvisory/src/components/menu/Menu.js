@@ -96,6 +96,9 @@ function Menu() {
                                 
                             </li>
                             <li className="navbar-item">
+                                <Link className="nav-link" to="/methodology">Methodology</Link>
+                            </li>
+                            <li className="navbar-item">
                                 <Link className="nav-link" to="/about">About us</Link>
                             </li>
                         </ul>
