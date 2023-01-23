@@ -72,7 +72,7 @@ function Menu() {
                                     <Link className="dropdown-item" to="/isfm">ISFM</Link>
                                     <Link className="dropdown-item" to="/csa">CSA</Link>
                                     <Link className="dropdown-item" to="/irrigation">Irrigation</Link>
-                                    <Link className="dropdown-item" to="/agroclimate">Lime</Link>
+                                    <Link className="dropdown-item" to="/lime">Lime</Link>
                                     <Link className="dropdown-item" to="/agroclimate">Agroclimate</Link>
                                     <Link className="dropdown-item" to="/wheat_rust">Wheat rust</Link>
                                     {/* <Link className="dropdown-item" to="/pest_disease">Pest and disease surveillance</Link>

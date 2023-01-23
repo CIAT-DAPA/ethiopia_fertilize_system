@@ -21,6 +21,7 @@ import BundledAAS from './pages/bundled_aas/BundledAAS';
 import Report from './pages/report/Report';
 import ReportWoreda from './pages/report_woreda/ReportWoreda';
 import WheatRust from './pages/wheat_rust/WheatRust';
+import Lime from './pages/lime/Lime';
 
 import store from './redux/store/store';
 
@@ -38,6 +39,7 @@ class App extends Component {
               <Route path='/fertilizer_advisories_nps_urea' element={<FertilizationUreaNPS />} />
               <Route path='/isfm' element={<ISFM />} />
               <Route path='/agroclimate' element={<Agroclimate />} />
+              <Route path='/lime' element={<Lime />} />
               <Route path='/pest_disease' element={<PestDisease />} />
               <Route path='/csa' element={<CSA />} />
               <Route path='/irrigation' element={<Irrigation />} />
