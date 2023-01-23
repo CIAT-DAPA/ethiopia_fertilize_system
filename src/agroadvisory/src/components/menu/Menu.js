@@ -65,8 +65,8 @@ function Menu() {
                                         Fertilizer
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="navbar2Dropdown">
-                                        <Link className="dropdown-item" to="/fertilizer_advisories">Fertilizer N, P & Optimal yield</Link>
-                                        <Link className="dropdown-item" to="/fertilizer_advisories_nps_urea">Fertilizer NPS & Urea</Link>
+                                        <Link className="dropdown-item" to="/fertilizer_advisories">N, P & Optimal yield</Link>
+                                        <Link className="dropdown-item" to="/fertilizer_advisories_nps_urea">NPS & Urea</Link>
                                     </div>
 
                                     <Link className="dropdown-item" to="/isfm">ISFM</Link>
