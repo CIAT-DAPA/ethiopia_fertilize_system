@@ -5,11 +5,11 @@ name: Devops Fertalizer
 
 on:
   push:
-    branches: [ "pre_deploy" ]
+    branches: [ "stage" ]
     tags:
     - 'v*'
   pull_request:
-    branches: [ "pre_deploy" ]
+    branches: [ "stage" ]
 
 
 permissions:
@@ -57,7 +57,7 @@ jobs:
         pip install rasterio
     - name: Install dependencies
       run: |
-        pip install -r ./src/webapi/requirements.txt
+        pip install -r ./src/webapi/requirements_devops.txt
     - name: Run Tests
       run: |
         python -m unittest discover -s ./src/webapi/unit_tests/ -p 'test_*.py'
@@ -99,7 +99,7 @@ jobs:
         with:
           type: now
           head_to_merge: ${{ github.ref }}
-          target_branch: devops
+          target_branch: master
           github_token: ${{ github.token }}
 
 # ------- END MERGE PROCCESS -------- #
@@ -148,7 +148,7 @@ jobs:
         WITH_V: true
         DRY_RUN: true
         DEFAULT_BUMP: patch
-        RELEASE_BRANCHES : pre_deploy,devops
+        RELEASE_BRANCHES : stage,master
         BRANCH_HISTORY: last
     # Create release
     - name: Create Release
