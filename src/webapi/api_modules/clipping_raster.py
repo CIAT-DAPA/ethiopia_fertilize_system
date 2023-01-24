@@ -77,6 +77,7 @@ class ClippingRaster(Resource):
         layer = args['layer'] 
 
         rasters_dir = ".//raster_files//fertilizer_et//"
+        
         raster_folder = rasters_dir+layer+"/"
         entries = os.listdir(raster_folder)
         

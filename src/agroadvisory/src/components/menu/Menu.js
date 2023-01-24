@@ -65,14 +65,14 @@ function Menu() {
                                         Fertilizer
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="navbar2Dropdown">
-                                        <Link className="dropdown-item" to="/fertilizer_advisories">Fertilizer N, P & Optimal yield</Link>
-                                        <Link className="dropdown-item" to="/fertilizer_advisories_nps_urea">Fertilizer NPS & Urea</Link>
+                                        <Link className="dropdown-item" to="/fertilizer_advisories">N, P & Optimal yield</Link>
+                                        <Link className="dropdown-item" to="/fertilizer_advisories_nps_urea">NPS & Urea</Link>
                                     </div>
 
                                     <Link className="dropdown-item" to="/isfm">ISFM</Link>
                                     <Link className="dropdown-item" to="/csa">CSA</Link>
                                     <Link className="dropdown-item" to="/irrigation">Irrigation</Link>
-                                    <Link className="dropdown-item" to="/agroclimate">Lime</Link>
+                                    <Link className="dropdown-item" to="/lime">Lime</Link>
                                     <Link className="dropdown-item" to="/agroclimate">Agroclimate</Link>
                                     <Link className="dropdown-item" to="/wheat_rust">Wheat rust</Link>
                                     {/* <Link className="dropdown-item" to="/pest_disease">Pest and disease surveillance</Link>
@@ -94,6 +94,9 @@ function Menu() {
                                     <a className="dropdown-item" href="https://webapi.aclimate.org/" target="_blank">API Aclimate</a>
                                 </div>
                                 
+                            </li>
+                            <li className="navbar-item">
+                                <Link className="nav-link" to="/methodology">Methodology</Link>
                             </li>
                             <li className="navbar-item">
                                 <Link className="nav-link" to="/about">About us</Link>

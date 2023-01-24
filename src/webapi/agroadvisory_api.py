@@ -40,7 +40,6 @@ api.add_resource(Woreda, '/woredas', endpoint="woredas")
 api.add_resource(Woreda, '/woredas/<woreda_name>', endpoint="woreda")
 api.add_resource(Kebele, '/kebele/<kebele_name>')
 api.add_resource(ClippingRaster, '/clip_raster')
-api.add_resource(Coordinates, '/coordinates/<layer>/<coor>')
 
 # New methods
 api.add_resource(AdministrativeLevel1, '/adm1')
@@ -51,6 +50,8 @@ api.add_resource(Crops, '/crops')
 api.add_resource(Forecasts, '/forecast/<crop>')
 api.add_resource(Metrics, '/metrics/<adm4>')
 api.add_resource(Risks, '/risk/<adm4>')
+api.add_resource(Coordinates, '/coordinates/<layer>/<coor>')
+
 #api.add_resource(Layers, '/layers')
 #api.add_resource(MetricType, '/metric_types')
 

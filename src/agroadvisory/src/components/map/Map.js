@@ -330,7 +330,15 @@ function Map(props) {
                                     </BaseLayer>
                                 
                                 :
-                                    <></>
+                                    <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
+                                        <WMSTileLayer
+                                            layers={"administrative:admin_levels"}
+                                            attribution=''
+                                            url={getUrlService('administrative', 'wms')}
+                                            format={"image/png"}
+                                            transparent={true}
+                                        />
+                                    </BaseLayer>
                             )
                        
                             : props.type === "seasonal_dominant" ?
