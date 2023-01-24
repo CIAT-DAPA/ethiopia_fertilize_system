@@ -1,6 +1,7 @@
 # User guide:
 
 ```
+
 3 main branches are managed.
 
 - `master:`
@@ -11,11 +12,15 @@
 
 - `develop:`
     Branch where the development version of the project will be managed, normally changes will be sent to stage from this branch.
+
+
 ```
 
 ## Release:
 
 ```
+
+
     The release will be created automatically if changes are sent to stage, either by means of a pull request or a push.
 
     The release consists of versioning, which consists of the following format
@@ -38,4 +43,6 @@
     Release output = Release v1.0.0
 
 By `default` if a tag is not sent within the commit it will increment the last value, similar to the #patch tag.
+
+
 ```
