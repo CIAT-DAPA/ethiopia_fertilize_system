@@ -1,14 +1,14 @@
 # User guide:
 
-- 3 main branches are managed.
+### 3 main branches are managed.
 
-* **master:**
+- **master:**
   No changes should be made directly, since it is updated when pulling or pushing to the stage branch
 
-* **stage:**
+- **stage:**
   The changes tested and ready to be sent to production must be sent to this branch, for their subsequent process of automatic tests, merge into master and creation of the release.
 
-* **develop:**
+- **develop:**
   Branch where the development version of the project will be managed, normally changes will be sent to stage from this branch.
 
 ## Release:
