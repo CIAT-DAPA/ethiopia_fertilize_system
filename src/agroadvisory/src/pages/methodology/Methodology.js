@@ -33,7 +33,7 @@ function Methodology() {
             a prediction grid for the three different scenarios (i.e. normal,
             above normal and below normal) was developed. Finally, a prediction
             was made to generate the outputs based on the different scenarios.
-            You can see the R source code here at <a href="#">github</a>. In addition to
+            You can see the R source code here at <a href="https://github.com/CIAT-DAPA/ethiopia_fertilize_system/tree/master/src/scripts" target="_blank">github</a>. In addition to
             generate a report based on the admin levels the average values of
             fertilizer recommendations were calculated by kebele boundaries.
             Please see the workflow below.
