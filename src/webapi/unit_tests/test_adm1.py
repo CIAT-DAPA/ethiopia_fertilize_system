@@ -1,9 +1,9 @@
 import unittest
 import sys
-import unittest
-from agroadvisory_api import app
-from mongoengine import connect, disconnect
 sys.path.append("./src/webapi/")
+from agroadvisory_api import app
+import requests
+from mongoengine import connect, disconnect
 
 import requests
 class TestAgroadisory(unittest.TestCase):
@@ -22,6 +22,6 @@ class TestAgroadisory(unittest.TestCase):
         self.assertEqual(200, response.status_code)
         #self.assertEqual(404, responseNotFound.status_code)
 
-
+ 
 if __name__ == "__main__":
     unittest.main()
