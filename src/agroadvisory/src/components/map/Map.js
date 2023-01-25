@@ -263,26 +263,6 @@ function Map(props) {
                                     />
                                 </BaseLayer>
                             })
-                            : props.type === "location_report" ?
-                            <></>
-                            
-                            //      <BaseLayer key={props.type} name={"location_report"}>
-                            //         <WMSTileLayer
-                            //             //layers={"fertilizer_et:Admin_fertilizerAdvisoryZone1"}
-                            //             attribution=''
-                            //             url={url_service}
-                            //             format={"image/png"}
-                            //             transparent={true}
-                            //             // params={{'time': props.forecast}}
-                            //             // eventHandlers={{
-                            //             //     add: (e) => {
-                            //             //       onLayerChange(e.target.options.layers);
-                                              
-                            //             //     }
-                            //             //   }}
-                            //         />
-                                    
-                            //     </BaseLayer>
                             : props.type === "location" ? (
                                 props.kebele ?
                                     <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
@@ -360,7 +340,30 @@ function Map(props) {
                                     />
                                 </BaseLayer>
                             
-                            :// props.type === "recommendation" ?
+                            : props.type === "recommendation_report" ?
+
+                                <BaseLayer key={"yield_optimal"} name={"optimal yield"} >
+                                    <WMSTileLayer
+                                        key={"fertilizer_et:et_wheat_yieldtypes_optimal_normal"}
+                                        layers={"fertilizer_et:et_wheat_yieldtypes_optimal_normal"}
+                                        attribution=''
+                                        url={getUrlService('fertilizer_et', 'wms')}
+                                        format={"image/png"}
+                                        transparent={true}
+                                        params={{'time': "2022-7" }}
+                                        eventHandlers={{
+                                            add: (e) => {
+                                            onLayerChange("fertilizer_et:et_wheat_yieldtypes_optimal_normal");
+                                            setLastSelected("optimal");
+                                            console.log(e.target.options)
+                                            
+                                            }
+                                        }}
+                                        
+                                    />
+                                    
+                                </BaseLayer>
+                            :
                                 <></>
                                 
                             
@@ -383,7 +386,7 @@ function Map(props) {
                 }
             
                 {
-                props.geo ? <GeoJSON attribution="" key={"advisory_geojson"+props.geo.timeStamp} data={props.geo} /> : <GeoJSON attribution="" />
+                props.geo ? <GeoJSON attribution="" key={"advisory_geojson"+props.geo.timeStamp} data={props.geo} style={props.styleGeojson} /> : <GeoJSON attribution="" />
                 }
             </MapContainer>
            

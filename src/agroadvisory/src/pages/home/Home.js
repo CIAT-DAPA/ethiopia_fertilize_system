@@ -84,7 +84,6 @@ function Home() {
             //Kebeles
             axios.get(Configuration.get_url_api_base() + "adm4/" + formValues.woreda[0])
                 .then(response => {
-                    console.log(response)
                     setSelectsValues({ ...selectsValues, kebeles: response.data })
                 });
 

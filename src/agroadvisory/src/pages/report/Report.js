@@ -89,9 +89,9 @@ function Report() {
       };
     
     const ForecastSelect = () => (
-        <div className='d-flex justify-content-end font-link-body'>
+        <div className='d-flex justify-content-end font-link-body flex-wrap align-items-center'>
             <h5 className='p-2 bd-highlight mt-2'>Forecast date</h5>
-            <div className='p-2 bd-highlight col-3'>
+            <div className='p-2 bd-highlight col-3 selectForecast'>
                 <Select defaultValue={opt_forecast[0]} options={opt_forecast} onChange={changeForecast}/>
 
             </div>
@@ -99,28 +99,27 @@ function Report() {
         </div>
     )
 
-    const Location = () => {
-        
-        return(
-            <div className="card col">
+    const Location = ({id}) => {
+        return (
+            <div className="card col-12 col-lg-5 my-1" style={{ minWidth: "49%" }}>
                 <div className="card-body">
                     <h5 className="card-title">Location</h5>
-                    
-            
-                        {
-                            geoJson && <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} style={{height: '40vh'}} bounds={bounds}/>
-                        }
-                    
-                    
-                    
-                   
+                    {geoJson && (
+                        <Map
+                            id={id}
+                            init={map_init}
+                            type={id}
+                            geo={geoJson}
+                            style={{ height: "50vh" }}
+                            bounds={bounds}
+                            legend={id === "recommendation_report"}
+                            styleGeojson={id === "recommendation_report" && {fillOpacity: 0, color: "red"}}
+                        />
+                    )}
                 </div>
             </div>
-            
-
-        )
-
-    }
+        );
+    };
 
     const NutrientsAndYield = () => {
         return(
@@ -147,12 +146,15 @@ function Report() {
 
     const SeasonalChartCarousel = () => {
         return(
-            <div className="card col mt-3 me-3" key="donutCarousel">
+            <div 
+            className="card col-12 col-md-5 my-1"
+            style={{ minWidth: "49%" }} 
+            key="donutCarousel">
                 <div className="card-body">
                 <h5 className="card-title">Seasonal</h5>
 
                    
-                    <Carousel variant="dark">
+                    <Carousel variant="dark" pause="hover">
                                 
                         {
                     
@@ -177,7 +179,10 @@ function Report() {
 
     const BarChartFert = ({name,data}) => {
         return(
-                <div className='card col ms-2' key={"bar_chart_"+name}>
+                <div 
+                className="card col-12 col-md-5 my-1"
+                key={"bar_chart_" + name}
+                style={{ minWidth: "49%" }}>
                     <div className="card-body">
                         <h5 className="card-title">{name}</h5>
                         <ColumnChart data={data} type={'fertilizer_rate'}/>
@@ -191,7 +196,10 @@ function Report() {
 
     const BarChartYield = ({name,data}) => {
         return(
-                <div className='card col mt-3' key={"bar_chart_yield"}>
+                <div 
+                className="card col-12 col-md-5 my-1"
+                key={"bar_chart_" + name}
+                style={{ minWidth: "49%" }}>
                     <div className="card-body">
                     <h5 className="card-title">{name}</h5>
                         <ColumnChart data={data} type={'optimal_yield'}/>
@@ -239,53 +247,42 @@ function Report() {
                 </div>
                 
 
-                {
-                    barChartData 
-                    ?
+                {barChartData ?
                     <div id='report'>
 
-                    <div className='row mt-2'>
-                       <Location/>
-                       <BarChartFert name={"Fertilizer rate"} data={[barChartData[1], barChartData[3]]}/>
-                       <BarChartFert name={"Fertilizer rate (ISFM)"} data={[barChartData[0], barChartData[4]]}/>
-                       
-                                
-                    </div>
+                        <div className="row my-3 g-8 row-cols-auto justify-content-between">
+                            <Location id="location_report"/>
+                            <SeasonalChartCarousel/>      
+                        </div>
 
-                    <div className='row'>
-                        <SeasonalChartCarousel/>
-                        <BarChartYield name={"Optimal yield"} data={[barChartData[2]]}/>
+                        <div className="row my-3 g-8 row-cols-auto justify-content-between">
+                            <BarChartFert name={"Fertilizer rate"} data={[barChartData[1], barChartData[3]]}/>
+                            <BarChartFert name={"Fertilizer rate (ISFM)"} data={[barChartData[0], barChartData[4]]}/>
+                        </div>
                         
-                    </div>
-                            {risk && <div className={`alert alert-${risk === "High risk" ? "danger" : "warning"} mt-4 text-center`} role="alert">
-                                {`Risk: ${risk}`}
-                            </div>}
+                        <div className="row my-3 g-8 row-cols-auto justify-content-between">
+                            <BarChartYield name={"Optimal yield"} data={[barChartData[2]]}/>
+                            <Location id="recommendation_report"/>
+                        </div>
 
-                            <div className="alert alert-light my-3 border" role="alert">
-                                <h5>Notes: </h5>
-                                <ol>
-                                    <li>This advisory is for agricultural land allotted to wheat in 2022 main crop season only.</li>
-                                    <li>If there is no sufficient inorganic fertilizer supply, use half inorganic with half organic rates.</li>
-                                </ol>
-                            </div>
+                        {risk && <div className={`alert alert-${risk === "High risk" ? "danger" : "warning"} mt-4 text-center`} role="alert">
+                            {`Risk: ${risk}`}
+                        </div>}
+
+                        <div className="alert alert-light my-3 border" role="alert">
+                            <h5>Notes: </h5>
+                            <ol>
+                                <li>This advisory is for agricultural land allotted to wheat in 2022 main crop season only.</li>
+                                <li>If there is no sufficient inorganic fertilizer supply, use half inorganic with half organic rates.</li>
+                            </ol>
+                        </div>
                     </div>
                     
 
                     : <Spinners/>
                                 
                 }
-                
-                
-                
-                    
-
-                
-
             </section>
-            
-                
-
-            
         </main>
     )
 
