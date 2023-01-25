@@ -10,21 +10,22 @@ export const reportSlice = createSlice({
       kebele: null,
       ad_fertilizer: null,
       ad_aclimate: null,
-      ad_isfm: null
+      ad_risk: null,
+      ad_optimal: null
 
     },
     reducers: {
        // Reducer y acciones asociadas.
        setReportInput: (state, action) => {
 
-        const { type, region, zone, woreda, kebele, ad_fertilizer, ad_aclimate, ad_isfm } = action.payload.formValues;
+        const { type, region, zone, woreda, kebele, ad_fertilizer, ad_aclimate, ad_risk, ad_optimal } = action.payload.formValues;
        
         // state = {
         //   ...action.payload.formValues
         // }
       
 
-        Object.assign(state, { type, region, zone, woreda, kebele, ad_fertilizer, ad_aclimate, ad_isfm });
+        Object.assign(state, { type, region, zone, woreda, kebele, ad_fertilizer, ad_aclimate, ad_risk, ad_optimal });
         return state;
 
        }

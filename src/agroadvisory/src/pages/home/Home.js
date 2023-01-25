@@ -37,9 +37,10 @@ function Home() {
         zone: null,
         woreda: null,
         kebele: null,
-        ad_fertilizer: null,
-        ad_aclimate: null,
-        ad_isfm: null
+        ad_fertilizer: true,
+        ad_aclimate: true,
+        ad_risk: true,
+        ad_optimal: true
 
     });
 
@@ -169,9 +170,14 @@ function Home() {
     const setType = e => {
         setForWoreda(e);
         if ( e )
-            setFormValues({ ...formValues, type: "woreda" })
+            setFormValues({ ...formValues, type: "woreda", ad_aclimate: false })
         else
-            setFormValues({ ...formValues, type: "kebele" })
+            setFormValues({ ...formValues, type: "kebele", ad_aclimate: true })
+    }
+
+    const verify = () => {
+        return (!(formValues.ad_aclimate || formValues.ad_fertilizer || formValues.ad_optimal || formValues.ad_risk) 
+        ||  (forWoreda ? disabledSelect.k : disabledSelect.b) )
     }
 
     return (
@@ -212,7 +218,7 @@ function Home() {
                         <div className='row form-group'>
                             <div className='col-6'>
                                 <b>Region</b>
-                                <select className="form-select" aria-label="Disabled select example" onChange={e => { setDisabledSelect({ ...disabledSelect, z: false, w: true, k: true }); setFormValues({ ...formValues, region: e.target.value.split(","), zone: null, woreda: null, kebele: null }); onChangeRegion(e.target.value.split(",")) }}>
+                                <select className="form-select" aria-label="Disabled select example" onChange={e => { setDisabledSelect({ ...disabledSelect, z: false, w: true, k: true, b: true }); setFormValues({ ...formValues, region: e.target.value.split(","), zone: null, woreda: null, kebele: null }); onChangeRegion(e.target.value.split(",")) }}>
                                     <option key={"region default"} value={null}>Select a region</option>
 
                                     {
@@ -223,7 +229,7 @@ function Home() {
                             </div>
                             <div className='col-6'>
                                 <b>Zone</b>
-                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.z} onChange={e => { setDisabledSelect({ ...disabledSelect, w: false, k: true }); setFormValues({ ...formValues, zone: e.target.value.split(","), woreda: null, kebele: null }); onChangeZone(e.target.value.split(",")) }}>
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.z} onChange={e => { setDisabledSelect({ ...disabledSelect, w: false, k: true, b: true }); setFormValues({ ...formValues, zone: e.target.value.split(","), woreda: null, kebele: null }); onChangeZone(e.target.value.split(",")) }}>
 
 
                                     <option key={"zone default"} value={null}>Select a zone</option>
@@ -236,7 +242,7 @@ function Home() {
                             </div>
                             <div className='col-6 mt-4'>
                                 <b>Woreda</b>
-                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.w} onChange={e => { setDisabledSelect({ ...disabledSelect, k: false }); setFormValues({ ...formValues, woreda: e.target.value.split(","), kebele: null }); onChangeWoreda(e.target.value.split(",")) }}>
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.w} onChange={e => { setDisabledSelect({ ...disabledSelect, k: false, b: true }); setFormValues({ ...formValues, woreda: e.target.value.split(","), kebele: null }); onChangeWoreda(e.target.value.split(",")) }}>
 
                                     <option key={"woreda default"} value={null}>Select a woreda</option>
 
@@ -259,33 +265,43 @@ function Home() {
 
                             </div>
 
-                            {/* <div className="row form-check mt-4">
-                                <div className='col 12'>
-                                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" onChange={e => setFormValues({ ...formValues, ad_fertilizer: e.target.checked })}/>
-                                    <label className="form-check-label" htmlFor="flexCheckDefault">
+                            <div className="row mt-4">
+                                <div className='col 6'>
+                                    <input className="form-check-input me-2" type="checkbox" checked={formValues.ad_fertilizer} id="ad_fertilizer" onChange={e => setFormValues({ ...formValues, ad_fertilizer: e.target.checked })}/>
+                                    <label className="form-check-label" htmlFor="ad_fertilizer">
                                         Advisory Fertilizer
                                     </label>
 
                                 </div>
+                                <div className='col 6'>
+                                    <input className="form-check-input me-2" type="checkbox" checked={formValues.ad_optimal} id="ad_optimal" onChange={e => setFormValues({ ...formValues, ad_optimal: e.target.checked })}/>
+                                    <label className="form-check-label" htmlFor="ad_optimal">
+                                        Advisory Optimal Yield
+                                    </label>
+
+                                </div>
                             </div>
-                            <div className="row form-check">
-                                <div className='col 12'>
-                                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" onChange={e => setFormValues({ ...formValues, ad_aclimate: e.target.checked })}/>
-                                    <label className="form-check-label" htmlFor="flexCheckDefault">
+                            <div className="row ">
+                                <div className='col 6'>
+                                    <input className="form-check-input me-2" type="checkbox" checked={formValues.ad_risk} id="ad_risk" onChange={e => setFormValues({ ...formValues, ad_risk: e.target.checked })}/>
+                                    <label className="form-check-label" htmlFor="ad_risk">
+                                        Advisory Risk
+                                    </label>
+
+                                </div>
+                                <div className='col 6' style={forWoreda ? { display:'none'} : {}}>
+                                    <input className="form-check-input me-2" type="checkbox" checked={formValues.ad_aclimate} id="ad_aclimate" onChange={e => setFormValues({ ...formValues, ad_aclimate: e.target.checked })} disabled={forWoreda}/>
+                                    <label className="form-check-label" htmlFor="ad_aclimate">
                                         Advisory Aclimate
                                     </label>
 
                                 </div>
-                            </div>
-                            <div className="row form-check">
-                                <div className='col 12'>
-                                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" onChange={e => setFormValues({ ...formValues, ad_isfm: e.target.checked })}/>
-                                    <label className="form-check-label" htmlFor="flexCheckDefault">
-                                        Advisory ISFM
-                                    </label>
-
+                            </div> 
+                            {!(formValues.ad_aclimate || formValues.ad_fertilizer || formValues.ad_optimal || formValues.ad_risk) &&
+                                <div className="alert alert-danger mt-4" role="alert">
+                                    You must select at least one layer of information
                                 </div>
-                            </div> */}
+                            }
 
                             </div>
 
@@ -293,24 +309,12 @@ function Home() {
 
                             <div className='row'>
                                 {
-
-                                    !disabledSelect.b || (forWoreda && !disabledSelect.k)
-                                        ? <Link className='col d-flex justify-content-center mt-4 mb-4' to={forWoreda ? "/report_woreda" : "/report"}>
-                                            <button type="submit" className="btn btn-primary" disabled={forWoreda ? disabledSelect.k : disabledSelect.b} onClick={e => { dispatch(setReportInput({ formValues })); }}>Advisory</button>
-                                        </Link>
-                                        :
-                                        <div>
-                                            <Alert />
-                                            <div className='d-flex justify-content-center mt-4 mb-4'>
-                                                <button type="submit" className={"btn btn-primary"} disabled={disabledSelect.b}>Advisory</button>
-
-                                            </div>
-                                        </div>
-
+                                    (forWoreda ? disabledSelect.k : disabledSelect.b)
+                                        && <Alert />
                                 }
-
-
-
+                                <Link className='col d-flex justify-content-center mt-4 mb-4' to={forWoreda ? "/report_woreda" : "/report"} style={ verify() ? { "pointer-events":'none'} : {}}>
+                                    <button type="submit" className="btn btn-primary" disabled={verify()} onClick={e => { dispatch(setReportInput({ formValues })); }}>Advisory</button>
+                                </Link>
                             </div>
                     </form>
                     <div className='col-6'>

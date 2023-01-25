@@ -100,9 +100,9 @@ function Report() {
 
     const Location = ({id}) => {
         return (
-            <div className="card col-12 col-lg-5 my-1" style={{ minWidth: "49%" }}>
+            <div className="card col-12 col-lg-5 my-1" style={ reportInput.ad_aclimate ? { minWidth: "49%" } : {width: "100%" } }>
                 <div className="card-body">
-                    <h5 className="card-title">Location</h5>
+                    <h5 className="card-title">{id === "recommendation_report" ? "Optimal yield" : "Location"}</h5>
                     {geoJson && (
                         <Map
                             id={id}
@@ -251,20 +251,24 @@ function Report() {
 
                         <div className="row my-3 g-8 row-cols-auto justify-content-between">
                             <Location id="location_report"/>
-                            <SeasonalChartCarousel/>      
+                            { reportInput.ad_aclimate && <SeasonalChartCarousel/>}                    
                         </div>
 
-                        <div className="row my-3 g-8 row-cols-auto justify-content-between">
-                            <BarChartFert name={"Fertilizer rate"} data={[barChartData[1], barChartData[3]]}/>
-                            <BarChartFert name={"Fertilizer rate (ISFM)"} data={[barChartData[0], barChartData[4]]}/>
-                        </div>
+                        {reportInput.ad_fertilizer &&
+                            <div className="row my-3 g-8 row-cols-auto justify-content-between">
+                                <BarChartFert name={"Fertilizer rate"} data={[barChartData[1], barChartData[3]]}/>
+                                <BarChartFert name={"Fertilizer rate (ISFM)"} data={[barChartData[0], barChartData[4]]}/>
+                            </div>
+                        }
                         
-                        <div className="row my-3 g-8 row-cols-auto justify-content-between">
-                            <BarChartYield name={"Optimal yield"} data={[barChartData[2]]}/>
-                            <Location id="recommendation_report"/>
-                        </div>
+                        {reportInput.ad_optimal && 
+                            <div className="row my-3 g-8 row-cols-auto justify-content-between">
+                                <BarChartYield name={"Optimal yield"} data={[barChartData[2]]}/>
+                                <Location id="recommendation_report"/>
+                            </div>
+                        }
 
-                        {risk && <div className={`alert alert-${risk === "High risk" ? "danger" : "warning"} mt-4 text-center`} role="alert">
+                        {risk && reportInput.ad_risk && <div className={`alert alert-${risk === "High risk" ? "danger" : "warning"} mt-4 text-center`} role="alert">
                             {`Risk: ${risk}`}
                         </div>}
 
