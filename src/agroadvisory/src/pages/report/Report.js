@@ -52,7 +52,6 @@ function Report() {
 
             axios.get(Configuration.get_url_api_base() + "risk/" + reportInput.kebele[0])
                 .then(response => {
-                    console.log("risk", response.data)
                     setRisk(response?.data[0]?.risk?.values[0])
                 });
 

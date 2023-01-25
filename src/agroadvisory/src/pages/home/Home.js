@@ -32,7 +32,7 @@ function Home() {
 
 
     const [formValues, setFormValues] = useState({
-        type: null,
+        type: "kebele",
         region: null,
         zone: null,
         woreda: null,
@@ -166,6 +166,14 @@ function Home() {
         )
     }
 
+    const setType = e => {
+        setForWoreda(e);
+        if ( e )
+            setFormValues({ ...formValues, type: "woreda" })
+        else
+            setFormValues({ ...formValues, type: "kebele" })
+    }
+
     return (
         <main>
             <br />
@@ -192,7 +200,7 @@ function Home() {
 
                 <div>
                     <label className="switch">
-                        <input type="checkbox" checked={forWoreda} onChange={e => setForWoreda(e.target.checked)} />
+                        <input type="checkbox" checked={forWoreda} onChange={e => setType(e.target.checked)} />
                         <span className="slider round"></span>
                     </label>
                     Report for Woreda

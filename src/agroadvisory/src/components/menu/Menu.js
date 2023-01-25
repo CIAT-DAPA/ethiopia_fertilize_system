@@ -46,14 +46,18 @@ function Menu() {
                                 <a className="nav-link" href="/mechanization">Mechanization</a>
                             </li>*/}
                             {
-                                reportInput?.kebele ?
+                                reportInput?.type === "kebele" ?
                                     <li className="nav-item">
                                         <Link className="nav-link" to="/report" >Report</Link>
                                     </li>
-                                    :
-                                    <li className="nav-item">
-                                        <Link className="nav-link disabled" to="/report" aria-disabled="true">Report</Link>
-                                    </li>
+                                    : reportInput?.type === "woreda" ?
+                                        <li className="nav-item">
+                                            <Link className="nav-link" to="/report_woreda" >Report</Link>
+                                        </li>
+                                        :
+                                        <li className="nav-item">
+                                            <Link className="nav-link disabled" to="/report" aria-disabled="true">Report</Link>
+                                        </li>
 
                             }
                             <li className="nav-item dropdown">
