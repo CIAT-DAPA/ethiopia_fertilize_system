@@ -6,13 +6,9 @@ function About() {
 
     return (
         <section className='d-flex h-100 text-center'>
-            <div className='row mt-5 mb-5'>
+            <div className='row mt-4 mb-5'>
                 <main className='px-3'>
-                    <br/>
-                    <br/>
-                    <br/>
-                    
-                    <h1 className='font-link'>About us</h1>
+                    <h2 className='font-link'>About us</h2>
                     <br/>
                     <p className='font-link-body'>
                         NextGenAgroadvisry is a project designed to develop site, context, and climate specific
