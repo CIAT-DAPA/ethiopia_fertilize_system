@@ -100,7 +100,7 @@ function Report() {
 
     const Location = ({id}) => {
         return (
-            <div className="card col-12 col-lg-5 my-1" style={ reportInput.ad_aclimate ? { minWidth: "49%" } : {width: "100%" } }>
+            <div className="card col-12 col-lg-5 my-1" style={ (!reportInput.ad_aclimate && id === "location_report") ? { minWidth: "100%" } : {width: "49%" } }>
                 <div className="card-body">
                     <h5 className="card-title">{id === "recommendation_report" ? "Optimal yield" : "Location"}</h5>
                     {geoJson && (
