@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import center from "@turf/center";
 import { Link } from 'react-router-dom'
@@ -14,8 +14,6 @@ import GeoFeatures from '../../services/GeoFeatures';
 
 import { setReportInput } from '../../slices/reportSlice';
 
-import { useState } from 'react';
-
 //redux
 import { useDispatch } from 'react-redux';
 const bbox = require('geojson-bbox');
@@ -29,6 +27,7 @@ function Home() {
     //const [disabledSelect, setDisabledSelect] = React.useState({ z: true, w: true, k: true, b: true });
     //const [geoJson, setGeoJson] = React.useState(null);
     const [bounds, setBounds] = React.useState([[10, 30], [8.5, 50],])
+    const [loading, setloading] = useState({ r: "pending", z: "pending", w: "pending", k: "pending" })
 
 
     const [formValues, setFormValues] = useState({
@@ -46,63 +45,81 @@ function Home() {
 
     const dispatch = useDispatch();
 
-    React.useEffect(() => {
-        //Regions
-        if (!selectsValues) {
-            axios.get(Configuration.get_url_api_base() + "adm1")
-                .then(response => {
-                    setSelectsValues({ ...selectsValues, regions: response.data })
+    //initial load of the regions
+    useEffect(() => {
+        setloading({ ...loading, r: "loading"})
+        axios.get(Configuration.get_url_api_base() + "adm1")
+        .then(response => {
+            setSelectsValues({ ...selectsValues, regions: response.data })
+            setloading({ ...loading, r: "pending"})
+        });
+    }, [!selectsValues])
+    
+    // change of region
+    useEffect(() => {
+        if (formValues.region){
+        setDisabledSelect({ z: true, w: true, k: true, b: true })
+        setloading({ ...loading, z: "loading"})
+        axios.get(Configuration.get_url_api_base() + "adm2/" + formValues.region[0])
+        .then(response => {
+            setSelectsValues({ ...selectsValues, zones: response.data })
+            setloading({ r: "uploaded", z: "pending", w: "pending", k: "pending"})
+            setDisabledSelect({ z: false, w: true, k: true, b: true })
+        });}
+    }, [formValues?.region])
 
-
-                });
-
-        }
-        if (formValues.region) {
-            //Zones
-            axios.get(Configuration.get_url_api_base() + "adm2/" + formValues.region[0])
-                .then(response => {
-
-                    setSelectsValues({ ...selectsValues, zones: response.data })
-
-
-                });
-
-        }
-
-        if (formValues.zone) {
-            //Woredas
+    //change of zone
+    useEffect(() => {
+        if (formValues.zone){
+            setDisabledSelect({ ...disabledSelect, w: true, k: true, b: true });
+            setloading({ ...loading, w: "loading"})
             axios.get(Configuration.get_url_api_base() + "adm3/" + formValues.zone[0])
-                .then(response => {
-
-                    setSelectsValues({ ...selectsValues, woredas: response.data })
-
-
-                });
-
+            .then(response => {
+                setSelectsValues({ ...selectsValues, woredas: response.data })
+                setloading({ ...loading, z: "uploaded", w: "pending", k: "pending"})
+                setDisabledSelect({ ...disabledSelect, w: false, k: true, b: true});
+            });
         }
+    }, [formValues.zone])
 
-        if (formValues.woreda) {
-            //Kebeles
+    // change of woreda
+    useEffect(() => {
+        if (formValues.woreda){
+            setDisabledSelect({ ...disabledSelect, k: true, b: true });
+            setloading({ ...loading, k: "loading"})
             axios.get(Configuration.get_url_api_base() + "adm4/" + formValues.woreda[0])
-                .then(response => {
-                    setSelectsValues({ ...selectsValues, kebeles: response.data })
-                });
-
+            .then(response => {
+                setSelectsValues({ ...selectsValues, kebeles: response.data })
+                setloading({ ...loading, k: "pending", w: "uploaded"})
+                setDisabledSelect({ ...disabledSelect, k: false, b: true });
+            });
         }
-
-        // if(geoJson){
-        //     console.log(geoJson);
-        //     var features = ([
-        //         [ 39.74409621, 13.35065102 ]
-        //       ]);
-
-        //     var center = center(geoJson);
-        //     console.log(center)
-
-        // }
+    }, [formValues.woreda])
 
 
-    }, [formValues]);
+    const icon = (statu) => {
+        switch (statu) {
+            case "pending":
+                return (<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle" viewBox="0 0 16 16">
+                    <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z" />
+                    <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z" />
+                </svg>)
+
+            case "loading":
+                return <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
+            case "uploaded":
+                return (<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                </svg>)
+            default:
+                return (<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bug" viewBox="0 0 16 16">
+                    <path d="M4.355.522a.5.5 0 0 1 .623.333l.291.956A4.979 4.979 0 0 1 8 1c1.007 0 1.946.298 2.731.811l.29-.956a.5.5 0 1 1 .957.29l-.41 1.352A4.985 4.985 0 0 1 13 6h.5a.5.5 0 0 0 .5-.5V5a.5.5 0 0 1 1 0v.5A1.5 1.5 0 0 1 13.5 7H13v1h1.5a.5.5 0 0 1 0 1H13v1h.5a1.5 1.5 0 0 1 1.5 1.5v.5a.5.5 0 1 1-1 0v-.5a.5.5 0 0 0-.5-.5H13a5 5 0 0 1-10 0h-.5a.5.5 0 0 0-.5.5v.5a.5.5 0 1 1-1 0v-.5A1.5 1.5 0 0 1 2.5 10H3V9H1.5a.5.5 0 0 1 0-1H3V7h-.5A1.5 1.5 0 0 1 1 5.5V5a.5.5 0 0 1 1 0v.5a.5.5 0 0 0 .5.5H3c0-1.364.547-2.601 1.432-3.503l-.41-1.352a.5.5 0 0 1 .333-.623zM4 7v4a4 4 0 0 0 3.5 3.97V7H4zm4.5 0v7.97A4 4 0 0 0 12 11V7H8.5zM12 6a3.989 3.989 0 0 0-1.334-2.982A3.983 3.983 0 0 0 8 2a3.983 3.983 0 0 0-2.667 1.018A3.989 3.989 0 0 0 4 6h8z"/>
+                </svg>)
+        }
+    }
+    
+    
 
     const onFormSubmit = (e) => {
         e.preventDefault();
@@ -218,31 +235,36 @@ function Home() {
                         <div className='row form-group'>
                             <div className='col-6'>
                                 <b>Region</b>
-                                <select className="form-select" aria-label="Disabled select example" onChange={e => { setDisabledSelect({ ...disabledSelect, z: false, w: true, k: true, b: true }); setFormValues({ ...formValues, region: e.target.value.split(","), zone: null, woreda: null, kebele: null }); onChangeRegion(e.target.value.split(",")) }}>
+                                <div className='input-group'>
+                                <select className="form-select" aria-label="Disabled select example"  onChange={e => { setFormValues({ ...formValues, region: e.target.value.split(","), zone: null, woreda: null, kebele: null }); onChangeRegion(e.target.value.split(",")) }}>
                                     <option key={"region default"} value={null}>Select a region</option>
-
                                     {
                                         selectsValues?.regions && selectsValues?.regions.map((currentRegion) => <option key={currentRegion.id} value={[currentRegion.id, currentRegion.name, currentRegion.ext_id]}>{currentRegion.name}</option>)
                                     }
                                 </select>
-
+                                    <span className='input-group-text'>
+                                        { icon(loading.r)}
+                                    </span>
+                                </div>
                             </div>
                             <div className='col-6'>
                                 <b>Zone</b>
-                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.z} onChange={e => { setDisabledSelect({ ...disabledSelect, w: false, k: true, b: true }); setFormValues({ ...formValues, zone: e.target.value.split(","), woreda: null, kebele: null }); onChangeZone(e.target.value.split(",")) }}>
-
-
-                                    <option key={"zone default"} value={null}>Select a zone</option>
-
-                                    {
-                                        selectsValues?.zones && selectsValues?.zones.map((currentZone) => <option key={currentZone.id} value={[currentZone.id, currentZone.name, currentZone.ext_id]}>{currentZone.name}</option>)
-                                    }
-                                </select>
-
+                                <div className='input-group'>
+                                    <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.z} onChange={e => { setFormValues({ ...formValues, zone: e.target.value.split(","), woreda: null, kebele: null }); onChangeZone(e.target.value.split(",")) }}>
+                                        <option key={"zone default"} value={null}>Select a zone</option>
+                                        {
+                                            selectsValues?.zones && selectsValues?.zones.map((currentZone) => <option key={currentZone.id} value={[currentZone.id, currentZone.name, currentZone.ext_id]}>{currentZone.name}</option>)
+                                        }
+                                    </select>
+                                    <span className='input-group-text'>
+                                        { icon(loading.z)}
+                                    </span>
+                                </div>
                             </div>
                             <div className='col-6 mt-4'>
                                 <b>Woreda</b>
-                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.w} onChange={e => { setDisabledSelect({ ...disabledSelect, k: false, b: true }); setFormValues({ ...formValues, woreda: e.target.value.split(","), kebele: null }); onChangeWoreda(e.target.value.split(",")) }}>
+                                <div className='input-group'>
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.w} onChange={e => { setFormValues({ ...formValues, woreda: e.target.value.split(","), kebele: null }); onChangeWoreda(e.target.value.split(",")) }}>
 
                                     <option key={"woreda default"} value={null}>Select a woreda</option>
 
@@ -250,11 +272,16 @@ function Home() {
                                         selectsValues?.woredas && selectsValues?.woredas.map((currentWoreda) => <option key={currentWoreda.id} value={[currentWoreda.id, currentWoreda.name, currentWoreda.ext_id]}>{currentWoreda.name}</option>)
                                     }
                                 </select>
+                                    <span className='input-group-text'>
+                                        { icon(loading.w)}
+                                    </span>
+                                </div>
 
                             </div>
                             <div className='col-6 mt-4'>
                                 <b>Kebele</b>
-                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.k || forWoreda} onChange={e => { setFormValues({ ...formValues, kebele: e.target.value.split(",") }); setDisabledSelect({ ...disabledSelect, b: false }); onChangeKebele(e.target.value.split(","))/*GeoFeatures.geojson("'"+e.target.value.split(",")[1]+"'").then((data_geo) => {setGeoJson(data_geo)});*/ }}>
+                                <div className='input-group'>
+                                <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.k || forWoreda} onChange={e => { setFormValues({ ...formValues, kebele: e.target.value.split(",") }); setDisabledSelect({ ...disabledSelect, b: false }); onChangeKebele(e.target.value.split(","), setloading({ ...loading, k: "uploaded"}))/*GeoFeatures.geojson("'"+e.target.value.split(",")[1]+"'").then((data_geo) => {setGeoJson(data_geo)});*/ }}>
                                 {/*<select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.k} onChange={e => { setFormValues({ ...formValues, kebele: e.target.value.split(",") }); setDisabledSelect({ ...disabledSelect, b: false });; onChangeKebele(e.target.value.split(",")) /*GeoFeatures.geojson("'"+e.target.value.split(",")[1]+"'").then((data_geo) => {setGeoJson(data_geo)}); }}> */}
                                     <option key={"kebele default"} value={null}>Select a kebele</option>
 
@@ -262,6 +289,10 @@ function Home() {
                                         selectsValues?.kebeles && selectsValues?.kebeles.map((currentKebele) => <option key={currentKebele.id} value={[currentKebele.id, currentKebele.name, currentKebele.ext_id]}>{currentKebele.name}</option>)
                                     }
                                 </select>
+                                    <span className='input-group-text'>
+                                        { icon(loading.k)}
+                                    </span>
+                                </div>
 
                             </div>
 
@@ -312,7 +343,7 @@ function Home() {
                                     (forWoreda ? disabledSelect.k : disabledSelect.b)
                                         && <Alert />
                                 }
-                                <Link className='col d-flex justify-content-center mt-4 mb-4' to={forWoreda ? "/report_woreda" : "/report"} style={ verify() ? { "pointer-events":'none'} : {}}>
+                                <Link className='col d-flex justify-content-center mt-4 mb-4' to={forWoreda ? "/report_woreda" : "/report"} style={ verify() ? { "pointerEvents":'none'} : {}} >
                                     <button type="submit" className="btn btn-primary" disabled={verify()} onClick={e => { dispatch(setReportInput({ formValues })); }}>Advisory</button>
                                 </Link>
                             </div>
