@@ -294,19 +294,26 @@ function ReportWoreda() {
                             <div id="report">
                                 <div className="row my-3 g-8 row-cols-auto justify-content-between">
                                     <Location />
-                                    <BarChartYield
-                                        name={"Optimal yield"}
-                                        data={[barChartData[2]]}
-                                    />
-                                    <BarChartFert
-                                        name={"Fertilizer rate"}
-                                        data={[barChartData[1], barChartData[3]]}
-                                    />
-                                    <BarChartFert
-                                        name={"Fertilizer rate (ISFM)"}
-                                        data={[barChartData[0], barChartData[4]]}
-                                    />{
-                                            chart &&
+                                    { reportInput.ad_optimal && 
+                                        <BarChartYield
+                                            name={"Optimal yield"}
+                                            data={[barChartData[2]]}
+                                        />
+                                    }
+                                    {reportInput.ad_fertilizer &&
+                                        <>
+                                            <BarChartFert
+                                                name={"Fertilizer rate"}
+                                                data={[barChartData[1], barChartData[3]]}
+                                            />
+                                            <BarChartFert
+                                                name={"Fertilizer rate (ISFM)"}
+                                                data={[barChartData[0], barChartData[4]]}
+                                            />
+                                        </>
+                                    }
+                                    {
+                                        reportInput.ad_risk && chart &&
                                             <div
                                                 className="card col-12 col-md-5 my-1"
                                                 key="bar_chart_risk"

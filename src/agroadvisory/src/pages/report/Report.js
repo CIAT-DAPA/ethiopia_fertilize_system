@@ -33,6 +33,7 @@ function Report() {
     const [geoJson, setGeoJson] = React.useState();
     const [barChartData, setBarChartData] = React.useState();
     const [risk, setRisk] = React.useState()
+    const [seasonal, setSeasonal] = React.useState(null)
 
     React.useEffect(() => {
 
@@ -52,8 +53,16 @@ function Report() {
 
             axios.get(Configuration.get_url_api_base() + "risk/" + reportInput.kebele[0])
                 .then(response => {
-                    console.log("risk", response.data)
                     setRisk(response?.data[0]?.risk?.values[0])
+                });
+
+            axios.get(Configuration.get_url_aclimate_api_base() + "Forecast/Climate/"+ reportInput.kebele[0] + "/false/json")
+                .then(response => {
+                    console.log(response)
+                    if (response.data?.climate[0]?.data)
+                        setSeasonal(response.data?.climate[0])
+                    else
+                        setSeasonal(donutChartData.climate[0])
                 });
 
         }
@@ -89,9 +98,9 @@ function Report() {
       };
     
     const ForecastSelect = () => (
-        <div className='d-flex justify-content-end font-link-body'>
+        <div className='d-flex justify-content-end font-link-body flex-wrap align-items-center'>
             <h5 className='p-2 bd-highlight mt-2'>Forecast date</h5>
-            <div className='p-2 bd-highlight col-3'>
+            <div className='p-2 bd-highlight col-3 selectForecast'>
                 <Select defaultValue={opt_forecast[0]} options={opt_forecast} onChange={changeForecast}/>
 
             </div>
@@ -99,28 +108,27 @@ function Report() {
         </div>
     )
 
-    const Location = () => {
-        
-        return(
-            <div className="card col">
+    const Location = ({id}) => {
+        return (
+            <div className="card col-12 col-lg-5 my-1" style={ (!reportInput.ad_aclimate && id === "location_report") ? { minWidth: "100%" } : {width: "49%" } }>
                 <div className="card-body">
-                    <h5 className="card-title">Location</h5>
-                    
-            
-                        {
-                            geoJson && <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} style={{height: '40vh'}} bounds={bounds}/>
-                        }
-                    
-                    
-                    
-                   
+                    <h5 className="card-title">{id === "recommendation_report" ? "Optimal yield" : "Location"}</h5>
+                    {geoJson && (
+                        <Map
+                            id={id}
+                            init={map_init}
+                            type={id}
+                            geo={geoJson}
+                            style={{ height: "50vh" }}
+                            bounds={bounds}
+                            legend={id === "recommendation_report"}
+                            styleGeojson={id === "recommendation_report" && {fillOpacity: 0, color: "red"}}
+                        />
+                    )}
                 </div>
             </div>
-            
-
-        )
-
-    }
+        );
+    };
 
     const NutrientsAndYield = () => {
         return(
@@ -147,16 +155,19 @@ function Report() {
 
     const SeasonalChartCarousel = () => {
         return(
-            <div className="card col mt-3 me-3" key="donutCarousel">
+            <div 
+            className="card col-12 col-md-5 my-1"
+            style={{ minWidth: "49%" }} 
+            key="donutCarousel">
                 <div className="card-body">
                 <h5 className="card-title">Seasonal</h5>
 
                    
-                    <Carousel variant="dark">
+                    <Carousel variant="dark" pause="hover">
                                 
                         {
                     
-                                donutChartData.climate[0].data.map((value, i) => (
+                                seasonal.data.map((value, i) => (
                                     <Carousel.Item key={i}>
                                         <DonutChart data={value}/>
                                     </Carousel.Item>
@@ -177,7 +188,10 @@ function Report() {
 
     const BarChartFert = ({name,data}) => {
         return(
-                <div className='card col ms-2' key={"bar_chart_"+name}>
+                <div 
+                className="card col-12 col-md-5 my-1"
+                key={"bar_chart_" + name}
+                style={{ minWidth: "49%" }}>
                     <div className="card-body">
                         <h5 className="card-title">{name}</h5>
                         <ColumnChart data={data} type={'fertilizer_rate'}/>
@@ -191,7 +205,10 @@ function Report() {
 
     const BarChartYield = ({name,data}) => {
         return(
-                <div className='card col mt-3' key={"bar_chart_yield"}>
+                <div 
+                className="card col-12 col-md-5 my-1"
+                key={"bar_chart_" + name}
+                style={{ minWidth: "49%" }}>
                     <div className="card-body">
                     <h5 className="card-title">{name}</h5>
                         <ColumnChart data={data} type={'optimal_yield'}/>
@@ -239,53 +256,46 @@ function Report() {
                 </div>
                 
 
-                {
-                    barChartData 
-                    ?
+                {barChartData ?
                     <div id='report'>
 
-                    <div className='row mt-2'>
-                       <Location/>
-                       <BarChartFert name={"Fertilizer rate"} data={[barChartData[1], barChartData[3]]}/>
-                       <BarChartFert name={"Fertilizer rate (ISFM)"} data={[barChartData[0], barChartData[4]]}/>
-                       
-                                
-                    </div>
+                        <div className="row my-3 g-8 row-cols-auto justify-content-between">
+                            <Location id="location_report"/>
+                            { seasonal && reportInput.ad_aclimate && <SeasonalChartCarousel/>}                    
+                        </div>
 
-                    <div className='row'>
-                        <SeasonalChartCarousel/>
-                        <BarChartYield name={"Optimal yield"} data={[barChartData[2]]}/>
-                        
-                    </div>
-                            {risk && <div className={`alert alert-${risk === "High risk" ? "danger" : "warning"} mt-4 text-center`} role="alert">
-                                {`Risk: ${risk}`}
-                            </div>}
-
-                            <div className="alert alert-light my-3 border" role="alert">
-                                <h5>Notes: </h5>
-                                <ol>
-                                    <li>This advisory is for agricultural land allotted to wheat in 2022 main crop season only.</li>
-                                    <li>If there is no sufficient inorganic fertilizer supply, use half inorganic with half organic rates.</li>
-                                </ol>
+                        {reportInput.ad_fertilizer &&
+                            <div className="row my-3 g-8 row-cols-auto justify-content-between">
+                                <BarChartFert name={"Fertilizer rate"} data={[barChartData[1], barChartData[3]]}/>
+                                <BarChartFert name={"Fertilizer rate (ISFM)"} data={[barChartData[0], barChartData[4]]}/>
                             </div>
+                        }
+                        
+                        {reportInput.ad_optimal && 
+                            <div className="row my-3 g-8 row-cols-auto justify-content-between">
+                                <BarChartYield name={"Optimal yield"} data={[barChartData[2]]}/>
+                                <Location id="recommendation_report"/>
+                            </div>
+                        }
+
+                        {risk && reportInput.ad_risk && <div className={`alert alert-${risk === "High risk" ? "danger" : "warning"} mt-4 text-center`} role="alert">
+                            {`Risk: ${risk}`}
+                        </div>}
+
+                        <div className="alert alert-light my-3 border" role="alert">
+                            <h5>Notes: </h5>
+                            <ol>
+                                <li>This advisory is for agricultural land allotted to wheat in 2022 main crop season only.</li>
+                                <li>If there is no sufficient inorganic fertilizer supply, use half inorganic with half organic rates.</li>
+                            </ol>
+                        </div>
                     </div>
                     
 
                     : <Spinners/>
                                 
                 }
-                
-                
-                
-                    
-
-                
-
             </section>
-            
-                
-
-            
         </main>
     )
 

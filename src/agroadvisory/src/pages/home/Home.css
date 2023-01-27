@@ -29,7 +29,7 @@
   } */
   
   .carousel {
-    width:430px;
+    width:auto;
     height:380px;
     margin: auto;
   }
