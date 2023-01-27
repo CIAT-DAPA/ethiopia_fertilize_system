@@ -19,14 +19,14 @@ import { useDispatch } from 'react-redux';
 const bbox = require('geojson-bbox');
 
 function Home() {
-    const [map_init, setMap_init] = React.useState({ center: [9.3988271, 39.9405962], zoom: 5 });
+    const [map_init, setMap_init] = React.useState({ center: [9.8088271, 38.0405962], zoom: 5.75 });
     const [selectsValues, setSelectsValues] = React.useState(null);
     const [disabledSelect, setDisabledSelect] = React.useState({ z: true, w: true, k: true, b: true });
     const [geoJson, setGeoJson] = React.useState();
     const [forWoreda, setForWoreda] = React.useState(false);
     //const [disabledSelect, setDisabledSelect] = React.useState({ z: true, w: true, k: true, b: true });
     //const [geoJson, setGeoJson] = React.useState(null);
-    const [bounds, setBounds] = React.useState([[10, 30], [8.5, 50],])
+    const [bounds, setBounds] = React.useState([[10, 32], [9.7, 45],])
     const [loading, setloading] = useState({ r: "pending", z: "pending", w: "pending", k: "pending" })
 
 
@@ -229,11 +229,11 @@ function Home() {
                     Report for Woreda
                 </div>
 
-                <div className='row row-content mt-5 font-link-body'>
-                    <form className='col-6' onSubmit={onFormSubmit}>
-                        <p>Choose a location</p>
+                <div className='row row-content my-4 font-link-body'>
+                    <form className='col-md-6' onSubmit={onFormSubmit}>
+                        <p className='mb-0'>Choose a location</p>
                         <div className='row form-group'>
-                            <div className='col-6'>
+                            <div className='col-md-6 mt-3'>
                                 <b>Region</b>
                                 <div className='input-group'>
                                 <select className="form-select" aria-label="Disabled select example"  onChange={e => { setFormValues({ ...formValues, region: e.target.value.split(","), zone: null, woreda: null, kebele: null }); onChangeRegion(e.target.value.split(",")) }}>
@@ -247,7 +247,7 @@ function Home() {
                                     </span>
                                 </div>
                             </div>
-                            <div className='col-6'>
+                            <div className='col-md-6 mt-3'>
                                 <b>Zone</b>
                                 <div className='input-group'>
                                     <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.z} onChange={e => { setFormValues({ ...formValues, zone: e.target.value.split(","), woreda: null, kebele: null }); onChangeZone(e.target.value.split(",")) }}>
@@ -261,7 +261,7 @@ function Home() {
                                     </span>
                                 </div>
                             </div>
-                            <div className='col-6 mt-4'>
+                            <div className='col-md-6 mt-3'>
                                 <b>Woreda</b>
                                 <div className='input-group'>
                                 <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.w} onChange={e => { setFormValues({ ...formValues, woreda: e.target.value.split(","), kebele: null }); onChangeWoreda(e.target.value.split(",")) }}>
@@ -278,7 +278,7 @@ function Home() {
                                 </div>
 
                             </div>
-                            <div className='col-6 mt-4'>
+                            <div className='col-md-6 mt-3'>
                                 <b>Kebele</b>
                                 <div className='input-group'>
                                 <select className="form-select" aria-label="Disabled select example" disabled={disabledSelect.k || forWoreda} onChange={e => { setFormValues({ ...formValues, kebele: e.target.value.split(",") }); setDisabledSelect({ ...disabledSelect, b: false }); onChangeKebele(e.target.value.split(","), setloading({ ...loading, k: "uploaded"}))/*GeoFeatures.geojson("'"+e.target.value.split(",")[1]+"'").then((data_geo) => {setGeoJson(data_geo)});*/ }}>
@@ -297,14 +297,14 @@ function Home() {
                             </div>
 
                             <div className="row mt-4">
-                                <div className='col 6'>
+                                <div className='col-lg-6 col-md-12 col-sm-6'>
                                     <input className="form-check-input me-2" type="checkbox" checked={formValues.ad_fertilizer} id="ad_fertilizer" onChange={e => setFormValues({ ...formValues, ad_fertilizer: e.target.checked })}/>
                                     <label className="form-check-label" htmlFor="ad_fertilizer">
                                         Advisory Fertilizer
                                     </label>
 
                                 </div>
-                                <div className='col 6'>
+                                <div className='col-lg-6 col-md-12 col-sm-6'>
                                     <input className="form-check-input me-2" type="checkbox" checked={formValues.ad_optimal} id="ad_optimal" onChange={e => setFormValues({ ...formValues, ad_optimal: e.target.checked })}/>
                                     <label className="form-check-label" htmlFor="ad_optimal">
                                         Advisory Optimal Yield
@@ -313,14 +313,14 @@ function Home() {
                                 </div>
                             </div>
                             <div className="row ">
-                                <div className='col 6'>
+                                <div className='col-lg-6 col-md-12 col-sm-6'>
                                     <input className="form-check-input me-2" type="checkbox" checked={formValues.ad_risk} id="ad_risk" onChange={e => setFormValues({ ...formValues, ad_risk: e.target.checked })}/>
                                     <label className="form-check-label" htmlFor="ad_risk">
                                         Advisory Risk
                                     </label>
 
                                 </div>
-                                <div className='col 6' style={forWoreda ? { display:'none'} : {}}>
+                                <div className='col-lg-6 col-md-12 col-sm-6' style={forWoreda ? { display:'none'} : {}}>
                                     <input className="form-check-input me-2" type="checkbox" checked={formValues.ad_aclimate} id="ad_aclimate" onChange={e => setFormValues({ ...formValues, ad_aclimate: e.target.checked })} disabled={forWoreda}/>
                                     <label className="form-check-label" htmlFor="ad_aclimate">
                                         Advisory Aclimate
@@ -348,10 +348,10 @@ function Home() {
                                 </Link>
                             </div>
                     </form>
-                    <div className='col-6'>
+                    <div className='col-md-6'>
                         {/* {geoJson ?
                             <Map id="location_report" init={map_init} type={"location_report"} geo={geoJson} bounds={bounds}/> : */}
-                            <Map id="location" init={map_init} type={"location"} style={{ height: '300px' }} zoomOnGeojson={map_init} cuttable={false} checked={true} param={geoJson} region={formValues.region} zone={formValues.zone} kebele={formValues.kebele} woreda={formValues.woreda} />
+                            <Map id="location" init={map_init} bounds={bounds} type={"location"} style={{ height: '450px' }} zoomOnGeojson={map_init} cuttable={false} checked={true} param={geoJson} region={formValues.region} zone={formValues.zone} kebele={formValues.kebele} woreda={formValues.woreda} />
                         {/* } */}
 
                     </div>
