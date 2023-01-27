@@ -33,6 +33,7 @@ function Report() {
     const [geoJson, setGeoJson] = React.useState();
     const [barChartData, setBarChartData] = React.useState();
     const [risk, setRisk] = React.useState()
+    const [seasonal, setSeasonal] = React.useState(null)
 
     React.useEffect(() => {
 
@@ -53,6 +54,15 @@ function Report() {
             axios.get(Configuration.get_url_api_base() + "risk/" + reportInput.kebele[0])
                 .then(response => {
                     setRisk(response?.data[0]?.risk?.values[0])
+                });
+
+            axios.get(Configuration.get_url_aclimate_api_base() + "Forecast/Climate/"+ reportInput.kebele[0] + "/false/json")
+                .then(response => {
+                    console.log(response)
+                    if (response.data?.climate[0]?.data)
+                        setSeasonal(response.data?.climate[0])
+                    else
+                        setSeasonal(donutChartData.climate[0])
                 });
 
         }
@@ -157,7 +167,7 @@ function Report() {
                                 
                         {
                     
-                                donutChartData.climate[0].data.map((value, i) => (
+                                seasonal.data.map((value, i) => (
                                     <Carousel.Item key={i}>
                                         <DonutChart data={value}/>
                                     </Carousel.Item>
@@ -251,7 +261,7 @@ function Report() {
 
                         <div className="row my-3 g-8 row-cols-auto justify-content-between">
                             <Location id="location_report"/>
-                            { reportInput.ad_aclimate && <SeasonalChartCarousel/>}                    
+                            { seasonal && reportInput.ad_aclimate && <SeasonalChartCarousel/>}                    
                         </div>
 
                         {reportInput.ad_fertilizer &&
