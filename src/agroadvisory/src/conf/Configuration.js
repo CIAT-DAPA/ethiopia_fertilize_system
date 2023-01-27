@@ -7,6 +7,7 @@ const FERTILIZER_WORSPACE = "fertilizer_et"
 const ACLIMATE_WORSPACE = "aclimate_et"
 //const NEXTGEN_API_BASE = "http://localhost:5000/"
 const NEXTGEN_API_BASE = "https://webapi.nextgenagroadvisory.com/"
+const ACLIMATE_API_BASE = "https://webapi.aclimate.org/api/"
 
 class Configuration {
     get_geoserver_url() {
@@ -29,6 +30,9 @@ class Configuration {
     }
     get_aclimate_worspace(){
       return ACLIMATE_WORSPACE;
+    }
+    get_url_aclimate_api_base(){
+      return ACLIMATE_API_BASE;
     }
 
 }
