@@ -110,7 +110,7 @@ function Report() {
 
     const Location = ({id}) => {
         return (
-            <div className="card col-12 col-lg-5 my-1" style={ (!reportInput.ad_aclimate && id === "location_report") ? { minWidth: "100%" } : {width: "49%" } }>
+            <div className="card col-12 col-lg-5 my-1" style={ {  minWidth: (!reportInput.ad_aclimate && id === "location_report") ? "100%" : "49%"  , maxHeight: "445.33px" } }>
                 <div className="card-body">
                     <h5 className="card-title">{id === "recommendation_report" ? "Optimal yield" : "Location"}</h5>
                     {geoJson && (
@@ -119,7 +119,8 @@ function Report() {
                             init={map_init}
                             type={id}
                             geo={geoJson}
-                            style={{ height: "50vh" }}
+                            style={{ height: "90%",
+                                minHeight: id === "location_report" ? "370px" : "312.29px"}}
                             bounds={bounds}
                             legend={id === "recommendation_report"}
                             styleGeojson={id === "recommendation_report" && {fillOpacity: 0, color: "red"}}

@@ -209,7 +209,7 @@ function ReportWoreda() {
                             init={map_init}
                             type={"location_report"}
                             geo={geoJson}
-                            style={{ height: "50vh" }}
+                            style={{ height: "90%", minHeight: "312.29px"}}
                             bounds={bounds}
                         />
                     )}
@@ -328,13 +328,13 @@ function ReportWoreda() {
                                     }
                                     
                                 </div>
-                                <div  className="alert alert-light my-3 border" role="alert">
+                                {reportInput.ad_fertilizer && <div  className="alert alert-light my-3 border" role="alert">
                                     <h5>Notes: </h5>
                                     <ol>
                                         <li>This advisory is for agricultural land allotted to wheat in 2022 main crop season only.</li>
                                         <li>If there is no sufficient inorganic fertilizer supply, use half inorganic with half organic rates.</li>
                                     </ol>
-                                </div>
+                                </div>}
                             </div>
                         ) : (
                             <div
