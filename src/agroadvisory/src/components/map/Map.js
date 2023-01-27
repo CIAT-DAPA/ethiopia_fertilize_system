@@ -267,7 +267,7 @@ function Map(props) {
                                 props.kebele ?
                                     <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
                                         <WMSTileLayer
-                                            layers={"administrative:admin_levels"}
+                                            layers={"administrative:et_adm3"}
                                             attribution=''
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
@@ -278,7 +278,7 @@ function Map(props) {
                                 : props.woreda ?
                                     <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
                                         <WMSTileLayer
-                                            layers={"administrative:admin_levels"}
+                                            layers={"administrative:et_adm3"}
                                             attribution=''
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
@@ -289,7 +289,7 @@ function Map(props) {
                                 : props.zone ? 
                                     <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
                                         <WMSTileLayer
-                                            layers={"administrative:admin_levels"}
+                                            layers={"administrative:et_adm3"}
                                             attribution=''
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
@@ -300,7 +300,7 @@ function Map(props) {
                                 : props.region ?
                                     <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
                                         <WMSTileLayer
-                                            layers={"administrative:admin_levels"}
+                                            layers={"administrative:et_adm3"}
                                             attribution=''
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
@@ -312,7 +312,7 @@ function Map(props) {
                                 :
                                     <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
                                         <WMSTileLayer
-                                            layers={"administrative:admin_levels"}
+                                            layers={"administrative:et_adm3"}
                                             attribution=''
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
