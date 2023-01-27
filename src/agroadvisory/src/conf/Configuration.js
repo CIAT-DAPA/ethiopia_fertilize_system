@@ -2,12 +2,12 @@ const GEOSERVER_URL = "https://geo.aclimate.org/geoserver/";
 const GEOSERVER_SERVICE = "wms";
 const GEOSERVER_FEATURE = "oms";
 
-const CROP_RASTER_URL = "https://webapi.nextgenagroadvisory.com/clip_raster";
 const FERTILIZER_WORSPACE = "fertilizer_et"
 const ACLIMATE_WORSPACE = "aclimate_et"
 //const NEXTGEN_API_BASE = "http://localhost:5000/"
 const NEXTGEN_API_BASE = "https://webapi.nextgenagroadvisory.com/"
 const ACLIMATE_API_BASE = "https://webapi.aclimate.org/api/"
+const CROP_RASTER_URL = NEXTGEN_API_BASE+"clip_raster";
 
 class Configuration {
     get_geoserver_url() {
