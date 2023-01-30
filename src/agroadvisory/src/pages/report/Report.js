@@ -61,8 +61,6 @@ function Report() {
                     console.log(response)
                     if (response.data?.climate[0]?.data)
                         setSeasonal(response.data?.climate[0])
-                    else
-                        setSeasonal(donutChartData.climate[0])
                 });
 
         }
@@ -110,7 +108,7 @@ function Report() {
 
     const Location = ({id}) => {
         return (
-            <div className="card col-12 col-lg-5 my-1" style={ {  minWidth: (!reportInput.ad_aclimate && id === "location_report") ? "100%" : "49%"  , maxHeight: "445.33px" } }>
+            <div className="card col-12 col-lg-5 my-1" style={ {  minWidth: ((!reportInput.ad_aclimate || !seasonal) && id === "location_report") ? "100%" : "49%"  , maxHeight: "445.33px" } }>
                 <div className="card-body">
                     <h5 className="card-title">{id === "recommendation_report" ? "Optimal yield" : "Location"}</h5>
                     {geoJson && (
