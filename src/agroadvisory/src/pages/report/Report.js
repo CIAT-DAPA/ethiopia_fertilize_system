@@ -281,16 +281,15 @@ function Report() {
                             {`Risk: ${risk}`}
                         </div>}
 
-                        <div className="alert alert-light my-3 border" role="alert">
+                        { reportInput.ad_fertilizer && <div className="alert alert-light my-3 border" role="alert">
                             <h5>Notes: </h5>
                             <ol>
                                 <li>This advisory is for agricultural land allotted to wheat in 2022 main crop season only.</li>
                                 <li>If there is no sufficient inorganic fertilizer supply, use half inorganic with half organic rates.</li>
                             </ol>
-                        </div>
+                        </div>}
                     </div>
                     
-
                     : <Spinners/>
                                 
                 }
