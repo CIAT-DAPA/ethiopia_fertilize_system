@@ -5,28 +5,27 @@ function WheatRust() {
     return (
         <main>
             <br />
-            <section className='row'>
-                <div className='col-lg-12'>
-                    <h2 className='text-center font-link'>Wheat Rust advisories</h2>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    {/* <p class="font-link-body">
-                        The climate-smart agriculture (CSA) component of the tool provides an integrated approach to managing
-                        landscapes—cropland, livestock, forests, and farms —to addresses the interlinked challenges of
-                        food security and climate change and enhance productivity and resilience. Practices, technologies,
-                        approaches under this category can be included in most of the above ‘packages’ and includes use of
-                        improved varieties (drought, disease and heat tolerant), conservation agriculture, crop rotation, intercropping,
-                        feed and feeding improvement etc.
-                    </p> */}
+            <section className="row">
+                <div className="col-lg-12">
+                    <h2 className="text-center font-link">Wheat Rust advisories</h2>
+                    <p className="font-link-body text-justify">
+                        Wheat rusts are the major disease constraints for Ethiopian wheat
+                        farmers. Early detection and timely actionable advice are critical
+                        to safeguard crops. In this NextGen platform, advisories being
+                        generated from the already developed wheat rust early warning system
+                        by the University of Cambridge, the UK Met Office, the Ethiopian
+                        Institute of Agricultural Research (EIAR), the Ethiopian
+                        Agricultural Transformation Agency (ATA) and the International Maize
+                        and Wheat Improvement Center (CIMMYT) are integrated to provide
+                        bundle advisory to farmers.
+                    </p>
+                    <br />
+                    <br />
+                    <br />
                 </div>
             </section>
         </main>
-    );
+  );
 }
 
 export default WheatRust;

@@ -9,7 +9,7 @@ function Methodology() {
         <div className="col-lg-12">
           <h2 className="text-center font-link">Methodology</h2>
           <h4 className="font-link">Overview</h4>
-          <p class="font-link-body text-justify">
+          <p className="font-link-body text-justify">
             NextGen Agroadvisory is a tool developed to provide location,
             context, and climate specific agricultural advisories particularly
             related to optimal fertilizer application, integrated soil fertility
@@ -21,14 +21,14 @@ function Methodology() {
             based on different methodologies:
           </p>
           <h4 className="font-link ps-3"> 1. Fertilizer</h4>
-          <p class="font-link-body text-justify">
+          <p className="font-link-body text-justify">
             The fertilizer data stored in the system consists of both elemental
             and compound fertilizer nutrients. It includes n, p, urea, nps,
             compost and vermi-compost. The output is produced based on machine
             learning algorithm.
           </p>
           <h4 className="font-link">Data and Data Sources</h4>
-          <p class="font-link-body text-justify">
+          <p className="font-link-body text-justify">
             In order to get fertilizer recommendation two categories of data
             were used. An observation data which consists of the fertilizer and
             treatment historical information collected, cleaned and harmonized
@@ -36,7 +36,7 @@ function Methodology() {
             publicly were used. These includes:
           </p>
           <ol type="a">
-            <li class="font-link-body text-justify">
+            <li className="font-link-body text-justify">
               Soil data – these are raster covariates collected from soilgrids (
               <a href="https://soilgrids.org/" target="_blank">
                 soilgrids.org
@@ -44,7 +44,7 @@ function Methodology() {
               ) which contains eleven soil property maps with three different
               depths (0-5cm, 5-15cm and 15-30cm)
             </li>
-            <li class="font-link-body text-justify">
+            <li className="font-link-body text-justify">
               Climate data – acquired from TerraClim (
               <a
                 href="https://www.climatologylab.org/terraclimate.html"
@@ -55,7 +55,7 @@ function Methodology() {
               ) and consists of four different parameters (precipitation, solar
               radiation, min temperature and max temperature)
             </li>
-            <li class="font-link-body text-justify">
+            <li className="font-link-body text-justify">
               Topographic data – these category includes elevation, slope,
               topographic positioning index (tpi) and topographic ruggedness
               index (tri) collected from amazon web tile services.
@@ -64,7 +64,7 @@ function Methodology() {
 
           <h4 className="font-link">Methodology</h4>
 
-          <p class="font-link-body text-justify">
+          <p className="font-link-body text-justify">
             After acquiring the data, first weighted average for the three soil
             depths was and a single raster file calculated for each soil
             nutrient was generated. Then slope, tpi and tri was calculated from
@@ -73,7 +73,7 @@ function Methodology() {
             were extracted by the observation data.
           </p>
 
-          <p class="font-link-body text-justify">
+          <p className="font-link-body text-justify">
             For model calibration, the covariates data extracted was cleaned and
             missing values were removed. Then 80 percent and 20 percent of the
             data was selected for model training and validation respectively. A
@@ -94,7 +94,7 @@ function Methodology() {
               github
             </a>
           </p>
-          <div class="d-flex justify-content-center my-4">
+          <div className="d-flex justify-content-center my-4">
             <figure>
               <img alt="methodology" src={methodology} role="img" />
               <figcaption>
