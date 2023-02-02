@@ -18,20 +18,21 @@ class Forecasts(Resource):
             name: crop
             type: string
             required: false
-        200:
-          description: Forecast
-          schema:
-            id: Forecast
-            properties:
-              id:
-                type: string
-                description: Id Forecast
-              date:
-                type: datetime
-                description: Date of forecast
-              crop:
-                type: string
-                description: Id crop
+        responses:
+          200:
+            description: Forecast
+            schema:
+              id: Forecast
+              properties:
+                id:
+                  type: string
+                  description: Id Forecast
+                date:
+                  type: datetime
+                  description: Date of forecast
+                crop:
+                  type: string
+                  description: Id crop
         """
         q_set = None
         if crop is None:

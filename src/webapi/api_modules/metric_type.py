@@ -18,17 +18,18 @@ class MetricType(Resource):
             name: type
             type: string
             required: false
-        200:
-          description: Metric type
-          schema:
-            id: Metric type
-            properties:
-              id:
-                type: string
-                description: Id metric type
-              name:
-                type: string
-                description: name of the metric
+        responses:
+          200:
+            description: Metric type
+            schema:
+              id: Metric type
+              properties:
+                id:
+                  type: string
+                  description: Id metric type
+                name:
+                  type: string
+                  description: name of the metric
               
         """
         q_set = None

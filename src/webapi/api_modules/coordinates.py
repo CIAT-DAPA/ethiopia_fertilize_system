@@ -4,8 +4,8 @@ from URLSearchParams import URLSearchParams
 import requests
 import json
 import ast
-GEOSERVER_URL="https://geo.aclimate.org/geoserver/fertilizer_et/";
-SERVICEE="wms";
+GEOSERVER_URL="https://geo.aclimate.org/geoserver/fertilizer_et/"
+SERVICEE="wms"
 #Example of layer:fertilizer_et:et_wheat_compost_probabilistic_bellow
 #example of array of coordinates
 lista=[]

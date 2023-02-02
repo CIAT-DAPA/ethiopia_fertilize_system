@@ -17,23 +17,24 @@ class AdministrativeLevel3(Resource):
             name: adm2
             type: string
             required: false
-        200:
-          description: Administrative levels 3
-          schema:
-            id: Adm3
-            properties:
-              id:
-                type: string
-                description: Id Administrative level 3
-              name:
-                type: string
-                description: Administrative level 3 name
-              ext_id:
-                type: string
-                description: Extern Id to identify Administrative level 3
-              adm2:
-                type: string
-                description: Id Administrative level 2
+        responses:    
+          200:
+            description: Administrative levels 3
+            schema:
+              id: Adm3
+              properties:
+                id:
+                  type: string
+                  description: Id Administrative level 3
+                name:
+                  type: string
+                  description: Administrative level 3 name
+                ext_id:
+                  type: string
+                  description: Extern Id to identify Administrative level 3
+                adm2:
+                  type: string
+                  description: Id Administrative level 2
         """
         q_set = None
         if adm2 is None:

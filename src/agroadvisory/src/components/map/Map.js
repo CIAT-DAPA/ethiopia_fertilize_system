@@ -32,6 +32,7 @@ function Map(props) {
     const [mapRef, setRefMap] = React.useState();
     //For changing the layer according to scenerario selected (Sidebar)
     const [lastSelected, setLastSelected] = React.useState();
+    const [scenarios, setScenarios] = React.useState(["normal", "above", "below"]);
 
     const { BaseLayer } = LayersControl;
     const icon = L.icon({iconSize: [25, 41],iconAnchor: [10, 41],popupAnchor: [2, -40],iconUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-icon.png",shadowUrl: "https://unpkg.com/leaflet@1.7/dist/images/marker-shadow.png"});
@@ -267,7 +268,7 @@ function Map(props) {
                                 props.kebele ?
                                     <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
                                         <WMSTileLayer
-                                            layers={"administrative:et_adm3"}
+                                            layers={"administrative:et_adm4"}
                                             attribution=''
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
@@ -278,7 +279,7 @@ function Map(props) {
                                 : props.woreda ?
                                     <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
                                         <WMSTileLayer
-                                            layers={"administrative:et_adm3"}
+                                            layers={"administrative:et_adm4"}
                                             attribution=''
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
@@ -294,25 +295,25 @@ function Map(props) {
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
                                             transparent={true}
-                                            cql_filter= {`id_adm2=${props.param}`}
+                                            cql_filter= {`ADM2_PCODE='ET${props.param.length == 4 ? props.param : "0" + props.param}'`}
                                         />
                                     </BaseLayer>
                                 : props.region ?
                                     <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
                                         <WMSTileLayer
-                                            layers={"administrative:et_adm3"}
+                                            layers={"administrative:et_adm2"}
                                             attribution=''
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
                                             transparent={true}
-                                            cql_filter= {`id_adm1=${props.param}`}
+                                            cql_filter= {`ADM1_PCODE='ET${props.param.length == 2 ? props.param : "0" + props.param}'`}
                                         />
                                     </BaseLayer>
                                 
                                 :
                                     <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
                                         <WMSTileLayer
-                                            layers={"administrative:et_adm3"}
+                                            layers={"administrative:et_adm1"}
                                             attribution=''
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
@@ -342,27 +343,27 @@ function Map(props) {
                             
                             : props.type === "recommendation_report" ?
 
-                                <BaseLayer key={"yield_optimal"} name={"optimal yield"} >
-                                    <WMSTileLayer
-                                        key={"fertilizer_et:et_wheat_yieldtypes_optimal_normal"}
-                                        layers={"fertilizer_et:et_wheat_yieldtypes_optimal_normal"}
-                                        attribution=''
-                                        url={getUrlService('fertilizer_et', 'wms')}
-                                        format={"image/png"}
-                                        transparent={true}
-                                        params={{'time': "2022-7" }}
-                                        eventHandlers={{
-                                            add: (e) => {
-                                            onLayerChange("fertilizer_et:et_wheat_yieldtypes_optimal_normal");
-                                            setLastSelected("optimal");
-                                            console.log(e.target.options)
-                                            
-                                            }
-                                        }}
-                                        
-                                    />
-                                    
-                                </BaseLayer>
+                                scenarios.map(scenario => {
+                                    return <BaseLayer key={scenario} name={scenario} checked={scenario === 'normal'} >
+                                        <WMSTileLayer
+                                            key={`fertilizer_et:et_wheat_yieldtypes_optimal_${scenario}`}
+                                            layers={`fertilizer_et:et_wheat_yieldtypes_optimal_${scenario}`}
+                                            attribution=''
+                                            url={getUrlService('fertilizer_et', 'wms')}
+                                            format={"image/png"}
+                                            transparent={true}
+                                            params={{ 'time': "2022-7" }}
+                                            eventHandlers={{
+                                                add: (e) => {
+                                                    onLayerChange(e.target.options.layers);
+                                                    setLastSelected("optimal");
+                                                }
+                                            }}
+
+                                        />
+
+                                    </BaseLayer>
+                                })                                
                             :
                                 <></>
                                 

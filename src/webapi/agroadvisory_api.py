@@ -22,6 +22,7 @@ from api_modules.metrics import Metrics
 from api_modules.metric_type import MetricType
 from api_modules.risks import Risks
 from api_modules.coordinates import Coordinates
+from api_modules.layers_fertilizer import Layers
 #from api_modules.layers import Layers
 
 
@@ -51,6 +52,7 @@ api.add_resource(Forecasts, '/forecast/<crop>')
 api.add_resource(Metrics, '/metrics/<adm4>')
 api.add_resource(Risks, '/risk/<adm4>')
 api.add_resource(Coordinates, '/coordinates/<layer>/<coor>')
+api.add_resource(Layers, '/layers_fertilizer')
 
 #api.add_resource(Layers, '/layers')
 #api.add_resource(MetricType, '/metric_types')

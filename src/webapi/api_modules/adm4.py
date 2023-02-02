@@ -17,26 +17,27 @@ class AdministrativeLevel4(Resource):
             name: adm3
             type: string
             required: false
-        200:
-          description: Administrative levels 4
-          schema:
-            id: Adm3
-            properties:
-              id:
-                type: string
-                description: Id Administrative level 4
-              name:
-                type: string
-                description: Administrative level 4 name
-              ext_id:
-                type: string
-                description: Extern Id to identify Administrative level 4
-              aclimate_id:
-                type: string
-                description: Id to identify Administrative level 4 in Aclimate Platform
-              adm3:
-                type: string
-                description: Id Administrative level 3
+        responses:
+          200:
+            description: Administrative levels 4
+            schema:
+              id: Adm4
+              properties:
+                id:
+                  type: string
+                  description: Id Administrative level 4
+                name:
+                  type: string
+                  description: Administrative level 4 name
+                ext_id:
+                  type: string
+                  description: Extern Id to identify Administrative level 4
+                aclimate_id:
+                  type: string
+                  description: Id to identify Administrative level 4 in Aclimate Platform
+                adm3:
+                  type: string
+                  description: Id Administrative level 3
         """
         q_set = None
         if adm3 is None:

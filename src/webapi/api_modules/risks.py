@@ -17,26 +17,28 @@ class Risks(Resource):
             name: adm4
             type: string
             required: false
-        200:
-          description: Risk
-          schema:
-            id: Risk
-            properties:
-              id:
-                type: string
-                description: Id Risk
-              adm4:
-                type: string
-                description: ID Administrative level 4
-              forecast:
-                type: string
-                description: Forecast ID
-              type:
-                type: string
-                description: Type of metric
-              values:
-                type: array
-                description: Value of risk
+        responses:
+          200:
+            description: Risk
+            schema:
+              id: Risk
+              properties:
+                id:
+                  type: string
+                  description: Id Risk
+                adm4:
+                  type: string
+                  description: ID Administrative level 4
+                forecast:
+                  type: string
+                  description: Forecast ID
+                type:
+                  type: string
+                  description: Type of metric
+                values:
+                  type: array
+                  items: {}
+                  description: Value of risk
         """
         q_set = None
         if adm4 is None:
