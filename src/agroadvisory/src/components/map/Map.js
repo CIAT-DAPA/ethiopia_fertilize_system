@@ -357,8 +357,6 @@ function Map(props) {
                                                 add: (e) => {
                                                     onLayerChange(e.target.options.layers);
                                                     setLastSelected("optimal");
-                                                    console.log(e.target.options)
-
                                                 }
                                             }}
 

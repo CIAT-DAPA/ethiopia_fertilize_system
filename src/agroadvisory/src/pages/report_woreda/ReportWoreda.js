@@ -303,6 +303,17 @@ function ReportWoreda() {
                                     }
                                     {reportInput.ad_fertilizer &&
                                         <>
+                                            <div className="alert alert-light my-3 border" role="alert">
+                                                <p className="font-link-body text-justify">
+                                                    Integrated Soil Fertility Management (ISFM) in this study address the integrated use of inorganic fertilizers with organic fertilizer such as verm-icompost, compost, manure, and bio-slurry with a set of locally adapted soil fertility technologies and improved agronomic practices promoted to enhance soil fertility, crop productivity and incomes of smallholder farmers. For this purpose, we developed site-specific recommendations integrated use of organic fertilizer with inorganic fertilizer for profitable wheat production in Ethiopia.
+                                                </p>
+                                                <p className="font-link-body text-justify">
+                                                    Urea is the most concentrated solid nitrogen fertilizer which contain 46% nitrogen and no other plant nutrients. It is the most common fertilizer used as a source of nitrogen in Ethiopia. When it is worked into the soil, it is as effective as any other nitrogen fertilizer and is most efficiently utilized on soils with adequate moisture content, so that the gaseous ammonia can go quickly into solution. In the soil, urea changes to ammonium carbonate which may temporarily cause a harmful local high pH and its use need smart management practices such as split application to allow efficient uptake by plant.
+                                                </p>
+                                                <p className="font-link-body text-justify">
+                                                    NPS blend fertilizer is a mix of single fertilizers which are mixed during the production process into an instant fertilizer recipe, packaged in a big bag. The composition of the mix is homogeneous throughout the entire big bag. This prevents the nutrients from coagulating and turning into hard layers, enabling easy application of the product into the crop field. Different types of blended fertilizers are available in Ethiopia. The NPS blend fertilizer used for crop production in Ethiopia contain nitrogen (19%), phosphorus (38%) and sulphur (7%).
+                                                </p>
+                                            </div>
                                             <BarChartFert
                                                 name={"Fertilizer rate"}
                                                 data={[barChartData[1], barChartData[3]]} 
