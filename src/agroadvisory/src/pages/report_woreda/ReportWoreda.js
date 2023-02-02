@@ -218,7 +218,7 @@ function ReportWoreda() {
         );
     };
 
-    const BarChartFert = ({ name, data }) => {
+    const BarChartFert = ({ name, data, tooltip }) => {
         return (
             <div
                 className="card col-12 col-md-5 my-1"
@@ -227,6 +227,7 @@ function ReportWoreda() {
             >
                 <div className="card-body">
                     <h5 className="card-title">{name}</h5>
+                    {tooltip}
                     <ColumnChart data={data} type={"fertilizer_rate"} />
                 </div>
             </div>
@@ -304,11 +305,15 @@ function ReportWoreda() {
                                         <>
                                             <BarChartFert
                                                 name={"Fertilizer rate"}
-                                                data={[barChartData[1], barChartData[3]]}
+                                                data={[barChartData[1], barChartData[3]]} 
+                                                tooltip={<p>Urea: compound fertilizer and source of nitrogen <br/>
+                                                NPS: blended fertilizer and source of nitrogen, phosphorus, and sulphur</p>
+                                                }
                                             />
                                             <BarChartFert
                                                 name={"Fertilizer rate (ISFM)"}
                                                 data={[barChartData[0], barChartData[4]]}
+                                                tooltip={<p>ISFM: integrated soil fertility management<br/><br/></p>}
                                             />
                                         </>
                                     }
