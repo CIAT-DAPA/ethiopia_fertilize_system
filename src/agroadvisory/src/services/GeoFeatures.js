@@ -30,7 +30,7 @@ class GeoFeatures {
     }
 
     geojson(ids){
-        const url = "https://geo.aclimate.org/geoserver/administrative/"+ "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=administrative:et_adm3&maxFeatures=50&outputFormat=application/json&CQL_FILTER=name_adm4 in (" + ids + ")&SRSNAME=EPSG:4326";
+        const url = "https://geo.aclimate.org/geoserver/administrative/"+ "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=administrative:et_adm4&maxFeatures=50&outputFormat=application/json&CQL_FILTER=name_adm4 in (" + ids + ")&SRSNAME=EPSG:4326";
         
         return axios.get(url, {})
             .then(response => {
@@ -41,7 +41,7 @@ class GeoFeatures {
     geojsonRegion(ids){
 
         //const url = "https://geo.aclimate.org/geoserver/administrative/"+ "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=administrative:et_adm3&maxFeatures=50&outputFormat=application/json&CQL_FILTER=name_adm1 in (" + ids + ")&SRSNAME=EPSG:4326";
-        const url = "https://geo.aclimate.org/geoserver/administrative/"+ "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=administrative:et_adm3&maxFeatures=3000&outputFormat=application/json&CQL_FILTER=id_adm1 in (" + ids + ")&SRSNAME=EPSG:4326";
+        const url = `https://geo.aclimate.org/geoserver/administrative/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=administrative:et_adm1&maxFeatures=200&outputFormat=application/json&CQL_FILTER=ADM1_PCODE='ET${ids.length === 2 ? ids : "0" + ids}'&SRSNAME=EPSG:4326`;
         
         return axios.get(url, {})
             .then(response => {
@@ -51,7 +51,7 @@ class GeoFeatures {
 
     geojsonZone(ids){
         //const url = "https://geo.aclimate.org/geoserver/administrative/"+ "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=administrative:et_adm3&maxFeatures=50&outputFormat=application/json&CQL_FILTER=name_adm2 in (" + ids + ")&SRSNAME=EPSG:4326";
-        const url = "https://geo.aclimate.org/geoserver/administrative/"+ "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=administrative:et_adm3&maxFeatures=1000&outputFormat=application/json&CQL_FILTER=id_adm2 in (" + ids + ")&SRSNAME=EPSG:4326";
+        const url = `https://geo.aclimate.org/geoserver/administrative/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=administrative:et_adm2&maxFeatures=200&outputFormat=application/json&CQL_FILTER=ADM2_PCODE='ET${ids.length === 4 ? ids : "0" + ids}'&SRSNAME=EPSG:4326`;
         return axios.get(url, {})
             .then(response => {
                 return response.data;
@@ -60,7 +60,7 @@ class GeoFeatures {
 
     geojsonWoreda(ids){
         //const url = "https://geo.aclimate.org/geoserver/administrative/"+ "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=administrative:et_adm3&maxFeatures=50&outputFormat=application/json&CQL_FILTER=name_adm3 in (" + ids + ")&SRSNAME=EPSG:4326";
-        const url = "https://geo.aclimate.org/geoserver/administrative/"+ "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=administrative:et_adm3&maxFeatures=500&outputFormat=application/json&CQL_FILTER=id_adm3 in (" + ids + ")&SRSNAME=EPSG:4326";
+        const url = `https://geo.aclimate.org/geoserver/administrative/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=administrative:et_adm4&maxFeatures=200&outputFormat=application/json&CQL_FILTER=id_adm3 in (${ids})&SRSNAME=EPSG:4326`;
         return axios.get(url, {})
             .then(response => {
                 return response.data;
@@ -68,7 +68,7 @@ class GeoFeatures {
     }
 
     geojsonKebele(ids){
-        const url = "https://geo.aclimate.org/geoserver/administrative/"+ "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=administrative:et_adm3&maxFeatures=50&outputFormat=application/json&CQL_FILTER=id_adm4 in (" + ids + ")&SRSNAME=EPSG:4326";
+        const url = "https://geo.aclimate.org/geoserver/administrative/"+ "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=administrative:et_adm4&maxFeatures=50&outputFormat=application/json&CQL_FILTER=id_adm4 in (" + ids + ")&SRSNAME=EPSG:4326";
         return axios.get(url, {})
             .then(response => {
                 return response.data;

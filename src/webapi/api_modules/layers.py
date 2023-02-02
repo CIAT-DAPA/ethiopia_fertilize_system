@@ -13,14 +13,15 @@ class Layers(Resource):
         """
         Get all layers in the geoserver for nextgen
         ---
-        200:
-          description: Layers available in Geoserver
-          schema:
-            id: Layer
-            properties:
-              name:
-                type: string
-                description: Full name of layer
+        responses:
+          200:
+            description: Layers available in Geoserver
+            schema:
+              id: Layer
+              properties:
+                name:
+                  type: string
+                  description: Full name of layer
         """
         q_set = None
         response = requests.get('https://geo.aclimate.org/geoserver/rest/layers.json',auth = HTTPBasicAuth('geoserver', 'SCG0vw>l2cF7vG'))

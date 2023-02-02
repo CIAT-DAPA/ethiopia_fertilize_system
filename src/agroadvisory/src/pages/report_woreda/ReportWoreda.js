@@ -209,7 +209,7 @@ function ReportWoreda() {
                             init={map_init}
                             type={"location_report"}
                             geo={geoJson}
-                            style={{ height: "50vh" }}
+                            style={{ height: "90%", minHeight: "312.29px"}}
                             bounds={bounds}
                         />
                     )}
@@ -218,7 +218,7 @@ function ReportWoreda() {
         );
     };
 
-    const BarChartFert = ({ name, data }) => {
+    const BarChartFert = ({ name, data, tooltip }) => {
         return (
             <div
                 className="card col-12 col-md-5 my-1"
@@ -227,6 +227,7 @@ function ReportWoreda() {
             >
                 <div className="card-body">
                     <h5 className="card-title">{name}</h5>
+                    {tooltip}
                     <ColumnChart data={data} type={"fertilizer_rate"} />
                 </div>
             </div>
@@ -302,13 +303,28 @@ function ReportWoreda() {
                                     }
                                     {reportInput.ad_fertilizer &&
                                         <>
+                                            <div className="alert alert-light my-3 border" role="alert">
+                                                <p className="font-link-body text-justify">
+                                                    Integrated Soil Fertility Management (ISFM) in this study address the integrated use of inorganic fertilizers with organic fertilizer such as verm-icompost, compost, manure, and bio-slurry with a set of locally adapted soil fertility technologies and improved agronomic practices promoted to enhance soil fertility, crop productivity and incomes of smallholder farmers. For this purpose, we developed site-specific recommendations integrated use of organic fertilizer with inorganic fertilizer for profitable wheat production in Ethiopia.
+                                                </p>
+                                                <p className="font-link-body text-justify">
+                                                    Urea is the most concentrated solid nitrogen fertilizer which contain 46% nitrogen and no other plant nutrients. It is the most common fertilizer used as a source of nitrogen in Ethiopia. When it is worked into the soil, it is as effective as any other nitrogen fertilizer and is most efficiently utilized on soils with adequate moisture content, so that the gaseous ammonia can go quickly into solution. In the soil, urea changes to ammonium carbonate which may temporarily cause a harmful local high pH and its use need smart management practices such as split application to allow efficient uptake by plant.
+                                                </p>
+                                                <p className="font-link-body text-justify">
+                                                    NPS blend fertilizer is a mix of single fertilizers which are mixed during the production process into an instant fertilizer recipe, packaged in a big bag. The composition of the mix is homogeneous throughout the entire big bag. This prevents the nutrients from coagulating and turning into hard layers, enabling easy application of the product into the crop field. Different types of blended fertilizers are available in Ethiopia. The NPS blend fertilizer used for crop production in Ethiopia contain nitrogen (19%), phosphorus (38%) and sulphur (7%).
+                                                </p>
+                                            </div>
                                             <BarChartFert
                                                 name={"Fertilizer rate"}
-                                                data={[barChartData[1], barChartData[3]]}
+                                                data={[barChartData[1], barChartData[3]]} 
+                                                tooltip={<p>Urea: compound fertilizer and source of nitrogen <br/>
+                                                NPS: blended fertilizer and source of nitrogen, phosphorus, and sulphur</p>
+                                                }
                                             />
                                             <BarChartFert
                                                 name={"Fertilizer rate (ISFM)"}
                                                 data={[barChartData[0], barChartData[4]]}
+                                                tooltip={<p>ISFM: integrated soil fertility management<br/><br/></p>}
                                             />
                                         </>
                                     }
@@ -328,13 +344,13 @@ function ReportWoreda() {
                                     }
                                     
                                 </div>
-                                <div  className="alert alert-light my-3 border" role="alert">
+                                {reportInput.ad_fertilizer && <div  className="alert alert-light my-3 border" role="alert">
                                     <h5>Notes: </h5>
                                     <ol>
                                         <li>This advisory is for agricultural land allotted to wheat in 2022 main crop season only.</li>
                                         <li>If there is no sufficient inorganic fertilizer supply, use half inorganic with half organic rates.</li>
                                     </ol>
-                                </div>
+                                </div>}
                             </div>
                         ) : (
                             <div
