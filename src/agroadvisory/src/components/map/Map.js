@@ -273,6 +273,7 @@ function Map(props) {
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
                                             transparent={true}
+                                            styles='Angola_Admin_Styles'
                                             cql_filter= {`id_adm4=${props.param}`}
                                         />
                                     </BaseLayer>
@@ -284,6 +285,7 @@ function Map(props) {
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
                                             transparent={true}
+                                            styles='Angola_Admin_Styles'
                                             cql_filter= {`id_adm3=${props.param}`}
                                         />
                                     </BaseLayer>
@@ -295,6 +297,7 @@ function Map(props) {
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
                                             transparent={true}
+                                            styles='Angola_Admin_Styles'
                                             cql_filter= {`ADM2_PCODE='ET${props.param.length == 4 ? props.param : "0" + props.param}'`}
                                         />
                                     </BaseLayer>
@@ -306,6 +309,7 @@ function Map(props) {
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
                                             transparent={true}
+                                            styles='Angola_Admin_Styles'
                                             cql_filter= {`ADM1_PCODE='ET${props.param.length == 2 ? props.param : "0" + props.param}'`}
                                         />
                                     </BaseLayer>
@@ -318,6 +322,7 @@ function Map(props) {
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
                                             transparent={true}
+                                            styles='Angola_Admin_Styles'
                                         />
                                     </BaseLayer>
                             )
