@@ -368,7 +368,53 @@ function Map(props) {
                                         />
 
                                     </BaseLayer>
-                                })                                
+                                }) 
+                            : props.type === "nps_urea_report" ?
+                                fertilizer.map((item) => {
+                                    return scenarios.map(scenario => {
+                                        return <BaseLayer key={"nps_urea" + item} name={`${item} ${scenario}`} checked={(item === "nps" && scenario === "normal")}>
+
+                                            <WMSTileLayer
+                                                key={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
+                                                layers={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
+                                                attribution=''
+                                                url={getUrlService('fertilizer_et', 'wms')}
+                                                format={"image/png"}
+                                                transparent={true}
+                                                params={{ 'time': "2022-7" }}
+                                                eventHandlers={{
+                                                    add: (e) => {
+                                                        onLayerChange(e.target.options.layers);
+                                                        setLastSelected(item);
+                                                    }
+                                                }}
+                                            />
+                                        </BaseLayer>
+                                    })
+                                })
+                            : props.type === "compost_report" ?
+                                compost.map((item) => {
+                                    return scenarios.map(scenario => {
+                                        return <BaseLayer key={"nps_urea" + item} name={`${item} ${scenario}`} checked={(item === "compost" && scenario === "normal")}>
+
+                                            <WMSTileLayer
+                                                key={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
+                                                layers={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
+                                                attribution=''
+                                                url={getUrlService('fertilizer_et', 'wms')}
+                                                format={"image/png"}
+                                                transparent={true}
+                                                params={{ 'time': "2022-7" }}
+                                                eventHandlers={{
+                                                    add: (e) => {
+                                                        onLayerChange(e.target.options.layers);
+                                                        setLastSelected(item);
+                                                    }
+                                                }}
+                                            />
+                                        </BaseLayer>
+                                    })
+                                })                          
                             :
                                 <></>
                                 

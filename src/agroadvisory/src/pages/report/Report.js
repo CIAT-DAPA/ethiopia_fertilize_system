@@ -103,12 +103,32 @@ function Report() {
     )
 
     const Location = ({ id }) => {
+
+        let name = "";
+        
+        switch (id) {
+            case "recommendation_report":
+                    name= "Optimal yield map"
+                break;
+            case "nps_urea_report":
+                    name="Fertilizer rate map"
+                break;
+            case "compost_report":
+                    name="Fertilizer rate map (ISFM)"
+                break;
+            default:
+                name = "Location"
+                break;
+        }
+
         return (
             <div className="card col-12 col-lg-5 my-1" style={{ minWidth: ((!reportInput.ad_aclimate || !seasonal) && id === "location_report") ? "100%" : "49%", maxHeight: "445.33px" }}>
                 <div className="card-body">
-                    <h5 className="card-title">{id === "recommendation_report" ? "Optimal yield" : "Location"}</h5>
+                    <h5 className="card-title">{name}</h5>
                     {geoJson && (
                         <Map
+                            crop="wheat"
+                            scenario="normal"
                             id={id}
                             init={map_init}
                             type={id}
@@ -118,8 +138,8 @@ function Report() {
                                 minHeight: id === "location_report" ? "370px" : "312.29px"
                             }}
                             bounds={bounds}
-                            legend={id === "recommendation_report"}
-                            styleGeojson={id === "recommendation_report" && { fillOpacity: 0, color: "red" }}
+                            legend={id !== "location_report"}
+                            styleGeojson={id !== "location_report" && { fillOpacity: 0, color: "red" }}
                         />
                     )}
                 </div>
@@ -281,8 +301,12 @@ function Report() {
                                         tooltip={<p>Urea: compound fertilizer and source of nitrogen <br />
                                             NPS: blended fertilizer and source of nitrogen, phosphorus, and sulphur</p>
                                         } />
+                                    <Location id="nps_urea_report" />
+                                </div>
+                                <div className="row my-3 g-8 row-cols-auto justify-content-between">
                                     <BarChartFert name={"Fertilizer rate (ISFM)"} data={[barChartData[0], barChartData[4]]}
                                         tooltip={<p>ISFM: integrated soil fertility management<br /><br /></p>} />
+                                        <Location id="compost_report" />
                                 </div>
                             </>
                             
