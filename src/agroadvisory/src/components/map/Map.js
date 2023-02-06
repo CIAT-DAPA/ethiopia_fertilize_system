@@ -372,7 +372,7 @@ function Map(props) {
                             : props.type === "nps_urea_report" ?
                                 fertilizer.map((item) => {
                                     return scenarios.map(scenario => {
-                                        return <BaseLayer key={"nps_urea" + item} name={`${item} ${scenario}`} checked={(item === "nps" && scenario === "normal")}>
+                                        return <BaseLayer key={`${item}_${scenario}`} name={`${item} ${scenario}`} checked={(item === "nps" && scenario === "normal")}>
 
                                             <WMSTileLayer
                                                 key={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
@@ -395,7 +395,7 @@ function Map(props) {
                             : props.type === "compost_report" ?
                                 compost.map((item) => {
                                     return scenarios.map(scenario => {
-                                        return <BaseLayer key={"nps_urea" + item} name={`${item} ${scenario}`} checked={(item === "compost" && scenario === "normal")}>
+                                        return <BaseLayer key={`${item}_${scenario}`}  name={`${item} ${scenario}`} checked={(item === "compost" && scenario === "normal")}>
 
                                             <WMSTileLayer
                                                 key={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}

@@ -38,7 +38,7 @@ function Report() {
     React.useEffect(() => {
 
         if (reportInput.kebele) {
-            GeoFeatures.geojson("'" + reportInput.kebele[1] + "'").then((data_geo) => {
+            GeoFeatures.geojsonKebele(reportInput.kebele[2]).then((data_geo) => {
                 const extent = bbox(data_geo);
                 setBounds([[extent[1], extent[0]], [extent[3], extent[2]]])
                 setGeoJson(data_geo)
