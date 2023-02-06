@@ -212,7 +212,7 @@ function ReportWoreda() {
         }
 
         return (
-            <div className="card col-12 col-lg-5 my-1" style={{ minWidth: (!reportInput.ad_optimal  && id === "location_report") ? "100%" : "49%", maxHeight: "445.33px" }}>
+            <div className="card col-12 col-lg-5 my-1" style={{ minWidth: id === "location_report" ? "100%" : "49%", maxHeight: "445.33px" }}>
                 <div className="card-body">
                     <h5 className="card-title">{name}</h5>
                     {geoJson && (
@@ -315,10 +315,13 @@ function ReportWoreda() {
                                 <div className="row my-3 g-8 row-cols-auto justify-content-between">
                                     <Location id="location_report"/>
                                     { reportInput.ad_optimal && 
+                                        <>
                                         <BarChartYield
                                             name={"Optimal yield"}
                                             data={[barChartData[2]]}
                                         />
+                                        <Location id="recommendation_report" />
+                                        </>
                                     }
                                     {reportInput.ad_fertilizer &&
                                         <>
