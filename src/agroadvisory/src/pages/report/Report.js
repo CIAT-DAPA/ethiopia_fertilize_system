@@ -38,7 +38,7 @@ function Report() {
     React.useEffect(() => {
 
         if (reportInput.kebele) {
-            GeoFeatures.geojson("'" + reportInput.kebele[1] + "'").then((data_geo) => {
+            GeoFeatures.geojsonKebele(reportInput.kebele[2]).then((data_geo) => {
                 const extent = bbox(data_geo);
                 setBounds([[extent[1], extent[0]], [extent[3], extent[2]]])
                 setGeoJson(data_geo)
@@ -55,13 +55,15 @@ function Report() {
                 .then(response => {
                     setRisk(response?.data[0]?.risk?.values[0])
                 });
-
-            axios.get(Configuration.get_url_aclimate_api_base() + "Forecast/Climate/" + reportInput.kebele[0] + "/false/json")
+            
+            if (reportInput.kebele[3]){
+                axios.get(Configuration.get_url_aclimate_api_base() + "Forecast/Climate/" + reportInput.kebele[3] + "/false/json")
                 .then(response => {
                     console.log(response)
                     if (response.data?.climate[0]?.data)
                         setSeasonal(response.data?.climate[0])
                 });
+            }        
 
         }
 

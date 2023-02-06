@@ -283,7 +283,7 @@ function Home() {
                                     <option key={"kebele default"} value={null}>Select a kebele</option>
 
                                     {
-                                        selectsValues?.kebeles && selectsValues?.kebeles.map((currentKebele) => <option key={currentKebele.id} value={[currentKebele.id, currentKebele.name, currentKebele.ext_id]}>{currentKebele.name}</option>)
+                                        selectsValues?.kebeles && selectsValues?.kebeles.map((currentKebele) => <option key={currentKebele.id} value={[currentKebele.id, currentKebele.name, currentKebele.ext_id, currentKebele.aclimate_id]}>{currentKebele.name}</option>)
                                     }
                                 </select>
                                     <span className='input-group-text'>
