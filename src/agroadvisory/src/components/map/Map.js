@@ -186,7 +186,7 @@ function Map(props) {
 
             }
         
-            <MapContainer zoomSnap={0.25} zoomDelta={0.25} center={props.init.center} zoom={props.init.zoom} zoomControl={false} style={props.style} scrollWheelZoom={true} whenReady={handleEventsMap}>
+            <MapContainer zoomSnap={0.25} zoomDelta={0.25} center={props.init.center} zoom={props.init.zoom} zoomControl={false} style={props.style} scrollWheelZoom={true} whenReady={handleEventsMap} renderer={L.canvas()}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}"
@@ -273,6 +273,7 @@ function Map(props) {
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
                                             transparent={true}
+                                            styles='Etiopia_Admin_Styles'
                                             cql_filter= {`id_adm4=${props.param}`}
                                         />
                                     </BaseLayer>
@@ -284,6 +285,7 @@ function Map(props) {
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
                                             transparent={true}
+                                            styles='Etiopia_Admin_Styles'
                                             cql_filter= {`id_adm3=${props.param}`}
                                         />
                                     </BaseLayer>
@@ -295,6 +297,7 @@ function Map(props) {
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
                                             transparent={true}
+                                            styles='Etiopia_Admin_Styles'
                                             cql_filter= {`ADM2_PCODE='ET${props.param.length == 4 ? props.param : "0" + props.param}'`}
                                         />
                                     </BaseLayer>
@@ -306,6 +309,7 @@ function Map(props) {
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
                                             transparent={true}
+                                            styles='Etiopia_Admin_Styles'
                                             cql_filter= {`ADM1_PCODE='ET${props.param.length == 2 ? props.param : "0" + props.param}'`}
                                         />
                                     </BaseLayer>
@@ -318,6 +322,7 @@ function Map(props) {
                                             url={getUrlService('administrative', 'wms')}
                                             format={"image/png"}
                                             transparent={true}
+                                            styles='Etiopia_Admin_Styles'
                                         />
                                     </BaseLayer>
                             )
@@ -363,7 +368,53 @@ function Map(props) {
                                         />
 
                                     </BaseLayer>
-                                })                                
+                                }) 
+                            : props.type === "nps_urea_report" ?
+                                fertilizer.map((item) => {
+                                    return scenarios.map(scenario => {
+                                        return <BaseLayer key={"nps_urea" + item} name={`${item} ${scenario}`} checked={(item === "nps" && scenario === "normal")}>
+
+                                            <WMSTileLayer
+                                                key={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
+                                                layers={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
+                                                attribution=''
+                                                url={getUrlService('fertilizer_et', 'wms')}
+                                                format={"image/png"}
+                                                transparent={true}
+                                                params={{ 'time': "2022-7" }}
+                                                eventHandlers={{
+                                                    add: (e) => {
+                                                        onLayerChange(e.target.options.layers);
+                                                        setLastSelected(item);
+                                                    }
+                                                }}
+                                            />
+                                        </BaseLayer>
+                                    })
+                                })
+                            : props.type === "compost_report" ?
+                                compost.map((item) => {
+                                    return scenarios.map(scenario => {
+                                        return <BaseLayer key={"nps_urea" + item} name={`${item} ${scenario}`} checked={(item === "compost" && scenario === "normal")}>
+
+                                            <WMSTileLayer
+                                                key={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
+                                                layers={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
+                                                attribution=''
+                                                url={getUrlService('fertilizer_et', 'wms')}
+                                                format={"image/png"}
+                                                transparent={true}
+                                                params={{ 'time': "2022-7" }}
+                                                eventHandlers={{
+                                                    add: (e) => {
+                                                        onLayerChange(e.target.options.layers);
+                                                        setLastSelected(item);
+                                                    }
+                                                }}
+                                            />
+                                        </BaseLayer>
+                                    })
+                                })                          
                             :
                                 <></>
                                 
