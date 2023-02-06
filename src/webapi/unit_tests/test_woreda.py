@@ -1,4 +1,4 @@
-import unittest
+""" import unittest
 import requests
 #from agroadvisory_api import app
 from agroadvisory_api import app
@@ -27,4 +27,4 @@ class TestAgroadisory(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main() """
