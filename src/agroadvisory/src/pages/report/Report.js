@@ -88,7 +88,7 @@ function Report() {
         })
         const img = canvas.toDataURL("image/png");
         report.addImage(img, 'JPEG', 20, 20, html.offsetWidth, html.offsetHeight);
-        report.save('Report.pdf');
+        report.save(`Report_Kebele_${reportInput.kebele[1]}.pdf`);
     };
 
     const ForecastSelect = () => (

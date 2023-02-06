@@ -176,26 +176,20 @@ function ReportWoreda() {
 
     // Generate the pdf based on a component
     const createPDF = async () => {
-        let orientacion;
-        if (window.screen.width < 1200) {
-            orientacion = "p";
-        } else {
-            orientacion = "l";
-        }
-
-        let html = document.querySelector("#report");
-        let report = new JsPDF(orientacion, "px", [
-            html.offsetWidth + 40,
-            html.offsetHeight + 40,
-        ]);
+        let html = document.querySelector('#report')
+        console.log(html.offsetWidth, html.offsetHeight)
+        let report = new JsPDF('p', 'px', [ html.offsetHeight + 50, html.offsetWidth + 50]);
         const canvas = await html2canvas(html, {
             useCORS: true,
-            scale: 1,
             allowTaint: true,
-        });
+            onrendered: function (canvas) {
+                document.body.appendChild(canvas);
+    
+            }
+        })
         const img = canvas.toDataURL("image/png");
-        report.addImage(img, "JPEG", 10, 10, html.offsetWidth, html.offsetHeight);
-        report.save("report.pdf");
+        report.addImage(img, 'JPEG', 20, 20, html.offsetWidth, html.offsetHeight);
+        report.save(`Report_Woreda_${reportInput.woreda[1]}.pdf`);
     };
 
     const Location = () => {
@@ -277,7 +271,7 @@ function ReportWoreda() {
                     <section className="container">
                         <div className="d-flex font-link">
                             <h3>
-                                Woreda report: <b>{reportInput.woreda[1]}</b>{" "}
+                                Woreda report: <b>{reportInput.woreda[1]}</b>
                             </h3>
                         </div>
                         <div>
