@@ -55,13 +55,15 @@ function Report() {
                 .then(response => {
                     setRisk(response?.data[0]?.risk?.values[0])
                 });
-
-            axios.get(Configuration.get_url_aclimate_api_base() + "Forecast/Climate/" + reportInput.kebele[0] + "/false/json")
+            
+            if (reportInput.kebele[3]){
+                axios.get(Configuration.get_url_aclimate_api_base() + "Forecast/Climate/" + reportInput.kebele[3] + "/false/json")
                 .then(response => {
                     console.log(response)
                     if (response.data?.climate[0]?.data)
                         setSeasonal(response.data?.climate[0])
                 });
+            }        
 
         }
 
