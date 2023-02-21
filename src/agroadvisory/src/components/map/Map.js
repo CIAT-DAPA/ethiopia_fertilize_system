@@ -81,7 +81,7 @@ function Map(props) {
             (currentLayerName.includes(geoserverLayers[5])) ? "vermi-compost: " : 
             (currentLayerName.includes(geoserverLayers[6])) ? "compost: " : "" 
         
-        unitPopupMessage = popUpMessage===""?"":" kg/ha";
+        unitPopupMessage = popUpMessage===""?"": (currentLayerName.includes(geoserverLayers[5]) || currentLayerName.includes(geoserverLayers[6])) ? " ton/ha" : " kg/ha";
 
     }
     

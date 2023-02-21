@@ -83,7 +83,8 @@ function MapLegend(props) {
             <div className="leaflet-control leaflet-bar">
                 <div className='info legend'>
                     {
-                        (props?.currentLayer && props?.currentLayer.includes(props.geoserverLayers[7])) ? <h6>scenaries</h6> : <h6>amounts (kg/ha)</h6>
+                        (props?.currentLayer && props?.currentLayer.includes(props.geoserverLayers[7])) ? <h6>scenaries</h6> : 
+                        <h6>amounts {props?.currentLayer?.includes(props?.geoserverLayers[5]) || props?.currentLayer?.includes(props?.geoserverLayers[6]) ? "(ton/ha)": "(kg/ha)"}</h6>
                     }
                     <Legend/>
                     
