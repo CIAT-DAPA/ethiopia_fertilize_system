@@ -8,7 +8,6 @@ GEOSERVER_URL="https://geo.aclimate.org/geoserver/fertilizer_et/"
 SERVICEE="wms"
 #Example of layer:fertilizer_et:et_wheat_compost_probabilistic_bellow
 #example of array of coordinates
-lista=[]
 class Coordinates(Resource):
 
 
@@ -56,11 +55,10 @@ class Coordinates(Resource):
         arr=ast.literal_eval(coor)
         print(arr[0]['lat'])
         print(len(arr))
-        pr=[]
+        list=[]
         for i in arr:
             lat=i['lat']
             lon=i['lon']
-            pr.append(lon)
             parameters={
                 'service':'WMS',
                 'version':'1.1.1',
@@ -85,10 +83,10 @@ class Coordinates(Resource):
             json= data
             
             respuesta={'layer':layer,'lat':lat,'lon':lon,'value':json['features'][0]['properties']['GRAY_INDEX']}
-            if not lista.__contains__(respuesta):
-                lista.append(respuesta)
+            if not list.__contains__(respuesta):
+                list.append(respuesta)
             
-        return lista
+        return list
 
             
         
