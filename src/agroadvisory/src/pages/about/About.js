@@ -5,7 +5,7 @@ import './About.css';
 function About() {
 
     return (
-        <section className='d-flex h-100 text-center'>
+        <section className='d-flex h-100 text-center container'>
             <div className='row mt-4 mb-5'>
                 <main className='px-3'>
                     <h2 className='font-link'>About us</h2>
