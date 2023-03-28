@@ -16,8 +16,6 @@ const geoserverLayers = ["optimal_nutrients_n",
         "optimal_nutrients_p", "yieldtypes_optimal", 
         "urea_probabilistic", "nps_probabilistic", 
         "vcompost_probabilistic", "compost_probabilistic", "dominant"];
-let popUpMessage = '';
-let unitPopupMessage='';
 
 
 
@@ -73,16 +71,6 @@ function Map(props) {
                 break;
             }
         }
-        
-
-        popUpMessage = (currentLayerName.includes("optimal_nutrients")) ? "optimal nutrient amount: ": 
-            (currentLayerName.includes("yieldtypes")) ? "optimal yield amount: " : 
-            (currentLayerName.includes(geoserverLayers[3]) || currentLayerName.includes(geoserverLayers[4])) ? "fertilizer amount: " : 
-            (currentLayerName.includes(geoserverLayers[5])) ? "vermi-compost: " : 
-            (currentLayerName.includes(geoserverLayers[6])) ? "compost: " : "" 
-        
-        unitPopupMessage = popUpMessage===""?"": (currentLayerName.includes(geoserverLayers[5]) || currentLayerName.includes(geoserverLayers[6])) ? " ton/ha" : " kg/ha";
-
     }
     
     React.useEffect(() => {
@@ -125,6 +113,14 @@ function Map(props) {
                 if(map.target._layers[key].wmsParams !== undefined){
                     //Yield layer name
                     const layer_name = map.target._layers[key].options.layers;
+
+                    const popUpMessage = (layer_name.includes("optimal_nutrients")) ? "optimal nutrient amount: ": 
+                    (layer_name.includes("yieldtypes")) ? "optimal yield amount: " : 
+                    (layer_name.includes(geoserverLayers[3]) || layer_name.includes(geoserverLayers[4])) ? "fertilizer amount: " : 
+                    (layer_name.includes(geoserverLayers[5])) ? "vermi-compost: " : 
+                    (layer_name.includes(geoserverLayers[6])) ? "compost: " : "" 
+                
+                    const unitPopupMessage = popUpMessage===""?"": (layer_name.includes(geoserverLayers[5]) || layer_name.includes(geoserverLayers[6])) ? " ton/ha" : " kg/ha";
                     
                     if((layer_name.includes(geoserverLayers[2]))){
                         //Getting N data  	fertilizer_et:et_wheat_optimal_nutrients_n_normal 
@@ -186,17 +182,15 @@ function Map(props) {
 
             }
         
-            <MapContainer zoomSnap={0.25} zoomDelta={0.25} center={props.init.center} zoom={props.init.zoom} zoomControl={false} style={props.style} scrollWheelZoom={true} whenReady={handleEventsMap} renderer={L.canvas()}>
+            <MapContainer id={props.type} zoomSnap={0.25} zoomDelta={0.25} center={props.init.center} zoom={props.init.zoom} zoomControl={false} style={props.style} scrollWheelZoom={true} whenReady={handleEventsMap} renderer={L.canvas()}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}"
                     
                 />
-                <LayersControl position="topright" collapsed={false}>
-                    {props.type === "nutrients_yield" ?
+                {props.type === "nutrients_yield" ?
+                    <LayersControl position="topright" collapsed={false}>{
                         nutrients_yield.map((item) => {
-                           
-                            
                             return <BaseLayer key={"nutrients_yield_" + item} name={item==="optimal"?"optimal yield":item} checked={item===lastSelected?true:false}> 
                     
                                 {
@@ -222,8 +216,10 @@ function Map(props) {
                                     
                                 />
                             </BaseLayer>
-                        })
-                        : props.type === "nps_urea" ?
+                        })}                        
+                    </LayersControl>
+                    : props.type === "nps_urea" ?
+                        <LayersControl position="topright" collapsed={false}>{
                             fertilizer.map((item) => {
                                 return <BaseLayer key={"nps_urea" + item} name={item} checked={item===lastSelected?true:false}>
                                    
@@ -243,9 +239,11 @@ function Map(props) {
                                           }}
                                     />
                                 </BaseLayer>
-                            })
-                            : props.type === "compost" ?
-                            compost.map((item) => {
+                            })}
+                        </LayersControl>
+                    : props.type === "compost" ?
+                        <LayersControl position="topright" collapsed={false}>
+                            {compost.map((item) => {
                                 return <BaseLayer key={"compost_" + item} name={item} checked={item===lastSelected?true:false}>
                                     <WMSTileLayer
                                         key={"fertilizer_et:et_" + props.crop + "_" + item + "_probabilistic_" +props.scenario}
@@ -263,96 +261,114 @@ function Map(props) {
                                           }}
                                     />
                                 </BaseLayer>
-                            })
-                            : props.type === "location" ? (
-                                props.kebele ?
-                                    <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
-                                        <WMSTileLayer
-                                            layers={"administrative:et_adm4"}
-                                            attribution=''
-                                            url={getUrlService('administrative', 'wms')}
-                                            format={"image/png"}
-                                            transparent={true}
-                                            styles='Etiopia_Admin_Styles'
-                                            cql_filter= {`id_adm4=${props.param}`}
-                                        />
-                                    </BaseLayer>
-                                : props.woreda ?
-                                    <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
-                                        <WMSTileLayer
-                                            layers={"administrative:et_adm4"}
-                                            attribution=''
-                                            url={getUrlService('administrative', 'wms')}
-                                            format={"image/png"}
-                                            transparent={true}
-                                            styles='Etiopia_Admin_Styles'
-                                            cql_filter= {`id_adm3=${props.param}`}
-                                        />
-                                    </BaseLayer>
-                                : props.zone ? 
-                                    <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
-                                        <WMSTileLayer
-                                            layers={"administrative:et_adm3"}
-                                            attribution=''
-                                            url={getUrlService('administrative', 'wms')}
-                                            format={"image/png"}
-                                            transparent={true}
-                                            styles='Etiopia_Admin_Styles'
-                                            cql_filter= {`ADM2_PCODE='ET${props.param.length == 4 ? props.param : "0" + props.param}'`}
-                                        />
-                                    </BaseLayer>
-                                : props.region ?
-                                    <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
-                                        <WMSTileLayer
-                                            layers={"administrative:et_adm2"}
-                                            attribution=''
-                                            url={getUrlService('administrative', 'wms')}
-                                            format={"image/png"}
-                                            transparent={true}
-                                            styles='Etiopia_Admin_Styles'
-                                            cql_filter= {`ADM1_PCODE='ET${props.param.length == 2 ? props.param : "0" + props.param}'`}
-                                        />
-                                    </BaseLayer>
-                                
-                                :
-                                    <BaseLayer key={props.type + " - " + Date.now()} name={"administrative levels"} checked={props.checked}>
-                                        <WMSTileLayer
-                                            layers={"administrative:et_adm1"}
-                                            attribution=''
-                                            url={getUrlService('administrative', 'wms')}
-                                            format={"image/png"}
-                                            transparent={true}
-                                            styles='Etiopia_Admin_Styles'
-                                        />
-                                    </BaseLayer>
-                            )
-                       
-                            : props.type === "seasonal_dominant" ?
-                            
-                                 <BaseLayer key={props.type} name={"dominant"} checked={props.checked}>
+                            })}
+                        </LayersControl>
+                    : props.type === "location" ? (
+                        props.kebele ?
+                            <WMSTileLayer
+                                key={props.kebele}
+                                layers={"administrative:et_adm4"}
+                                attribution=''
+                                url={getUrlService('administrative', 'wms')}
+                                format={"image/png"}
+                                transparent={true}
+                                styles='Etiopia_Admin_Styles'
+                                cql_filter= {`id_adm4=${props.param}`}
+                            />
+                        : props.woreda ?
+                            <WMSTileLayer
+                                key={props.woreda}
+                                layers={"administrative:et_adm4"}
+                                attribution=''
+                                url={getUrlService('administrative', 'wms')}
+                                format={"image/png"}
+                                transparent={true}
+                                styles='Etiopia_Admin_Styles'
+                                cql_filter= {`id_adm3=${props.param}`}
+                            />
+                        : props.zone ? 
+                            <WMSTileLayer
+                                key={props.zone}
+                                layers={"administrative:et_adm3"}
+                                attribution=''
+                                url={getUrlService('administrative', 'wms')}
+                                format={"image/png"}
+                                transparent={true}
+                                styles='Etiopia_Admin_Styles'
+                                cql_filter= {`ADM2_PCODE='ET${props.param.length == 4 ? props.param : "0" + props.param}'`}
+                            />
+                        : props.region ?
+                            <WMSTileLayer
+                                key={props.region}
+                                layers={"administrative:et_adm2"}
+                                attribution=''
+                                url={getUrlService('administrative', 'wms')}
+                                format={"image/png"}
+                                transparent={true}
+                                styles='Etiopia_Admin_Styles'
+                                cql_filter= {`ADM1_PCODE='ET${props.param.length == 2 ? props.param : "0" + props.param}'`}
+                            />
+                        :
+                        <WMSTileLayer
+                            layers={"administrative:et_adm1"}
+                            attribution=''
+                            url={getUrlService('administrative', 'wms')}
+                            format={"image/png"}
+                            transparent={true}
+                            styles='Etiopia_Admin_Styles'
+                        />)
+                    : props.type === "seasonal_dominant" ?
+                        <LayersControl position="topright" collapsed={false}>   
+                            <BaseLayer key={props.type} name={"dominant"} checked={props.checked}>
+                                <WMSTileLayer
+                                    layers={"aclimate_et:seasonal_country_et_dominant"}
+                                    attribution=''
+                                    url={getUrlService('aclimate_et', 'wms')}
+                                    format={"image/png"}
+                                    transparent={true}
+                                    // params={{'time': props.forecast}}
+                                    eventHandlers={{
+                                        add: (e) => {
+                                            onLayerChange(e.target.options.layers);
+                                            
+                                        }
+                                        }}
+                                />
+                            </BaseLayer>
+                        </LayersControl> 
+                    : props.type === "recommendation_report" ?
+                        <LayersControl position="topright" collapsed={true}>
+                            {scenarios.map(scenario => {
+                                return <BaseLayer key={scenario} name={scenario} checked={scenario === 'normal'} >
                                     <WMSTileLayer
-                                        layers={"aclimate_et:seasonal_country_et_dominant"}
+                                        key={`fertilizer_et:et_wheat_yieldtypes_optimal_${scenario}`}
+                                        layers={`fertilizer_et:et_wheat_yieldtypes_optimal_${scenario}`}
                                         attribution=''
-                                        url={getUrlService('aclimate_et', 'wms')}
+                                        url={getUrlService('fertilizer_et', 'wms')}
                                         format={"image/png"}
                                         transparent={true}
-                                        // params={{'time': props.forecast}}
+                                        params={{ 'time': "2022-7" }}
                                         eventHandlers={{
                                             add: (e) => {
-                                              onLayerChange(e.target.options.layers);
-                                              
+                                                onLayerChange(e.target.options.layers);
+                                                setLastSelected("optimal");
                                             }
-                                          }}
-                                    />
-                                </BaseLayer>
-                            
-                            : props.type === "recommendation_report" ?
+                                        }}
 
-                                scenarios.map(scenario => {
-                                    return <BaseLayer key={scenario} name={scenario} checked={scenario === 'normal'} >
+                                    />
+
+                                </BaseLayer>
+                            })}
+                        </LayersControl>
+                    : props.type === "nps_urea_report" ?
+                        <LayersControl position="topright" collapsed={true}>
+                            {fertilizer.map((item) => {
+                                return scenarios.map(scenario => {
+                                    return <BaseLayer key={`${item}_${scenario}`} name={`${item} ${scenario}`} checked={(item === "nps" && scenario === "normal")}>
+
                                         <WMSTileLayer
-                                            key={`fertilizer_et:et_wheat_yieldtypes_optimal_${scenario}`}
-                                            layers={`fertilizer_et:et_wheat_yieldtypes_optimal_${scenario}`}
+                                            key={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
+                                            layers={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
                                             attribution=''
                                             url={getUrlService('fertilizer_et', 'wms')}
                                             format={"image/png"}
@@ -361,67 +377,40 @@ function Map(props) {
                                             eventHandlers={{
                                                 add: (e) => {
                                                     onLayerChange(e.target.options.layers);
-                                                    setLastSelected("optimal");
+                                                    setLastSelected(item);
                                                 }
                                             }}
-
                                         />
-
                                     </BaseLayer>
-                                }) 
-                            : props.type === "nps_urea_report" ?
-                                fertilizer.map((item) => {
-                                    return scenarios.map(scenario => {
-                                        return <BaseLayer key={`${item}_${scenario}`} name={`${item} ${scenario}`} checked={(item === "nps" && scenario === "normal")}>
-
-                                            <WMSTileLayer
-                                                key={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
-                                                layers={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
-                                                attribution=''
-                                                url={getUrlService('fertilizer_et', 'wms')}
-                                                format={"image/png"}
-                                                transparent={true}
-                                                params={{ 'time': "2022-7" }}
-                                                eventHandlers={{
-                                                    add: (e) => {
-                                                        onLayerChange(e.target.options.layers);
-                                                        setLastSelected(item);
-                                                    }
-                                                }}
-                                            />
-                                        </BaseLayer>
-                                    })
                                 })
-                            : props.type === "compost_report" ?
-                                compost.map((item) => {
-                                    return scenarios.map(scenario => {
-                                        return <BaseLayer key={`${item}_${scenario}`}  name={`${item} ${scenario}`} checked={(item === "compost" && scenario === "normal")}>
+                            })}
+                        </LayersControl>
+                    : props.type === "compost_report" &&
+                        <LayersControl position="topright" collapsed={true}>
+                            {compost.map((item) => {
+                                return scenarios.map(scenario => {
+                                    return <BaseLayer key={`${item}_${scenario}`}  name={`${item} ${scenario}`} checked={(item === "compost" && scenario === "normal")}>
 
-                                            <WMSTileLayer
-                                                key={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
-                                                layers={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
-                                                attribution=''
-                                                url={getUrlService('fertilizer_et', 'wms')}
-                                                format={"image/png"}
-                                                transparent={true}
-                                                params={{ 'time': "2022-7" }}
-                                                eventHandlers={{
-                                                    add: (e) => {
-                                                        onLayerChange(e.target.options.layers);
-                                                        setLastSelected(item);
-                                                    }
-                                                }}
-                                            />
-                                        </BaseLayer>
-                                    })
-                                })                          
-                            :
-                                <></>
-                                
-                            
-
-                    }
-                </LayersControl>
+                                        <WMSTileLayer
+                                            key={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
+                                            layers={"fertilizer_et:et_wheat_" + item + "_probabilistic_" + scenario}
+                                            attribution=''
+                                            url={getUrlService('fertilizer_et', 'wms')}
+                                            format={"image/png"}
+                                            transparent={true}
+                                            params={{ 'time': "2022-7" }}
+                                            eventHandlers={{
+                                                add: (e) => {
+                                                    onLayerChange(e.target.options.layers);
+                                                    setLastSelected(item);
+                                                }
+                                            }}
+                                        />
+                                    </BaseLayer>
+                                })
+                            })} 
+                        </LayersControl>
+                }
                 {
                     props.legend &&
                         <MapLegend currentLayer={currentLayer} geoserverLayers={geoserverLayers}/>
