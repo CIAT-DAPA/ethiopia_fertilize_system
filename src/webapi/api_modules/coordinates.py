@@ -15,21 +15,21 @@ class Coordinates(Resource):
         super().__init__()
     def post(self,layer=None,coor=None):
         """
-        Get Features
-
+        Get Features, Information of Urea, NPS, Compost & VCompost and Optimal yield.
         ---
+        description: Should be queried to obtain Urea, NPS, Compost, VCompost or Optimal Yield information for one or more coordinates. This endpoint needs two parameters, **layer** that is name of the layer (the layer names can be obtained from the endpoint `/layers_fertilizer`) and  **coor** array of objects with the coordinates you want to query lat and lon. The endpoint must follow the following format, the endpoint only allows post requests and he will respond with a list of the values of the corresponding layer for each of the coordinates.
         parameters:
           - in: path
             name: layer
             type: string
-            required: false
+            required: true
             description: layer name at https://geo.aclimate.org/geoserver/web/wicket/bookmarkable/org.geoserver.web.demo.MapPreviewPage?8&filter=false example= et_wheat_compost_probabilistic_below
           - in: path
             name: coor
             type: array
             items:
                 type: object
-            required: false
+            required: true
             description: array of objects with coordinates lat and lon, example= [{"lat":7.17712,"lon":38.16367},{"lat":8.35343,"lon":36.51521},{"lat":8.35343,"lon":36.51521}]
             
         responses:
@@ -39,17 +39,20 @@ class Coordinates(Resource):
               id: Features
               properties:
                 lat:
-                  type: float
+                  type: number
+                  format: float
                   description: lat
                   default: 8.5583
                 lon:
-                  type: float
+                  type: number
+                  format: float
                   description: lat
-                  default: 8.5583
+                  example: 8.5583
                 value:
-                  type: float
+                  type: number
+                  format: float
                   description: values
-                  default: 0.00
+                  example: 20.00
                 
         """
         arr=ast.literal_eval(coor)

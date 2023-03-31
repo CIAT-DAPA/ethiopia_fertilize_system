@@ -12,11 +12,12 @@ class AdministrativeLevel3(Resource):
         """
         Get all Administrative levels 3 from database (Woreda)
         ---
+        description: Query the information of the administrative levels 3 (Woreda). This endpoint needs one parameter, **adm2** that is id of the administrative levels 2 (Zone) to be queried (this id can be obtained from the endpoint `/adm2`); The API will respond with the list of the Woredas from that specific zone.
         parameters:
           - in: path
             name: adm2
             type: string
-            required: false
+            required: true
         responses:    
           200:
             description: Administrative levels 3

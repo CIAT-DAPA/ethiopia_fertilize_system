@@ -12,6 +12,7 @@ class Crops(Resource):
         """
         Get all crops from database
         ---
+        description: Query all the crops, this endpoint has not parameters and will respond with the list of all crops
         responses:
           200:
             description: Crop
