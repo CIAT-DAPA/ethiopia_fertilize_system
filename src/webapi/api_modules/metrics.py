@@ -13,6 +13,16 @@ class Metrics(Resource):
         """
         Get forecast data for a adminsitrative level 4 (Kebele)
         ---
+        description: |- 
+          Query the forecast data for administrative level 4 (Kebele). This endpoint needs one parameter, **adm4** id of the administrative levels 4 (kebele) to be queried (this id can be obtained from the endpoint `/adm4`); The API will respond with the list of the forecast data from that specific kebele.
+          
+          The answer is an array with different objects. Each object has a type attribute which is an id. The ids are the following: 
+            •	63865d9f68c981103580abf0 - compost (tons/ha.) 
+            •	63865ef468c981103580e666 - nps (kg/ha.) 
+            •	638660ad68c98110358120dc - optimal yield (kg/ha.) 
+            •	638662c668c9811035815b52 - urea (kg/ha.) 
+            •	6386653e68c98110358195c8 - vermi compost (ton/ha.)
+
         parameters:
           - in: path
             name: adm4

@@ -12,11 +12,12 @@ class AdministrativeLevel4(Resource):
         """
         Get all Administrative levels 4 from database (Kebele)
         ---
+        description: Query the information of the administrative levels 4 (Kebele). This endpoint needs one parameter, **adm3** that is id of the administrative levels 3 (Woreda) to be queried (this id can be obtained from the endpoint `/adm3`); The API will respond with the list of Kebeles from that specific woreda.
         parameters:
           - in: path
             name: adm3
             type: string
-            required: false
+            required: true
         responses:
           200:
             description: Administrative levels 4
