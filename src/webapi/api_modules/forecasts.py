@@ -13,11 +13,12 @@ class Forecasts(Resource):
         """
         Get forecast list from database
         ---
+        description: Query the forecast list. This endpoint needs one parameter, **crop** that is id of the crop to be queried (this id can be obtained from the endpoint `/crops`). The API will respond with the list of the forecast from that specific crop.
         parameters:
           - in: path
             name: crop
             type: string
-            required: false
+            required: true
         responses:
           200:
             description: Forecast

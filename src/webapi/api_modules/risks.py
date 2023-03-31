@@ -12,6 +12,7 @@ class Risks(Resource):
         """
         Get Risk data for a adminsitrative level 4 (Kebele)
         ---
+        description: Query the risk data for administrative level 4 (Kebele). This endpoint needs one parameter, **adm4** id of the administrative levels 4 (kebele) to be queried (this id can be obtained from the endpoint `/adm4`; The API will respond a object with the list of the risk data from that specific kebele.
         parameters:
           - in: path
             name: adm4
@@ -35,10 +36,17 @@ class Risks(Resource):
                 type:
                   type: string
                   description: Type of metric
-                values:
-                  type: array
-                  items: {}
-                  description: Value of risk
+                risk:
+                  description: list risk
+                  type: object
+                  properties: 
+                    name: 
+                      type: string
+                    values:
+                      type: array
+                      items: {}
+                      description: Value of risk
+                  
         """
         q_set = None
         if adm4 is None:

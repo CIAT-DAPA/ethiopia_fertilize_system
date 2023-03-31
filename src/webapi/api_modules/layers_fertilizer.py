@@ -13,6 +13,7 @@ class Layers(Resource):
         """
         Get all layers of fertilizer in the geoserver for nextgen
         ---
+        description: Query all the layers. This endpoint does not receive any parameter. Returns an array with a list of the different layers on which information is available
         responses:
           200:
             description: Layers available in Geoserver
