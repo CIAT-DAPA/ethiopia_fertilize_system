@@ -9,7 +9,7 @@ from conf import config
 
 from api_modules.kebele import Kebele
 from api_modules.woreda import Woreda
-from api_modules.clipping_raster import ClippingRaster
+#from api_modules.clipping_raster import ClippingRaster
 # New Modules
 from mongoengine import *
 from api_modules.adm1 import AdministrativeLevel1
@@ -40,7 +40,7 @@ def home():
 #api.add_resource(Woreda, '/woredas', endpoint="woredas")
 #api.add_resource(Woreda, '/woredas/<woreda_name>', endpoint="woreda")
 #api.add_resource(Kebele, '/kebele/<kebele_name>')
-api.add_resource(ClippingRaster, '/clip_raster')
+#api.add_resource(ClippingRaster, '/clip_raster')
 
 # New methods
 api.add_resource(AdministrativeLevel1, '/adm1')
