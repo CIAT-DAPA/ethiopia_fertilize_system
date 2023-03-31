@@ -26,6 +26,7 @@ function Map(props) {
     const [fertilizer, setNutrients] = React.useState(["nps", "urea"]);
     const [currentLayer, setCurrentLayer] = React.useState();
     const [warning, setWarning] = React.useState(false);
+    const [messageWarning, setMessageWarning] = React.useState("")
     const [polygonCoords, setPolygonCoords] = React.useState();
     const [mapRef, setRefMap] = React.useState();
     //For changing the layer according to scenerario selected (Sidebar)
@@ -45,13 +46,40 @@ function Map(props) {
     React.useEffect(() => {
         
         if(polygonCoords && currentLayer){
-            let parameters = {minx: polygonCoords._southWest.lng, miny: polygonCoords._southWest.lat, maxx: polygonCoords._northEast.lng, maxy: polygonCoords._northEast.lat, layer: "et_"+props.crop+"_"+currentLayer+"_"+props.scenario}
-            let requestFormatted = request+"?"+"boundaries="+parameters["minx"]+","+parameters["miny"]+","+parameters["maxx"]+","+parameters["maxy"]+"&"+"layer="+parameters["layer"]
-            window.location.href = requestFormatted;
-            setWarning(false);
-            
-
+            try {
+                const geoserver = Configuration.get_geoserver_url()
+                const workspace = Configuration.get_fertilizer_worspace()
+                let parameters = { minx: polygonCoords._southWest.lng, miny: polygonCoords._southWest.lat, maxx: polygonCoords._northEast.lng, maxy: polygonCoords._northEast.lat, layer: "et_" + props.crop + "_" + currentLayer + "_" + props.scenario }
+                let requestFormatted = `${geoserver}${workspace}/wcs?service=WCS&version=2.0.1&request=GetCoverage&coverageId=${workspace}:${parameters["layer"]}&format=image/tiff&subset=time("${props.forecast}-01T00:00:00.000Z")&subset=Lat(${parameters["miny"]},${parameters["maxy"]})&subset=Long(${parameters["minx"]},${parameters["maxx"]})`
+                fetch(requestFormatted)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.blob();
+                    })
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `${parameters["layer"]}.tif`;
+                        document.body.appendChild(a);
+                        a.click();
+                        a.remove();
+                        setWarning(false);
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the network response:', error);
+                        setMessageWarning("There was a problem with the download, please check the coordinates. ")
+                        setWarning(true);
+                    });
+            } catch (error) {
+                console.error("There was a problem: ", error)
+                setMessageWarning("To download the clipping of a raster you must select a layer first")
+                setWarning(true);
+            }
         }else if(polygonCoords && !currentLayer){
+            setMessageWarning("To download the clipping of a raster you must select a layer first")
             setWarning(true);
         }
 
