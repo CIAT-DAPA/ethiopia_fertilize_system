@@ -13,7 +13,7 @@ class Coordinates(Resource):
 
     def __init__(self):
         super().__init__()
-    def post(self,layer=None,coor=None):
+    def post(self,layer=None,coor=None,date=None):
         """
         Get Features, Information of Urea, NPS, Compost & VCompost and Optimal yield.
         ---
@@ -31,7 +31,11 @@ class Coordinates(Resource):
                 type: object
             required: true
             description: array of objects with coordinates lat and lon, example= [{"lat":7.17712,"lon":38.16367},{"lat":8.35343,"lon":36.51521},{"lat":8.35343,"lon":36.51521}]
-            
+          - in: path
+            name: date
+            type: string
+            required: true
+            description: date in which you want to extract the information from the mosaic, example 2022-07
         responses:
           200:
             description: Latitude, longitude and value
@@ -66,6 +70,7 @@ class Coordinates(Resource):
                 'service':'WMS',
                 'version':'1.1.1',
                 'request':'GetFeatureInfo',
+                'time':date,
                 'layers':layer,
                 'query_layers':layer,
                 'feature_count':10,
@@ -84,10 +89,18 @@ class Coordinates(Resource):
             response= requests.get(self.url)
             data= response.json()
             json= data
-            
-            respuesta={'layer':layer,'lat':lat,'lon':lon,'value':json['features'][0]['properties']['GRAY_INDEX']}
-            if not list.__contains__(respuesta):
-                list.append(respuesta)
+
+            if 'features' in json and json['features']:
+                gray_index = json['features'][0]['properties'].get('GRAY_INDEX')
+                if gray_index is not None:
+                    respuesta = {'layer': layer, 'lat': lat, 'lon': lon, 'value': gray_index, 'date': date}
+                    if respuesta not in list:
+                        list.append(respuesta)
+                else:
+                    respuesta = {}
+            else:
+                respuesta = {}
+
             
         return list
 
