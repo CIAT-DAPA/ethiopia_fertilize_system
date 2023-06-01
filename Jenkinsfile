@@ -19,7 +19,7 @@ pipeline {
                     // Set up remote SSH connection parameters
                     remote.allowAnyHosts = true
                     remote.identityFile = ssh_key
-                    remote.user = 'scalderon'
+                    remote.user = user
                     remote.name = name
                     remote.host = host
                     
