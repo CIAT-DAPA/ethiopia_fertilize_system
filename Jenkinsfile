@@ -31,11 +31,12 @@ pipeline {
                     def GIT_HUB_URL = release_url
                     sshCommand remote: remote, command: """
                         # Download the latest release from GitHub
+                        sudo su
                         cd /var/www/docs/webapi/
-                        kill -9 $(netstat -nepal | grep 5000 | awk '{print $9}' | awk -F '/' '{print $1}')
-                        mv -r api api_backup_$(date +"%Y%m%d")
+                        kill -9 \$(netstat -nepal | grep 5000 | awk '{print \$9}' | awk -F '/' '{print \$1}')
+                        mv -r api api_backup_\$(date +"%Y%m%d")
                         rm -fr releaseApi.zip
-                        curl -LJO \$(curl -Ls ${GIT_HUB_URL} | jq -r '.assets[0].browser_download_url')
+                        curl -LJO \$(curl -Ls \${GIT_HUB_URL} | jq -r '.assets[0].browser_download_url')
                         unzip -o releaseApi.zip
                         rm -fr releaseApi.zip
                         mv -r src/webapi/ api
