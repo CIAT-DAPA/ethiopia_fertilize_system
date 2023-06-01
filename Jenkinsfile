@@ -1,9 +1,11 @@
+// Define an empty map for storing remote SSH connection parameters
+def remote = [:]
+
 pipeline {
 
     agent any
 
     environment {
-        remote = null
         user = credentials('fertalizer_user')
         host = credentials('fertalizer_host')
         name = credentials('fertalizer_name')
