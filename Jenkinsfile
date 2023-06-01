@@ -32,7 +32,7 @@ pipeline {
                     sshCommand remote: remote, command: """
                         ls
                     """
-                    sshCommand remote: remote, command: """
+                    sshCommand remote: remote, sudo: true, command: """
                         cd /var/www/docs/webapi/
                         kill -9 \$(netstat -nepal | grep 5000 | awk '{print \$9}' | awk -F '/' '{print \$1}')
                         mv api api_backup_\$(date +"%Y%m%d")
