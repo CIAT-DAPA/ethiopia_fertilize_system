@@ -29,10 +29,10 @@ pipeline {
         stage('Download latest release') {
             steps {
                 script {
-                    sshCommand remote: remote, sudo: true, command: """
+                    sshCommand remote: remote, command: """
                         ls
                     """
-                    sshCommand remote: remote, sudo: true, command: """
+                    sshCommand remote: remote, command: """
                         cd /var/www/docs/webapi/
                         kill -9 \$(netstat -nepal | grep 5000 | awk '{print \$9}' | awk -F '/' '{print \$1}')
                         mv -r api api_backup_\$(date +"%Y%m%d")
@@ -48,7 +48,7 @@ pipeline {
         stage('Init Api') {
             steps {
                 script {
-                    sshCommand remote: remote, sudo: true, command: """
+                    sshCommand remote: remote, command: """
                         cd /var/www/docs/webapi/
                         source env/bin/activate
                         export DEBUG=False
