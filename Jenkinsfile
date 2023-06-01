@@ -35,12 +35,12 @@ pipeline {
                     sshCommand remote: remote, command: """
                         cd /var/www/docs/webapi/
                         kill -9 \$(netstat -nepal | grep 5000 | awk '{print \$9}' | awk -F '/' '{print \$1}')
-                        mv -r api api_backup_\$(date +"%Y%m%d")
+                        mv api api_backup_\$(date +"%Y%m%d")
                         rm -fr releaseApi.zip
                         curl -LOk https://github.com/CIAT-DAPA/ethiopia_fertilize_system/releases/latest/download/releaseApi.zip
                         unzip -o releaseApi.zip
                         rm -fr releaseApi.zip
-                        mv -r src/webapi/ api
+                        mv src/webapi/ api
                     """
                 }
             }
