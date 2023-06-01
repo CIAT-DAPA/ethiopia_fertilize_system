@@ -59,7 +59,7 @@ pipeline {
                         export FERTILIZER_RASTERS_DIR="./raster_files/cropped/"
                         export PORT=5000
                         cd api/
-                        nohub python agroadvisory_api.py > log.txt 2>&1 &
+                        nohup python agroadvisory_api.py > log.txt 2>&1 &
                     """
                 }
             }
