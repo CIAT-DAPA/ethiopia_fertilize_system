@@ -8,7 +8,6 @@ pipeline {
         host = credentials('fertalizer_host')
         name = credentials('fertalizer_name')
         ssh_key = credentials('fertalizer_devops')
-        release_url = credentials('fertalizer_release')
     }
 
     stages {
@@ -21,7 +20,6 @@ pipeline {
                     remote.user = user
                     remote.name = name
                     remote.host = host
-                    remote.sudo = true
                     
                 }
             }
@@ -29,9 +27,10 @@ pipeline {
         stage('Download latest release') {
             steps {
                 script {
-                    def GIT_HUB_URL = release_url
-                    sshCommand remote: remote, command: """
-                        # Download the latest release from GitHub
+                    sshCommand remote: remote, sudo: true, command: """
+                        ls
+                    """
+                    sshCommand remote: remote, sudo: true, command: """
                         cd /var/www/docs/webapi/
                         kill -9 \$(netstat -nepal | grep 5000 | awk '{print \$9}' | awk -F '/' '{print \$1}')
                         mv -r api api_backup_\$(date +"%Y%m%d")
@@ -47,7 +46,7 @@ pipeline {
         stage('Init Api') {
             steps {
                 script {
-                    sshCommand remote: remote, command: """
+                    sshCommand remote: remote, sudo: true, command: """
                         cd /var/www/docs/webapi/
                         source env/bin/activate
                         export DEBUG=False
