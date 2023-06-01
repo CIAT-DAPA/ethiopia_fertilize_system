@@ -51,7 +51,7 @@ api.add_resource(Crops, '/crops')
 api.add_resource(Forecasts, '/forecast/<crop>')
 api.add_resource(Metrics, '/metrics/<adm4>')
 api.add_resource(Risks, '/risk/<adm4>')
-api.add_resource(Coordinates, '/coordinates/<layer>/<coor>')
+api.add_resource(Coordinates, '/coordinates/<layer>/<coor>/<date>')
 api.add_resource(Layers, '/layers_fertilizer')
 
 #api.add_resource(Layers, '/layers')
