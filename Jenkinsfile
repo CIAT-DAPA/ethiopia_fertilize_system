@@ -32,12 +32,13 @@ pipeline {
                     sshCommand remote: remote, command: """
                         cd /var/www/docs/webapi/
                         sudo kill -9 \$(sudo netstat -nepal | grep 5000 | awk '{print \$9}' | awk -F '/' '{print \$1}')
-                        mv test api_backup_\$(date +"%Y%m%d")
+                        rm -fr api_backup_\$(date +"%Y%m%d")
+                        mv api api_backup_\$(date +"%Y%m%d")
                         rm -fr releaseApi.zip
                         curl -LOk https://github.com/CIAT-DAPA/ethiopia_fertilize_system/releases/latest/download/releaseApi.zip
                         unzip -o releaseApi.zip
                         rm -fr releaseApi.zip
-                        mv src/webapi/ api
+                        mv src/webapi/* api
                         rm -fr src
                     """
                 }
@@ -69,7 +70,7 @@ pipeline {
     post {
         failure {
             script {
-                echo 'fail :('
+                echo 'fail'
             }
         }
 
@@ -81,4 +82,3 @@ pipeline {
     }
  
 }
-
