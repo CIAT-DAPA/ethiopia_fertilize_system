@@ -38,6 +38,7 @@ pipeline {
                         curl -LOk https://github.com/CIAT-DAPA/ethiopia_fertilize_system/releases/latest/download/releaseApi.zip
                         unzip -o releaseApi.zip
                         rm -fr releaseApi.zip
+                        mkdir api
                         mv src/webapi/* api
                         rm -fr src
                     """
