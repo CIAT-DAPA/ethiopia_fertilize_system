@@ -33,24 +33,22 @@ pipeline {
                         ls
                     """
                     sshCommand remote: remote, command: """
-                        sudo su
                         cd /var/www/docs/webapi/
-                        kill -9 \$(netstat -nepal | grep 5000 | awk '{print \$9}' | awk -F '/' '{print \$1}')
-                        mv api api_backup_\$(date +"%Y%m%d")
+                        mkdir test
+                        mv test api_backup_\$(date +"%Y%m%d")
                         rm -fr releaseApi.zip
                         curl -LOk https://github.com/CIAT-DAPA/ethiopia_fertilize_system/releases/latest/download/releaseApi.zip
                         unzip -o releaseApi.zip
                         rm -fr releaseApi.zip
-                        mv src/webapi/ api
+                        
                     """
                 }
             }
         }
-        stage('Init Api') {
+        /*stage('Init Api') {
             steps {
                 script {
                     sshCommand remote: remote, command: """
-                        sudo su
                         cd /var/www/docs/webapi/
                         source env/bin/activate
                         export DEBUG=False
@@ -60,12 +58,15 @@ pipeline {
                         export GEOSERVER_URL="https://geo.aclimate.org/geoserver/"
                         export FERTILIZER_RASTERS_DIR="./raster_files/cropped/"
                         export PORT=5000
+                        export CONNECTION_DB=mongodb://localhost:27017/nextgen_db
+                        export HOST=0.0.0.0
                         cd api/
                         nohup python agroadvisory_api.py > log.txt 2>&1 &
                     """
                 }
             }
-        }
+        }*/
     }
  
 }
+
