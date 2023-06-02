@@ -30,22 +30,20 @@ pipeline {
             steps {
                 script {
                     sshCommand remote: remote, command: """
-                        ls
-                    """
-                    sshCommand remote: remote, command: """
                         cd /var/www/docs/webapi/
-                        mkdir test
+                        sudo kill -9 \$(sudo netstat -nepal | grep 5000 | awk '{print \$9}' | awk -F '/' '{print \$1}')
                         mv test api_backup_\$(date +"%Y%m%d")
                         rm -fr releaseApi.zip
                         curl -LOk https://github.com/CIAT-DAPA/ethiopia_fertilize_system/releases/latest/download/releaseApi.zip
                         unzip -o releaseApi.zip
                         rm -fr releaseApi.zip
-                        
+                        mv src/webapi/ api
+                        rm -fr src
                     """
                 }
             }
         }
-        /*stage('Init Api') {
+        stage('Init Api') {
             steps {
                 script {
                     sshCommand remote: remote, command: """
@@ -65,7 +63,7 @@ pipeline {
                     """
                 }
             }
-        }*/
+        }
     }
  
 }
