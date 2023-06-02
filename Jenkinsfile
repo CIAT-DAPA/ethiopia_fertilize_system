@@ -65,6 +65,20 @@ pipeline {
             }
         }
     }
+    
+    post {
+        failure {
+            script {
+                echo 'fail'
+            }
+        }
+
+        success {
+            script {
+                echo 'everything went very well!!'
+            }
+        }
+    }
  
 }
 
